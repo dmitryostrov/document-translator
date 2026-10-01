@@ -6,6 +6,7 @@ import { strict as assert } from "node:assert";
 import { createHash } from "node:crypto";
 import { setup,environment,project,compose,poll,db } from "./test-support";
 import { fixturePDF,source } from "./fixtures";
+import { mcpFixtureOutput } from "./mcp-workspace";
 const live=process.env.LIVE_MCP==="1";
 if(!live)await setup(process.env.SKIP_BUILD!=="1");
 const folder=resolve(".runtime",`mcp-${crypto.randomUUID()}`);await mkdir(folder,{recursive:true});await mkdir(folder+"/out");
@@ -14,7 +15,9 @@ await writeFile(folder+"/sample.pdf",await fixturePDF());await writeFile(folder+
 await writeFile(folder+"/docs/one.md",source);await writeFile(folder+"/docs/two.md",source+"\nSecond document.");
 const checksum=(bytes:Uint8Array)=>createHash("sha256").update(bytes).digest("hex");
 const originals={pdf:checksum(await readFile(folder+"/sample.pdf")),md:checksum(await readFile(folder+"/sample.md"))};
-const args=["compose",...(live?[]:["-p",project]),"-f",resolve("compose.yaml"),...(live?[]:["-f",resolve("compose.test.yaml")]),"run","--rm","--no-deps","-T","-v",`${folder.replaceAll("\\","/")}:/workspace`,"mcp"];
+const composeArgs=["compose",...(live?[]:["-p",project]),"-f",resolve("compose.yaml"),...(live?[]:["-f",resolve("compose.test.yaml")])];
+const output=mcpFixtureOutput(folder,composeArgs,environment);output.prepare();
+const args=[...composeArgs,"run","--rm","--no-deps","-T","-v",`${folder.replaceAll("\\","/")}:/workspace`,"mcp"];
 const client=new Client({name:"clean-translator-verification",version:"1.0.0"});
 const transport=new StdioClientTransport({command:"docker",args,env:environment as Record<string,string>,stderr:"pipe"});
 await client.connect(transport);
@@ -31,7 +34,7 @@ try{
     const done=await poll(()=>call("translation_status",{job_id:q.job_id}),j=>["SUCCEEDED","FAILED","NEEDS_ATTENTION"].includes(j.stage));
     assert.equal(done.stage,"SUCCEEDED");
     const saved=await call("save_translation",{job_id:q.job_id,output_path:`/workspace/out/sample.de.${format}`});
-    assert.equal(checksum(await readFile(folder+`/out/sample.de.${format}`)),saved.checksum);
+    assert.equal(await output.checksum(`sample.de.${format}`),saved.checksum);
     await assert.rejects(()=>call("save_translation",{job_id:q.job_id,output_path:`/workspace/out/sample.de.${format}`}));
     evidence.push({format,job_id:q.job_id,checksum:saved.checksum,metadata_only:true});
   }
@@ -49,4 +52,4 @@ try{
   const evidencePath=live?"evidence/mcp-live.json":"evidence/mcp.json";
   await mkdir("evidence",{recursive:true});await writeFile(evidencePath,JSON.stringify(evidence,null,2));
   console.log(JSON.stringify({passed:evidence.length,tools:4,evidence:evidencePath,provider:live?"openai":"fake",inputs_preserved:true}));
-}finally{await client.close();}
+}finally{try{await client.close();}finally{output.restore();}}

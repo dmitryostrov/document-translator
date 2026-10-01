@@ -8,6 +8,7 @@ import { createHash } from "node:crypto";
 import { strict as assert } from "node:assert";
 import { fixturePDF,source } from "./fixtures";
 import { poll } from "./test-support";
+import { mcpFixtureOutput } from "./mcp-workspace";
 
 const root=process.cwd();
 const run=(command:string,args:string[],cwd=root,env=process.env)=>{
@@ -66,6 +67,7 @@ try{
     evidence.push({front_door:"api",format,stage:done.stage,checksum:done.artifact.checksum,cost:done.cost});
   }
   const client=new Client({name:"fresh-clone-readme-verification",version:"1.0.0"});
+  const output=mcpFixtureOutput(workspace,composeArgs,environment,checkout);output.prepare();
   const transport=new StdioClientTransport({command:"docker",args:[...composeArgs,"run","--rm","--no-deps","-T","-v",`${workspace.replaceAll("\\","/")}:/workspace`,"mcp"],env:environment as Record<string,string>,stderr:"pipe"});
   try{
     await client.connect(transport);
@@ -79,11 +81,11 @@ try{
       const done=await poll(()=>call("translation_status",{job_id:quote.job_id}),j=>["SUCCEEDED","FAILED","NEEDS_ATTENTION"].includes(j.stage));
       assert.equal(done.stage,"SUCCEEDED");
       const saved=await call("save_translation",{job_id:quote.job_id,output_path:`/workspace/out/manual.de.${format}`});
-      assert.equal(hash(await readFile(join(workspace,"out",`manual.de.${format}`))),saved.checksum);
+      assert.equal(await output.checksum(`manual.de.${format}`),saved.checksum);
       assert.equal(hash(await readFile(join(workspace,`manual.${format}`))),originals[format]);
       evidence.push({front_door:"mcp",format,stage:done.stage,checksum:saved.checksum,cost:done.cost,inputs_preserved:true});
     }
-  }finally{await client.close();}
+  }finally{try{await client.close();}finally{output.restore();}}
   await mkdir("evidence",{recursive:true});
   const path=live?"evidence/fresh-clone-live.json":"evidence/fresh-clone.json";
   await writeFile(path,JSON.stringify({kind:"fresh Git clone of private GitHub repository",repository,commit,runtime_tree_sha256:runtimeTreeSha256,directory:checkout,project,provider:live?"openai":"fake",vscode_tracked:false,vscode_present:false,host_node_modules_copied:false,host_dependencies_required_for_app:false,key_copied:false,results:evidence},null,2));
