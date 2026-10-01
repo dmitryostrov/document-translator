@@ -1,10 +1,10 @@
 [
   {
     "boundary": "before-provider-submission",
-    "job_id": "ac6de3ab-5477-4ade-9425-146e04e07bdc",
+    "job_id": "94fcd303-bd0c-464a-9f41-9519aca734bf",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32318,
+    "recovery_ms": 32352,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -23,10 +23,10 @@
   },
   {
     "boundary": "provider-accepted",
-    "job_id": "0a872564-991c-480c-b2ec-01ad8f58abf5",
+    "job_id": "42e90828-b6db-4093-be00-83c4c24fe1fa",
     "expected": "NEEDS_ATTENTION",
     "result": "NEEDS_ATTENTION",
-    "recovery_ms": 31588,
+    "recovery_ms": 31593,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
@@ -45,10 +45,10 @@
   },
   {
     "boundary": "provider-returned",
-    "job_id": "01ee8e46-8522-44be-8881-e7baf15d58f6",
+    "job_id": "cad53053-d467-4921-8976-cb71d799f885",
     "expected": "NEEDS_ATTENTION",
     "result": "NEEDS_ATTENTION",
-    "recovery_ms": 31572,
+    "recovery_ms": 31599,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
@@ -67,10 +67,10 @@
   },
   {
     "boundary": "call-checkpointed",
-    "job_id": "0604ec35-478f-4400-a9fe-4b8e104819a4",
+    "job_id": "79fa962b-ac10-4a91-a2b4-37638c76e67f",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32330,
+    "recovery_ms": 32340,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -89,10 +89,10 @@
   },
   {
     "boundary": "terms-output-ready",
-    "job_id": "c968d103-93fc-4a78-a69a-ee0b2c2f252c",
+    "job_id": "833a63b8-17e6-4609-9669-938073165f1e",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32294,
+    "recovery_ms": 32498,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006208,
@@ -111,10 +111,10 @@
   },
   {
     "boundary": "unit-checkpointed",
-    "job_id": "f1fc55f4-d281-4f64-9e07-0396cf949ba0",
+    "job_id": "2bcbfee8-62c5-4fea-88ac-52cd19a011f5",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 2375,
+    "recovery_ms": 2399,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -133,10 +133,10 @@
   },
   {
     "boundary": "artifact-renamed",
-    "job_id": "fbd5808f-b9d7-44ca-93d9-082ee60935e0",
+    "job_id": "d7c7bc42-361c-45b1-8db2-a9f806ba4d73",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 31550,
+    "recovery_ms": 31580,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006208,
@@ -155,7 +155,7 @@
   },
   {
     "boundary": "api-commit-before-notify",
-    "job_id": "b4b53270-c784-4e99-983e-a7385ea24d02",
+    "job_id": "cc80e321-c5a7-45ed-a5a7-51943c5891e1",
     "durable": true
   },
   {

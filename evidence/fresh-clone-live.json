@@ -1,0 +1,98 @@
+{
+  "kind": "fresh Git clone of private GitHub repository",
+  "repository": "git@github.com:dmitryostrov/stark-document-translator.git",
+  "commit": "43893ce0d5aedd911176d3f23eda42cab22910c7",
+  "runtime_tree_sha256": "8496778a20b7f37d46689ff68b104f75952d3ba7f01038909ac6a6f3835343b4",
+  "directory": "C:\\Users\\dmitr\\AppData\\Local\\Temp\\stark-clone-35JDM0\\checkout",
+  "project": "stark-clone-0e26c405",
+  "provider": "openai",
+  "vscode_tracked": false,
+  "vscode_present": false,
+  "host_node_modules_copied": false,
+  "host_dependencies_required_for_app": false,
+  "key_copied": false,
+  "results": [
+    {
+      "front_door": "api",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "checksum": "c5b4584a81c52c6d5bdddb66b80cf8f27ebc7eb4ae1d0f076235293b618e3bb1",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0006416,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1084,
+          "output": 130,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.25
+      }
+    },
+    {
+      "front_door": "api",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "checksum": "e81deff50d447da95136128f034accc14ffbb935364e9e01d6cb33f531b531b0",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009456,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 1596,
+          "output": 192,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.25
+      }
+    },
+    {
+      "front_door": "mcp",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "checksum": "aa496f62fec3c27ef97c3bd41a60e9d7715a6278b3b1aba5694b936ed0729fa2",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0005996,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1063,
+          "output": 109,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.25
+      },
+      "inputs_preserved": true
+    },
+    {
+      "front_door": "mcp",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "checksum": "f3f51b5d9e8c537f7e6e10543fc94775a067e5fb6f802a793ec7869befd13301",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.000706,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1137,
+          "output": 157,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.25
+      },
+      "inputs_preserved": true
+    }
+  ]
+}

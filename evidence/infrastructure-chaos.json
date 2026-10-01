@@ -4,7 +4,7 @@
     "phase": "submitted provider call",
     "stage": "SUCCEEDED",
     "error": null,
-    "recovery_after_healthy_ms": 4738,
+    "recovery_after_healthy_ms": 1189,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006064,
@@ -26,7 +26,7 @@
     "phase": "submitted provider call",
     "stage": "NEEDS_ATTENTION",
     "error": "OUTCOME_UNKNOWN",
-    "recovery_after_healthy_ms": 589,
+    "recovery_after_healthy_ms": 357,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
