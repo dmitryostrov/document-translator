@@ -1,0 +1,25 @@
+import { strict as assert } from "node:assert";
+import { writeFile } from "node:fs/promises";
+import { setup,Session,db,compose,poll,docker } from "./test-support";
+import { fixturePDF,source } from "./fixtures";
+await setup(process.env.SKIP_BUILD!=="1");
+const sessions=[new Session(),new Session(),new Session()];
+const docs=await Promise.all([sessions[0].prepare(await fixturePDF(200),"large.pdf"),sessions[1].prepare(source+" owner A"),sessions[2].prepare(source+" owner B")]);
+const quotes=await Promise.all(docs.map((p,i)=>sessions[i].quote(p.data.job_id)));
+assert.ok(quotes.every(q=>q.stage==="AWAITING_APPROVAL"));
+for(let i=0;i<3;i++)for(let j=0;j<3;j++)if(i!==j)assert.equal((await sessions[i].request(`/api/translations/${quotes[j].job_id}`)).code,404);
+const began=Date.now();await Promise.all(quotes.map((q,i)=>sessions[i].start(q)));
+const admission=await Promise.all(quotes.slice(1).map(q=>poll(async()=>db(`select count(*) from calls where job_id='${q.job_id}'`),n=>Number(n)>0,6000).then(()=>Date.now()-began)));
+assert.ok(admission.every(n=>n<=5000),JSON.stringify(admission));
+const completed=await Promise.all(quotes.map((q,i)=>sessions[i].done(q.job_id)));
+assert.ok(completed.every(r=>r.stage==="SUCCEEDED"));
+// Checkpoint-only re-render keeps historical bytes and makes zero provider calls.
+const id=quotes[0].job_id,owner=db(`select owner from jobs where id='${id}'`),before=db(`select count(*) from calls where job_id='${id}'`);
+const old=db(`select artifact->>'id' from jobs where id='${id}'`);
+const rerender=JSON.parse(compose(["exec","-T","-e",`OWNER_ID=${owner}`,"worker","bun","scripts/rerender.ts",id]));
+assert.equal(db(`select count(*) from calls where job_id='${id}'`),before);
+assert.equal(db(`select count(*) from artifacts where id='${old}'`),"1");
+assert.equal(rerender.provider_calls,0);
+const memory=docker(["stats","--no-stream","--format","{{.Name}} {{.MemUsage}}"]);
+await writeFile("evidence/fairness.json",JSON.stringify({large_pages:200,owners:3,small_admission_ms:admission,ownership_denials:6,completed:3,rerender:{provider_calls:0,old_artifact_preserved:true},container_memory:memory},null,2));
+console.log(JSON.stringify({passed:true,admission,evidence:"evidence/fairness.json"}));

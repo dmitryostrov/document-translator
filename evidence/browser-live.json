@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "formats": [
+    "md",
+    "pdf"
+  ],
+  "provider": "openai",
+  "reload": true,
+  "mobile_overflow": false,
+  "keyboard": true,
+  "page_errors": []
+}

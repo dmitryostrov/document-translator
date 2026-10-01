@@ -1,0 +1,13 @@
+import { sql,migrate } from '../src/db';
+import { publish } from '../src/publication';
+const id=process.argv[2],owner=process.env.OWNER_ID;
+if(!id||!owner)throw new Error('Usage: OWNER_ID=<owner> bun run rerender -- <jobId>');
+await migrate();
+const [job]=await sql`select * from jobs where id=${id} and owner=${owner}`;
+if(!job||job.stage!=='SUCCEEDED')throw new Error('RERENDER_JOB_NOT_READY_OR_OWNED');
+const [before]=await sql`select count(*)::int as n from calls where job_id=${id}`;
+const result=await publish(job);
+const [after]=await sql`select count(*)::int as n from calls where job_id=${id}`;
+if(before.n!==after.n)throw new Error('RERENDER_PROVIDER_INVARIANT_FAILED');
+console.log(JSON.stringify({job_id:id,artifact:result,provider_calls:0,previous_checksum:job.artifact.hash}));
+await sql.end();

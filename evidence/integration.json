@@ -1,0 +1,47 @@
+[
+  {
+    "case": "markdown-quote-start-cost-isolation",
+    "job_id": "fd91c97b-3555-4e6d-803b-73e3ca1a98b8",
+    "stage": "SUCCEEDED",
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0005964,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 803,
+        "output": 172,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    }
+  },
+  {
+    "case": "marker",
+    "error": "SENSITIVE_MARKING_DETECTED"
+  },
+  {
+    "case": "tiny",
+    "error": "PDF_VISIBILITY_UNSUPPORTED"
+  },
+  {
+    "case": "pdf-output",
+    "job_id": "1b343aaa-0489-47e9-9cef-d50811650c70",
+    "checksum": "6fdce4b52c28e293847c50ffeb96b40417e72dbe7164a90365545a16a8c2e7da"
+  },
+  {
+    "case": "white-text-excluded",
+    "warnings": [
+      {
+        "code": "HIDDEN_TEXT_EXCLUDED",
+        "page": 1,
+        "count": 1
+      },
+      {
+        "code": "QUALITY_REFERENCE_HUMAN_REVIEW_PENDING"
+      }
+    ]
+  }
+]

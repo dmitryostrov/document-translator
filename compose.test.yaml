@@ -1,0 +1,6 @@
+services:
+  worker:
+    secrets: !reset []
+    environment:
+      OPENAI_API_KEY_FILE: ""
+      FAKE_DELAY_MS: "150"

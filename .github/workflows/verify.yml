@@ -1,0 +1,49 @@
+name: Verify document translator
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    env:
+      TEST_RUN_ID: ci
+      PROVIDER_MODE: fake
+      OPENAI_KEY_PATH: /dev/null
+      OPENAI_API_KEY: ""
+      OPENAI_API_KEY_FILE: ""
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: oven-sh/setup-bun@0c5077e51419868618aeaa5fe8019c62421857d6 # v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - run: bunx playwright install --with-deps chromium
+      - run: bun run verify
+      - name: Retain metadata-only test evidence
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: fake-provider-verification
+          retention-days: 7
+          path: |
+            evidence/verification.json
+            evidence/e2e.json
+            evidence/chaos.json
+            evidence/regressions.json
+            evidence/contracts.json
+            evidence/lease-proof.json
+            evidence/fairness.json
+            evidence/folder-chaos.json
+            evidence/folder-fairness.json
+            evidence/infrastructure-chaos.json
+      - name: Stop isolated test services
+        if: always()
+        run: docker compose -p stark-test-ci -f compose.yaml -f compose.test.yaml stop

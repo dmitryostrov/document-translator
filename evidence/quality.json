@@ -1,0 +1,413 @@
+{
+  "reference_status": "AI-curated candidate reference. Independent human approval pending; this is not final acceptance.",
+  "occurrences": 261,
+  "matched": 256,
+  "rate": 0.9808429118773946,
+  "numeric": {
+    "occurrences": 161,
+    "preserved": 161,
+    "rate": 1
+  },
+  "review": [
+    {
+      "index": 1,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b0",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "Drive system 0",
+      "translation": "Antriebssystem 0",
+      "provisional_pass": true
+    },
+    {
+      "index": 2,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b1",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb bedeutet in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 3,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b1",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb bedeutet in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 4,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 5,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 6,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b2",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 7,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b2",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 8,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b2",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 9,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b3",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 10,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b3",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 11,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b3",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 12,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b3",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 13,
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "block_id": "b3",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 14,
+      "job_id": "fdfd4e94-e06c-4adf-9705-76555243e3f7",
+      "block_id": "p1b0",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Batterie 12 kW. Seite 1.",
+      "provisional_pass": true
+    },
+    {
+      "index": 15,
+      "job_id": "fdfd4e94-e06c-4adf-9705-76555243e3f7",
+      "block_id": "p1b0",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Batterie 12 kW. Seite 1.",
+      "provisional_pass": true
+    },
+    {
+      "index": 16,
+      "job_id": "fdfd4e94-e06c-4adf-9705-76555243e3f7",
+      "block_id": "p1b0",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Batterie 12 kW. Seite 1.",
+      "provisional_pass": true
+    },
+    {
+      "index": 17,
+      "job_id": "fdfd4e94-e06c-4adf-9705-76555243e3f7",
+      "block_id": "p1b1",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "Service every 100 km. Keep units and numbers unchanged.",
+      "translation": "Wartung alle 100 km. Einheiten und Zahlen unverändert lassen.",
+      "provisional_pass": true
+    },
+    {
+      "index": 18,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b0",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "Drive system 2",
+      "translation": "Antriebssystem 2",
+      "provisional_pass": true
+    },
+    {
+      "index": 19,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b1",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 20,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b1",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 21,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 22,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 23,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b2",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 24,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b2",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 25,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b2",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 26,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b3",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 27,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b3",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 28,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b3",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 29,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b3",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 30,
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "block_id": "b3",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 2 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Zeichnen Sie die Batterietemperatur vor dem Laden auf. Inspektionsschritt 2 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 31,
+      "job_id": "8e4ac334-90c9-4f50-949f-c7cf5c3a5202",
+      "block_id": "p1b0",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Battery 12 kW. Seite 1.",
+      "provisional_pass": true
+    },
+    {
+      "index": 32,
+      "job_id": "8e4ac334-90c9-4f50-949f-c7cf5c3a5202",
+      "block_id": "p1b0",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Battery 12 kW. Seite 1.",
+      "provisional_pass": false
+    },
+    {
+      "index": 33,
+      "job_id": "8e4ac334-90c9-4f50-949f-c7cf5c3a5202",
+      "block_id": "p1b0",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The drive means the motor assembly. Battery 12 kW. Page 1.",
+      "translation": "Der Antrieb bedeutet die Motorbaugruppe. Battery 12 kW. Seite 1.",
+      "provisional_pass": true
+    },
+    {
+      "index": 34,
+      "job_id": "8e4ac334-90c9-4f50-949f-c7cf5c3a5202",
+      "block_id": "p1b1",
+      "term": "Service",
+      "reference": "Wart|warten|gewartet|gewartet",
+      "source": "Service every 100 km. Keep units and numbers unchanged.",
+      "translation": "Wartung alle 100 km. Einheiten und Zahlen unverändert lassen.",
+      "provisional_pass": true
+    },
+    {
+      "index": 35,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b0",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "Drive system 4",
+      "translation": "Antriebssystem 4",
+      "provisional_pass": true
+    },
+    {
+      "index": 36,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b1",
+      "term": "drive",
+      "reference": "Antrieb",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb meint in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 37,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b1",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The drive means the motor assembly in this manual.",
+      "translation": "Der Antrieb meint in diesem Handbuch die Motorbaugruppe.",
+      "provisional_pass": true
+    },
+    {
+      "index": 38,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Prüfschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 39,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b2",
+      "term": "battery",
+      "reference": "Batterie|Akku",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Prüfschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    },
+    {
+      "index": 40,
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "block_id": "b2",
+      "term": "motor",
+      "reference": "Motor",
+      "source": "The battery supplies 12 kW. Service the motor every 100 km. Record the battery temperature before charging. Inspection step 1 protects the motor and the charging system.",
+      "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Prüfschritt 1 schützt den Motor und das Ladesystem.",
+      "provisional_pass": true
+    }
+  ]
+}

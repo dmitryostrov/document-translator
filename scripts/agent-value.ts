@@ -1,0 +1,13 @@
+import { sql } from "../src/db";
+import { translate } from "../src/provider";
+const [job]=await sql`select * from jobs where id=${process.argv[2]} and stage='SUCCEEDED'`;
+if(!job)throw new Error("BENCHMARK_JOB_REQUIRED");
+const id=crypto.randomUUID(),worker="measured-baseline";
+const [unit]=await sql`insert into units(id,job_id,kind,sequence,state,lease_owner,lease_expires_at) values(${id},${job.id},'BENCHMARK',99,'RUNNING',${worker},now()+interval '30 seconds') returning *`;
+const baseline=await translate({job:{...job,glossary:{entries:[]},options:{disable_result_cache:true}},unit,worker,generation:0},[{id:"baseline",text:"The seal must be replaced after every inspection."}],[]);
+await sql`update units set state='DONE',lease_owner=null,lease_expires_at=null,result=${sql.json({blocks:baseline})} where id=${id}`;
+const agentBlocks=await sql`select result->'blocks' as blocks from units where job_id=${job.id} and kind='TRANSLATE'`;
+const toolEvents=await sql`select name,block_ids from tool_events where job_id=${job.id}`;
+const costs=await sql`select kind,cost,usage from calls where job_id=${job.id}`;
+console.log(JSON.stringify({job_id:job.id,baseline:baseline[0].text,with_agent:agentBlocks.flatMap(r=>r.blocks).find((b:any)=>b.id==="b1")?.text,glossary:job.glossary,tool_events:toolEvents,calls:costs}));
+await sql.end();

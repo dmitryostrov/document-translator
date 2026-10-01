@@ -1,0 +1,25 @@
+{
+  "kind": "explicit source-file copy, not a Git clone",
+  "directory": "C:\\Users\\dmitr\\AppData\\Local\\Temp\\stark-fresh-jGEUTQ",
+  "project": "stark-fresh-f1412346",
+  "host_node_modules_copied": false,
+  "key_copied": false,
+  "healthy": true,
+  "provider": "openai",
+  "stage": "SUCCEEDED",
+  "checksum": "1fcdb6fa7768732065e9f29f18faced0348a435c1bb70f9ed34f62d49bccba9d",
+  "cost": {
+    "currency": "USD",
+    "known_cost_usd": 0.0005596,
+    "active_reserved_usd": 0,
+    "unresolved_exposure_usd": 0,
+    "completed_calls": 3,
+    "tokens": {
+      "input": 1023,
+      "output": 94,
+      "cached": 0,
+      "cache_write": 0
+    },
+    "cap_usd": 0.2
+  }
+}

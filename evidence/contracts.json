@@ -1,0 +1,25 @@
+[
+  {
+    "case": "quote-cap-and-concurrent-start",
+    "duplicate_starts": 0
+  },
+  {
+    "case": "expired-approval",
+    "paid_calls": 0
+  },
+  {
+    "case": "running-text-alias-order",
+    "header_occurrences": 3,
+    "footer_and_body_occurrences": 6,
+    "numeric_rate": 1
+  },
+  {
+    "case": "fresh-pdf-catalog",
+    "active_objects_copied": 0
+  },
+  {
+    "case": "competing-reconcilers-and-workers",
+    "jobs": 4,
+    "duplicate_paid_calls": 0
+  }
+]

@@ -1,0 +1,1848 @@
+{
+  "measured_at": "2026-09-30T22:03:09.014Z",
+  "model": "gpt-4.1-mini",
+  "rates_usd_per_million": {
+    "input": 0.4,
+    "cached": 0.1,
+    "write": 0.4,
+    "output": 1.6
+  },
+  "method": "Fixed synthetic corpus; cold means distinct owner, no local result-memory reuse. Wall time includes preflight, approval/start request, queue, all agent turns, validation and rendering. Provider prefix caching remains enabled. Warm memory and French samples excluded from cold p95.",
+  "cold": {
+    "n": 20,
+    "p50_ms": 7499,
+    "p95_ms": 13952,
+    "mean_cost_usd": 0.0013247,
+    "input_tokens": 33055,
+    "output_tokens": 8295,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "concurrency_1": {
+    "n": 10,
+    "p50_ms": 7592,
+    "p95_ms": 13776,
+    "mean_cost_usd": 0.0013587999999999999,
+    "input_tokens": 17010,
+    "output_tokens": 4240,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "concurrency_4": {
+    "n": 10,
+    "p50_ms": 7221,
+    "p95_ms": 14288,
+    "mean_cost_usd": 0.0012906,
+    "input_tokens": 16045,
+    "output_tokens": 4055,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "warm_memory": {
+    "n": 1,
+    "p50_ms": 6386,
+    "p95_ms": 6386,
+    "mean_cost_usd": 0.0010568,
+    "input_tokens": 1466,
+    "output_tokens": 294,
+    "cached_tokens": 0,
+    "cache_write_tokens": 0
+  },
+  "failures": [],
+  "rows": [
+    {
+      "index": 0,
+      "concurrency": 1,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "8300ff4338ad727ef4b8ee9e89ec084dc277523322be37990c13465895655fab",
+      "job_id": "93734dec-520a-4c27-9737-e7f46c8e615a",
+      "elapsed_ms": 6419,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "d2c25b2c82dc0a1b76306d459d69e464c299cc87cd5115b5bc9d8849004b92df",
+        "expires_at": "2026-09-30T22:16:07.666Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0010328,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1446,
+          "output": 284,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 405,
+            "write": 0,
+            "cached": 0,
+            "output": 148
+          },
+          "cost": 0.0003988
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 616,
+            "write": 0,
+            "cached": 0,
+            "output": 72
+          },
+          "cost": 0.0003616
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 64
+          },
+          "cost": 0.0002724
+        }
+      ],
+      "artifact": "evidence/live-artifacts/93734dec-520a-4c27-9737-e7f46c8e615a.md"
+    },
+    {
+      "index": 1,
+      "concurrency": 1,
+      "format": "pdf",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "6342844318f91744608e0795ed159684f6082f4def51a6c66079ca1acb46a190",
+      "job_id": "fdfd4e94-e06c-4adf-9705-76555243e3f7",
+      "elapsed_ms": 7600,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "1bb2a23f0f6b5819ec8b7823bfb43d838488e93a41df4ed7f9102a5d58239ad0",
+        "expires_at": "2026-09-30T22:16:14.313Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 29,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632228,
+          "min": 0.00632228
+        },
+        "maximum_reserved_usd": 0.063223
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0006416,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1084,
+          "output": 130,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 3,
+        "expected": 3
+      },
+      "tools": 1,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 358,
+            "write": 0,
+            "cached": 0,
+            "output": 16
+          },
+          "cost": 0.0001688
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 53
+          },
+          "cost": 0.0002484
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 317,
+            "write": 0,
+            "cached": 0,
+            "output": 61
+          },
+          "cost": 0.0002244
+        }
+      ],
+      "artifact": "evidence/live-artifacts/fdfd4e94-e06c-4adf-9705-76555243e3f7.pdf"
+    },
+    {
+      "index": 2,
+      "concurrency": 1,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "acb5da18f6faae866c50295afe719ad4bd9a2e5cd8a599f55f5c8d884ff80645",
+      "job_id": "8b114209-272b-401d-8bb0-c42e9f74ce99",
+      "elapsed_ms": 5879,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "83d87f8b6640ef9da72892ffe6155a9020bd7eda220e011a15779f48b52b97f9",
+        "expires_at": "2026-09-30T22:16:21.733Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009644,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1403,
+          "output": 252,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002468
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 591,
+            "write": 0,
+            "cached": 0,
+            "output": 54
+          },
+          "cost": 0.0003228
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 387,
+            "write": 0,
+            "cached": 0,
+            "output": 150
+          },
+          "cost": 0.0003948
+        }
+      ],
+      "artifact": "evidence/live-artifacts/8b114209-272b-401d-8bb0-c42e9f74ce99.md"
+    },
+    {
+      "index": 3,
+      "concurrency": 1,
+      "format": "pdf",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "5e353596e54ebbf93923004d7361df97b2f74f87b03eefac063abc57a20441c3",
+      "job_id": "8e4ac334-90c9-4f50-949f-c7cf5c3a5202",
+      "elapsed_ms": 5329,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "1bb2a23f0f6b5819ec8b7823bfb43d838488e93a41df4ed7f9102a5d58239ad0",
+        "expires_at": "2026-09-30T22:16:27.844Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 29,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632228,
+          "min": 0.00632228
+        },
+        "maximum_reserved_usd": 0.063223
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0006936,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1110,
+          "output": 156,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 3,
+        "expected": 3
+      },
+      "tools": 1,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 358,
+            "write": 0,
+            "cached": 0,
+            "output": 16
+          },
+          "cost": 0.0001688
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 343,
+            "write": 0,
+            "cached": 0,
+            "output": 61
+          },
+          "cost": 0.0002348
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 79
+          },
+          "cost": 0.00029
+        }
+      ],
+      "artifact": "evidence/live-artifacts/8e4ac334-90c9-4f50-949f-c7cf5c3a5202.pdf"
+    },
+    {
+      "index": 4,
+      "concurrency": 1,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "38ed6a6d08a3a34758e35248f32af6d0efd26f46a2a9b96aa5b1ee3cd3e9cf10",
+      "job_id": "4a2b24fc-e4ec-4146-9e7d-267d0a84aabc",
+      "elapsed_ms": 6133,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "557405de79b9140ed14be91f63aca77572fa6e54155654647b680223b3ec1690",
+        "expires_at": "2026-09-30T22:16:32.959Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009172,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1329,
+          "output": 241,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 522,
+            "write": 0,
+            "cached": 0,
+            "output": 49
+          },
+          "cost": 0.0002872
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002468
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 382,
+            "write": 0,
+            "cached": 0,
+            "output": 144
+          },
+          "cost": 0.0003832
+        }
+      ],
+      "artifact": "evidence/live-artifacts/4a2b24fc-e4ec-4146-9e7d-267d0a84aabc.md"
+    },
+    {
+      "index": 5,
+      "concurrency": 1,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "852846bdf9e9261eff8eba8360bb8a4aa7b186eca9f69eacc270c62314d9bc33",
+      "job_id": "7719e156-66fa-438b-8f0e-4082d8a0e89c",
+      "elapsed_ms": 8109,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:16:39.284Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0011684,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1581,
+          "output": 335,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 47
+          },
+          "cost": 0.000238
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 671,
+            "write": 0,
+            "cached": 0,
+            "output": 62
+          },
+          "cost": 0.0003676
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 503,
+            "write": 0,
+            "cached": 0,
+            "output": 226
+          },
+          "cost": 0.0005628
+        }
+      ],
+      "artifact": "evidence/live-artifacts/7719e156-66fa-438b-8f0e-4082d8a0e89c.pdf"
+    },
+    {
+      "index": 6,
+      "concurrency": 1,
+      "format": "md",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "6a6ccb3aca1ab08919f56f4aa082da600533cdd9f0ad4465cb021b2586a8e24c",
+      "job_id": "cf3912d8-1b4d-411f-8c43-67a3222e56ee",
+      "elapsed_ms": 13776,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "e2f542ed99a47a755d71f34e6e16fd35de821b1e7e35b2fb3560dcd97815f7a6",
+        "expires_at": "2026-09-30T22:16:47.147Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 575,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.063488,
+          "min": 0.0063488
+        },
+        "maximum_reserved_usd": 0.063488
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0025512,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 2294,
+          "output": 1021,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 49,
+        "expected": 49
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1047,
+            "write": 0,
+            "cached": 0,
+            "output": 904
+          },
+          "cost": 0.0018652
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 47
+          },
+          "cost": 0.0002452
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 822,
+            "write": 0,
+            "cached": 0,
+            "output": 70
+          },
+          "cost": 0.0004408
+        }
+      ],
+      "artifact": "evidence/live-artifacts/cf3912d8-1b4d-411f-8c43-67a3222e56ee.md"
+    },
+    {
+      "index": 7,
+      "concurrency": 1,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "1fe4453bf569d71700a6ecb9afe66b39d952c87879042d41296ef5f24dbfc817",
+      "job_id": "2966dc04-7cfd-46e7-9cce-3deab7fb5985",
+      "elapsed_ms": 10143,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:17:01.157Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0014988,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 2339,
+          "output": 352,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 758,
+            "write": 0,
+            "cached": 0,
+            "output": 62
+          },
+          "cost": 0.0004024
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 503,
+            "write": 0,
+            "cached": 0,
+            "output": 218
+          },
+          "cost": 0.00055
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 47
+          },
+          "cost": 0.000238
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 671,
+            "write": 0,
+            "cached": 0,
+            "output": 25
+          },
+          "cost": 0.0003084
+        }
+      ],
+      "artifact": "evidence/live-artifacts/2966dc04-7cfd-46e7-9cce-3deab7fb5985.pdf"
+    },
+    {
+      "index": 8,
+      "concurrency": 1,
+      "format": "md",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "2c06f1545e2ceb2af7b32545dc1b7878871567ecb4d6dd4b1c81b28c1306a2e5",
+      "job_id": "b214271c-8ea4-4abb-8e42-71c2d6f8b7ac",
+      "elapsed_ms": 12244,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "29387cd8e6f1fbccece40b3a9374004b031d57ea0e5b269e90786f3d7f570aba",
+        "expires_at": "2026-09-30T22:17:11.201Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 575,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.063488,
+          "min": 0.0063488
+        },
+        "maximum_reserved_usd": 0.063488
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0028208,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 2684,
+          "output": 1092,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 49,
+        "expected": 49
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0002708
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1174,
+            "write": 0,
+            "cached": 0,
+            "output": 108
+          },
+          "cost": 0.0006424
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1085,
+            "write": 0,
+            "cached": 0,
+            "output": 921
+          },
+          "cost": 0.0019076
+        }
+      ],
+      "artifact": "evidence/live-artifacts/b214271c-8ea4-4abb-8e42-71c2d6f8b7ac.md"
+    },
+    {
+      "index": 9,
+      "concurrency": 1,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "985134d1c00df831e250742c215fe18e3b58b4f117b48777777cf33e04c1a852",
+      "job_id": "f750016e-ad88-480e-b0b4-1ac274ce9bc7",
+      "elapsed_ms": 7592,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:17:23.762Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0012992,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1740,
+          "output": 377,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 529,
+            "write": 0,
+            "cached": 0,
+            "output": 226
+          },
+          "cost": 0.0005732
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0002636
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 804,
+            "write": 0,
+            "cached": 0,
+            "output": 88
+          },
+          "cost": 0.0004624
+        }
+      ],
+      "artifact": "evidence/live-artifacts/f750016e-ad88-480e-b0b4-1ac274ce9bc7.pdf"
+    },
+    {
+      "index": 1,
+      "concurrency": 4,
+      "format": "pdf",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "42b965a964416a0239a0d39df35ae3578ed992b38fb97e7877cc2be4a197e59b",
+      "job_id": "74a34b71-bf97-4e3e-9371-6926f56699e4",
+      "elapsed_ms": 5791,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "1bb2a23f0f6b5819ec8b7823bfb43d838488e93a41df4ed7f9102a5d58239ad0",
+        "expires_at": "2026-09-30T22:17:31.595Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 29,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632228,
+          "min": 0.00632228
+        },
+        "maximum_reserved_usd": 0.063223
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0005996,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1063,
+          "output": 109,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 3,
+        "expected": 3
+      },
+      "tools": 1,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 358,
+            "write": 0,
+            "cached": 0,
+            "output": 16
+          },
+          "cost": 0.0001688
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 32
+          },
+          "cost": 0.0002148
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 296,
+            "write": 0,
+            "cached": 0,
+            "output": 61
+          },
+          "cost": 0.000216
+        }
+      ],
+      "artifact": "evidence/live-artifacts/74a34b71-bf97-4e3e-9371-6926f56699e4.pdf"
+    },
+    {
+      "index": 2,
+      "concurrency": 4,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "acb5da18f6faae866c50295afe719ad4bd9a2e5cd8a599f55f5c8d884ff80645",
+      "job_id": "b076b816-61c1-46e9-bd7b-f0a2e59afc90",
+      "elapsed_ms": 6030,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "83d87f8b6640ef9da72892ffe6155a9020bd7eda220e011a15779f48b52b97f9",
+        "expires_at": "2026-09-30T22:17:31.288Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009612,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1403,
+          "output": 250,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002468
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 591,
+            "write": 0,
+            "cached": 0,
+            "output": 54
+          },
+          "cost": 0.0003228
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 387,
+            "write": 0,
+            "cached": 0,
+            "output": 148
+          },
+          "cost": 0.0003916
+        }
+      ],
+      "artifact": "evidence/live-artifacts/b076b816-61c1-46e9-bd7b-f0a2e59afc90.md"
+    },
+    {
+      "index": 0,
+      "concurrency": 4,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "8300ff4338ad727ef4b8ee9e89ec084dc277523322be37990c13465895655fab",
+      "job_id": "8f759301-cb34-4f03-a0e9-5928dac936fb",
+      "elapsed_ms": 6550,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "d2c25b2c82dc0a1b76306d459d69e464c299cc87cd5115b5bc9d8849004b92df",
+        "expires_at": "2026-09-30T22:17:31.297Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009092,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1313,
+          "output": 240,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 1,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 479,
+            "write": 0,
+            "cached": 0,
+            "output": 76
+          },
+          "cost": 0.0003132
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 16
+          },
+          "cost": 0.0001956
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 148
+          },
+          "cost": 0.0004004
+        }
+      ],
+      "artifact": "evidence/live-artifacts/8f759301-cb34-4f03-a0e9-5928dac936fb.md"
+    },
+    {
+      "index": 3,
+      "concurrency": 4,
+      "format": "pdf",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "42b965a964416a0239a0d39df35ae3578ed992b38fb97e7877cc2be4a197e59b",
+      "job_id": "0b1f7258-110a-41b5-974e-67eda2712cd7",
+      "elapsed_ms": 7499,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "1bb2a23f0f6b5819ec8b7823bfb43d838488e93a41df4ed7f9102a5d58239ad0",
+        "expires_at": "2026-09-30T22:17:31.600Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 29,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632228,
+          "min": 0.00632228
+        },
+        "maximum_reserved_usd": 0.063223
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0006384,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1084,
+          "output": 128,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 3,
+        "expected": 3
+      },
+      "tools": 1,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 53
+          },
+          "cost": 0.0002484
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 358,
+            "write": 0,
+            "cached": 0,
+            "output": 16
+          },
+          "cost": 0.0001688
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 317,
+            "write": 0,
+            "cached": 0,
+            "output": 59
+          },
+          "cost": 0.0002212
+        }
+      ],
+      "artifact": "evidence/live-artifacts/0b1f7258-110a-41b5-974e-67eda2712cd7.pdf"
+    },
+    {
+      "index": 4,
+      "concurrency": 4,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "38ed6a6d08a3a34758e35248f32af6d0efd26f46a2a9b96aa5b1ee3cd3e9cf10",
+      "job_id": "7ae0bbcf-55f5-4d9b-9fa3-51f127bf0a3a",
+      "elapsed_ms": 6458,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "557405de79b9140ed14be91f63aca77572fa6e54155654647b680223b3ec1690",
+        "expires_at": "2026-09-30T22:17:36.981Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009652,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1417,
+          "output": 249,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 607,
+            "write": 0,
+            "cached": 0,
+            "output": 52
+          },
+          "cost": 0.000326
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 47
+          },
+          "cost": 0.0002452
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 385,
+            "write": 0,
+            "cached": 0,
+            "output": 150
+          },
+          "cost": 0.000394
+        }
+      ],
+      "artifact": "evidence/live-artifacts/7ae0bbcf-55f5-4d9b-9fa3-51f127bf0a3a.md"
+    },
+    {
+      "index": 5,
+      "concurrency": 4,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "1ea755c7222f7671e585bff544ba735fe1a6e77edb81c9147fad2db72269c402",
+      "job_id": "41b3e415-19a3-44ef-b8b0-fee0629f1a6e",
+      "elapsed_ms": 9006,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:17:37.526Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0011724,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1583,
+          "output": 337,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 672,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0003696
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 504,
+            "write": 0,
+            "cached": 0,
+            "output": 226
+          },
+          "cost": 0.0005632
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002396
+        }
+      ],
+      "artifact": "evidence/live-artifacts/41b3e415-19a3-44ef-b8b0-fee0629f1a6e.pdf"
+    },
+    {
+      "index": 7,
+      "concurrency": 4,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "ac3b2e7b86dffac66c579e10025867af18935a4ed8ca13946258004b35f89a8b",
+      "job_id": "a5057ebd-1591-44a1-b2d0-7935ae6d30c2",
+      "elapsed_ms": 8490,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:17:38.783Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0011596,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1583,
+          "output": 329,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002396
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 672,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0003696
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 504,
+            "write": 0,
+            "cached": 0,
+            "output": 218
+          },
+          "cost": 0.0005504
+        }
+      ],
+      "artifact": "evidence/live-artifacts/a5057ebd-1591-44a1-b2d0-7935ae6d30c2.pdf"
+    },
+    {
+      "index": 6,
+      "concurrency": 4,
+      "format": "md",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "6a6ccb3aca1ab08919f56f4aa082da600533cdd9f0ad4465cb021b2586a8e24c",
+      "job_id": "6e89ca04-4cb2-478d-a461-ef90cfb6b2d5",
+      "elapsed_ms": 13952,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "e2f542ed99a47a755d71f34e6e16fd35de821b1e7e35b2fb3560dcd97815f7a6",
+        "expires_at": "2026-09-30T22:17:37.680Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 575,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.063488,
+          "min": 0.0063488
+        },
+        "maximum_reserved_usd": 0.063488
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.002736,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 2668,
+          "output": 1043,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 49,
+        "expected": 49
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1053,
+            "write": 0,
+            "cached": 0,
+            "output": 905
+          },
+          "cost": 0.0018692
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1190,
+            "write": 0,
+            "cached": 0,
+            "output": 76
+          },
+          "cost": 0.0005976
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 62
+          },
+          "cost": 0.0002692
+        }
+      ],
+      "artifact": "evidence/live-artifacts/6e89ca04-4cb2-478d-a461-ef90cfb6b2d5.md"
+    },
+    {
+      "index": 9,
+      "concurrency": 4,
+      "format": "pdf",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "56a03f2e6f0610aaab03a05078122845b569d71b84371955c40956d6f84347ab",
+      "job_id": "76ba1144-03f4-4dfe-9d7e-5774dae81d45",
+      "elapsed_ms": 7221,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "b947ec21e1bebedfa5ffbf244ca3a47a8b49c02fa53aea5ff1cff9b9d718eeb4",
+        "expires_at": "2026-09-30T22:17:46.325Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 116,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632888,
+          "min": 0.00632888
+        },
+        "maximum_reserved_usd": 0.063289
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0011596,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1583,
+          "output": 329,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 12,
+        "expected": 12
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 504,
+            "write": 0,
+            "cached": 0,
+            "output": 218
+          },
+          "cost": 0.0005504
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 672,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0003696
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 48
+          },
+          "cost": 0.0002396
+        }
+      ],
+      "artifact": "evidence/live-artifacts/76ba1144-03f4-4dfe-9d7e-5774dae81d45.pdf"
+    },
+    {
+      "index": 8,
+      "concurrency": 4,
+      "format": "md",
+      "target": "german",
+      "size": "medium",
+      "source_sha256": "2c06f1545e2ceb2af7b32545dc1b7878871567ecb4d6dd4b1c81b28c1306a2e5",
+      "job_id": "aba2cc00-77a7-4336-86ec-41380a4479a9",
+      "elapsed_ms": 14288,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "29387cd8e6f1fbccece40b3a9374004b031d57ea0e5b269e90786f3d7f570aba",
+        "expires_at": "2026-09-30T22:17:43.180Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 575,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.063488,
+          "min": 0.0063488
+        },
+        "maximum_reserved_usd": 0.063488
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0026048,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 2348,
+          "output": 1041,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 49,
+        "expected": 49
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 1049,
+            "write": 0,
+            "cached": 0,
+            "output": 905
+          },
+          "cost": 0.0018676
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 874,
+            "write": 0,
+            "cached": 0,
+            "output": 72
+          },
+          "cost": 0.0004648
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 64
+          },
+          "cost": 0.0002724
+        }
+      ],
+      "artifact": "evidence/live-artifacts/aba2cc00-77a7-4336-86ec-41380a4479a9.md"
+    },
+    {
+      "index": 0,
+      "concurrency": 0,
+      "format": "md",
+      "target": "german",
+      "size": "small",
+      "source_sha256": "8300ff4338ad727ef4b8ee9e89ec084dc277523322be37990c13465895655fab",
+      "job_id": "4f4e9bbc-d6ae-4c9f-a06a-235c67489606",
+      "elapsed_ms": 6386,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "d2c25b2c82dc0a1b76306d459d69e464c299cc87cd5115b5bc9d8849004b92df",
+        "expires_at": "2026-09-30T22:17:57.486Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0010568,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1466,
+          "output": 294,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 3,
+      "calls": [
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 63
+          },
+          "cost": 0.0002708
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 632,
+            "write": 0,
+            "cached": 0,
+            "output": 76
+          },
+          "cost": 0.0003744
+        },
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 155
+          },
+          "cost": 0.0004116
+        }
+      ],
+      "artifact": "evidence/live-artifacts/4f4e9bbc-d6ae-4c9f-a06a-235c67489606.md"
+    },
+    {
+      "index": 0,
+      "concurrency": 1,
+      "format": "md",
+      "target": "french",
+      "size": "small",
+      "source_sha256": "8300ff4338ad727ef4b8ee9e89ec084dc277523322be37990c13465895655fab",
+      "job_id": "eca11df9-1530-495d-a001-8fbc8452e966",
+      "elapsed_ms": 5644,
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "d2c25b2c82dc0a1b76306d459d69e464c299cc87cd5115b5bc9d8849004b92df",
+        "expires_at": "2026-09-30T22:18:03.849Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 85,
+        "rates_version": "2026-09-30",
+        "prompt_version": "translation-v2",
+        "estimated_total_usd": {
+          "max": 0.0632472,
+          "min": 0.006324720000000001
+        },
+        "maximum_reserved_usd": 0.063248
+      },
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0009848,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1422,
+          "output": 260,
+          "cached": 0,
+          "cache_write": 0
+        },
+        "cap_usd": 0.2
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 7,
+        "expected": 7
+      },
+      "tools": 2,
+      "calls": [
+        {
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 390,
+            "write": 0,
+            "cached": 0,
+            "output": 156
+          },
+          "cost": 0.0004056
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 425,
+            "write": 0,
+            "cached": 0,
+            "output": 47
+          },
+          "cost": 0.0002452
+        },
+        {
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 607,
+            "write": 0,
+            "cached": 0,
+            "output": 57
+          },
+          "cost": 0.000334
+        }
+      ],
+      "artifact": "evidence/live-artifacts/eca11df9-1530-495d-a001-8fbc8452e966.md"
+    }
+  ],
+  "quality_reference_status": "Candidate references require independent human approval; numeric preservation measured automatically."
+}

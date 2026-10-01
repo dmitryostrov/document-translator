@@ -1,0 +1,22 @@
+{
+  "model": "gpt-4.1-mini",
+  "prompt": "translation-v2",
+  "source": "english",
+  "target": "german",
+  "n": 20,
+  "measured_at": "2026-09-30T22:03:09.014Z",
+  "input_tokens": {
+    "min": 29,
+    "max": 575
+  },
+  "observed_cost_usd": {
+    "min": 0.0005996,
+    "max": 0.0028208
+  },
+  "latency_seconds": {
+    "p50": 7.499,
+    "p95": 13.952
+  },
+  "reference_status": "human_review_pending",
+  "scope": "Synthetic prose corpus; provider prefix caching enabled; local result-memory misses."
+}

@@ -1,0 +1,43 @@
+{
+  "runner": "Playwright Test",
+  "provider": "fake",
+  "status": "passed",
+  "tests": [
+    {
+      "name": "Markdown: approve, download verified bytes and retain completion after reload",
+      "status": "passed",
+      "elapsed_ms": 4070
+    },
+    {
+      "name": "PDF: approve, download verified bytes and retain completion after reload",
+      "status": "passed",
+      "elapsed_ms": 3501
+    },
+    {
+      "name": "corrupt.pdf: specific preparation error with no model calls or artifact",
+      "status": "passed",
+      "elapsed_ms": 1947
+    },
+    {
+      "name": "scanned.pdf: specific preparation error with no model calls or artifact",
+      "status": "passed",
+      "elapsed_ms": 1923
+    },
+    {
+      "name": "Unsupported format: immediate named rejection",
+      "status": "passed",
+      "elapsed_ms": 307
+    },
+    {
+      "name": "Cancel before approval: persisted cancellation without spending",
+      "status": "passed",
+      "elapsed_ms": 1475
+    },
+    {
+      "name": "Workbench: desktop/mobile layout and keyboard navigation",
+      "status": "passed",
+      "elapsed_ms": 351
+    }
+  ],
+  "test_retries": 0
+}

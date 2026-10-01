@@ -1,0 +1,46 @@
+[
+  {
+    "service": "redis",
+    "phase": "submitted provider call",
+    "stage": "SUCCEEDED",
+    "error": null,
+    "recovery_after_healthy_ms": 4738,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006064,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 808,
+        "output": 177,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "duplicate_paid_calls": 0
+  },
+  {
+    "service": "postgres",
+    "phase": "submitted provider call",
+    "stage": "NEEDS_ATTENTION",
+    "error": "OUTCOME_UNKNOWN",
+    "recovery_after_healthy_ms": 589,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0.0128,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "duplicate_paid_calls": 0
+  }
+]

@@ -1,0 +1,25 @@
+flowchart LR
+  Web[React workbench] --> API[Hono API / common core]
+  MCP[MCP stdio adapter] --> API
+  API --> PG[(PostgreSQL)]
+  API --> Files[(Durable files)]
+  API --> Queue[(Redis / BullMQ)]
+  Queue --> Worker[Bun worker]
+  Worker --> PG
+  Worker --> Files
+  Worker --> Agent[Agents SDK terminology stage]
+  Agent --> OpenAI[OpenAI]
+  Worker --> OpenAI
+  Worker --> Repair[5-second reconciler]
+  Repair --> PG
+  Repair --> Queue
+  classDef edge fill:#12324a,stroke:#67e8f9,color:#f8fafc
+  classDef control fill:#173b2e,stroke:#6ee7b7,color:#f8fafc
+  classDef data fill:#3b2f16,stroke:#fbbf24,color:#fff7ed
+  classDef broker fill:#173a4a,stroke:#38bdf8,color:#f8fafc
+  classDef execution fill:#312e5a,stroke:#a78bfa,color:#f8fafc
+  class Web,MCP edge
+  class API,Repair control
+  class PG,Files data
+  class Queue broker
+  class Worker,Agent,OpenAI execution

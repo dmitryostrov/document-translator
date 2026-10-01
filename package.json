@@ -1,0 +1,53 @@
+{
+  "name": "stark-document-translator",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "bun scripts/build.ts",
+    "start": "bun src/api.ts",
+    "worker": "bun src/worker.ts",
+    "mcp": "bun src/mcp.ts",
+    "check": "tsc --noEmit",
+    "test": "bun test tests/unit",
+    "test:integration": "bun scripts/integration.ts",
+    "test:queue-recovery": "bun scripts/chaos.ts",
+    "chaos": "bun scripts/chaos.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:list": "playwright test --list",
+    "test:e2e:ui": "playwright test --ui",
+    "verify": "bun scripts/verify.ts",
+    "rerender": "bun scripts/rerender.ts",
+    "measure:live": "bun scripts/measure.ts",
+    "test:fresh-clone": "bun scripts/fresh-clone.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "@napi-rs/canvas": "^1.0.9",
+    "@openai/agents": "^0.18.0",
+    "@pdf-lib/fontkit": "^1.1.1",
+    "bullmq": "^6.3.10",
+    "busboy": "^1.6.0",
+    "franc-min": "^6.2.0",
+    "gpt-tokenizer": "^4.0.0",
+    "hono": "^4.13.12",
+    "ioredis": "^6.0.0",
+    "mdast-util-from-markdown": "^2.0.3",
+    "mdast-util-to-markdown": "^2.1.3",
+    "openai": "^7.25.0",
+    "pdf-lib": "^1.17.1",
+    "pdfjs-dist": "^6.3.289",
+    "postgres": "^3.4.9",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "unist-util-visit": "^5.1.0",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "@types/bun": "^1.4.2",
+    "@types/busboy": "^1.5.4",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

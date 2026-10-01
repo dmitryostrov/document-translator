@@ -1,0 +1,158 @@
+[
+  {
+    "case": "corrupt.pdf",
+    "error": "CORRUPT_OR_ENCRYPTED_PDF",
+    "provider_calls": 0
+  },
+  {
+    "case": "scan.pdf",
+    "error": "SCANNED_PDF_UNSUPPORTED",
+    "provider_calls": 0
+  },
+  {
+    "case": "contrast.pdf",
+    "error": "PDF_VISIBILITY_UNSUPPORTED",
+    "provider_calls": 0
+  },
+  {
+    "case": "mixed.pdf",
+    "error": "PDF_TEXT_ONLY_CONFIRMATION_REQUIRED",
+    "provider_calls": 0
+  },
+  {
+    "case": "marked.md",
+    "error": "SENSITIVE_MARKING_DETECTED",
+    "provider_calls": 0
+  },
+  {
+    "case": "conceal.md",
+    "error": "UNICODE_CONCEALMENT_UNSUPPORTED",
+    "provider_calls": 0
+  },
+  {
+    "case": "invalid.md",
+    "error": "MARKDOWN_UTF8_INVALID",
+    "provider_calls": 0
+  },
+  {
+    "case": "tr3",
+    "hidden_excluded": true
+  },
+  {
+    "case": "offpage",
+    "hidden_excluded": true
+  },
+  {
+    "case": "fake-500",
+    "stage": "NEEDS_ATTENTION",
+    "error": "OUTCOME_UNKNOWN",
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0.0128,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    }
+  },
+  {
+    "case": "fake-timeout",
+    "stage": "NEEDS_ATTENTION",
+    "error": "OUTCOME_UNKNOWN",
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0.0128,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    }
+  },
+  {
+    "case": "fake-invalid-output",
+    "stage": "FAILED",
+    "error": "INVALID_MODEL_OUTPUT",
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006084,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 809,
+        "output": 178,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    }
+  },
+  {
+    "case": "fake-429",
+    "stage": "FAILED",
+    "error": "SAFE_RATE_LIMIT_RETRY",
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    }
+  },
+  {
+    "case": "cancel-before-transport",
+    "reservation_released": true
+  },
+  {
+    "case": "cancel-submitted-and-kill",
+    "uncertain_charge_preserved": true,
+    "active_reservation": 0
+  },
+  {
+    "case": "queue-completed",
+    "generation": 1,
+    "recovery_ms": 2334
+  },
+  {
+    "case": "queue-failed",
+    "generation": 1,
+    "recovery_ms": 2294
+  },
+  {
+    "case": "queue-active",
+    "generation": 1,
+    "recovery_ms": 7117
+  },
+  {
+    "case": "queue-missing",
+    "generation": 0,
+    "recovery_ms": 2300
+  },
+  {
+    "case": "persisted-not-before",
+    "early_claims": 0
+  },
+  {
+    "case": "live-lease-duplicate",
+    "duplicate_paid_calls": 0
+  }
+]

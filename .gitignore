@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.*
+!.env.example
+.vscode/
+.data/
+.runtime/
+evidence/private/
+playwright-report/
+test-results/
+*.log

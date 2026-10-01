@@ -1,0 +1,12 @@
+{
+  "passed": true,
+  "formats": [
+    "md",
+    "pdf"
+  ],
+  "provider": "fake",
+  "reload": true,
+  "mobile_overflow": false,
+  "keyboard": true,
+  "page_errors": []
+}

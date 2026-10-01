@@ -1,0 +1,171 @@
+[
+  {
+    "boundary": "before-provider-submission",
+    "job_id": "ac6de3ab-5477-4ade-9425-146e04e07bdc",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 32318,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006228,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 817,
+        "output": 185,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 0
+  },
+  {
+    "boundary": "provider-accepted",
+    "job_id": "0a872564-991c-480c-b2ec-01ad8f58abf5",
+    "expected": "NEEDS_ATTENTION",
+    "result": "NEEDS_ATTENTION",
+    "recovery_ms": 31588,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0.0128,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 0
+  },
+  {
+    "boundary": "provider-returned",
+    "job_id": "01ee8e46-8522-44be-8881-e7baf15d58f6",
+    "expected": "NEEDS_ATTENTION",
+    "result": "NEEDS_ATTENTION",
+    "recovery_ms": 31572,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0.0128,
+      "completed_calls": 0,
+      "tokens": {
+        "input": 0,
+        "output": 0,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 0
+  },
+  {
+    "boundary": "call-checkpointed",
+    "job_id": "0604ec35-478f-4400-a9fe-4b8e104819a4",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 32330,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006228,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 817,
+        "output": 185,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 1
+  },
+  {
+    "boundary": "terms-output-ready",
+    "job_id": "c968d103-93fc-4a78-a69a-ee0b2c2f252c",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 32294,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006208,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 816,
+        "output": 184,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 2
+  },
+  {
+    "boundary": "unit-checkpointed",
+    "job_id": "f1fc55f4-d281-4f64-9e07-0396cf949ba0",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 2375,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006228,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 817,
+        "output": 185,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 2
+  },
+  {
+    "boundary": "artifact-renamed",
+    "job_id": "fbd5808f-b9d7-44ca-93d9-082ee60935e0",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 31550,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006208,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 816,
+        "output": 184,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 3
+  },
+  {
+    "boundary": "api-commit-before-notify",
+    "job_id": "b4b53270-c784-4e99-983e-a7385ea24d02",
+    "durable": true
+  },
+  {
+    "boundary": "redis-SIGKILL",
+    "checksum_preserved": true,
+    "calls_preserved": true
+  },
+  {
+    "boundary": "postgres-SIGKILL",
+    "checksum_preserved": true,
+    "calls_preserved": true
+  }
+]

@@ -1,0 +1,13 @@
+{
+  "group_id": "aa670ddc-a469-42f0-ae53-5fd292f97dd9",
+  "children": 3,
+  "completed": 2,
+  "preflight_rejected": 1,
+  "group_start_records": 1,
+  "api_SIGKILL_after_first_child_start": true,
+  "completed_child_preserved": true,
+  "blocked_provider_calls": 0,
+  "known_cost_usd": 0.0012008,
+  "approved_cap_usd": 0.1376,
+  "ownership_denied": true
+}

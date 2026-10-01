@@ -1,0 +1,71 @@
+name: stark-translator
+services:
+  postgres:
+    image: postgres:17-alpine
+    environment:
+      POSTGRES_USER: stark
+      POSTGRES_PASSWORD: stark-local
+      POSTGRES_DB: stark
+    volumes: [pg:/var/lib/postgresql/data]
+    healthcheck:
+      test: [CMD-SHELL, "pg_isready -U stark"]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  redis:
+    image: redis:7.4-alpine
+    command: [redis-server, --appendonly, "yes", --appendfsync, everysec, --maxmemory-policy, noeviction]
+    volumes: [redis:/data]
+    healthcheck:
+      test: [CMD, redis-cli, ping]
+      interval: 2s
+      timeout: 2s
+      retries: 30
+  api:
+    build: .
+    ports: ["127.0.0.1:${APP_PORT:-3100}:3100"]
+    environment: &appenv
+      DATABASE_URL: postgres://stark:stark-local@postgres:5432/stark
+      REDIS_URL: redis://redis:6379
+      PROVIDER_MODE: ${PROVIDER_MODE:-openai}
+      MODEL: ${MODEL:-gpt-4.1-mini}
+      MCP_TOKEN_FILE: /auth/mcp-token
+    volumes: [files:/data, tokens:/auth]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    healthcheck:
+      test: [CMD, bun, -e, "fetch('http://localhost:3100/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 3s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+  worker:
+    build: .
+    command: [bun, src/worker.ts]
+    environment:
+      <<: *appenv
+      OPENAI_API_KEY_FILE: /run/secrets/openai_key
+    secrets: [openai_key]
+    volumes: [files:/data]
+    depends_on:
+      postgres: {condition: service_healthy}
+      redis: {condition: service_healthy}
+    mem_limit: 1536m
+  mcp:
+    profiles: [mcp]
+    image: ${COMPOSE_PROJECT_NAME:-stark-translator}-api
+    command: [bun, src/mcp.ts]
+    stdin_open: true
+    environment:
+      API_URL: http://api:3100
+      MCP_TOKEN_FILE: /auth/mcp-token
+    volumes: [tokens:/auth:ro]
+volumes:
+  pg:
+  redis:
+  files:
+  tokens:
+secrets:
+  openai_key:
+    file: ${OPENAI_KEY_PATH:-./.vscode/openapi-key.txt}

@@ -1,0 +1,15 @@
+{
+  "large_pages": 200,
+  "owners": 3,
+  "small_admission_ms": [
+    403,
+    403
+  ],
+  "ownership_denials": 6,
+  "completed": 3,
+  "rerender": {
+    "provider_calls": 0,
+    "old_artifact_preserved": true
+  },
+  "container_memory": "stark-test-local-worker-1 128.7MiB / 1.5GiB\nstark-test-local-api-1 113.5MiB / 512MiB\nstark-test-local-postgres-1 79.21MiB / 31.3GiB\nstark-test-local-redis-1 9.883MiB / 31.3GiB"
+}

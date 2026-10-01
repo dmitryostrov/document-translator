@@ -1,0 +1,11 @@
+{
+  "verified_at": "2026-09-30T23:44:08.792Z",
+  "client": "Claude Code",
+  "version": "2.1.286",
+  "config_scope": "isolated .runtime/claude-clean",
+  "transport": "Docker stdio",
+  "mcp_list": "Connected",
+  "authenticated": false,
+  "end_to_end": "pending authenticated account",
+  "original_user_config_modified": false
+}

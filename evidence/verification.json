@@ -1,0 +1,62 @@
+[
+  {
+    "name": "typecheck",
+    "passed": true,
+    "elapsed_ms": 424
+  },
+  {
+    "name": "unit",
+    "passed": true,
+    "elapsed_ms": 1090
+  },
+  {
+    "name": "integration",
+    "passed": true,
+    "elapsed_ms": 8824
+  },
+  {
+    "name": "regressions",
+    "passed": true,
+    "elapsed_ms": 74203
+  },
+  {
+    "name": "contracts",
+    "passed": true,
+    "elapsed_ms": 13217
+  },
+  {
+    "name": "lease-and-native-stalls",
+    "passed": true,
+    "elapsed_ms": 31173
+  },
+  {
+    "name": "fairness-and-rerender",
+    "passed": true,
+    "elapsed_ms": 10156
+  },
+  {
+    "name": "folder-api-kill",
+    "passed": true,
+    "elapsed_ms": 9793
+  },
+  {
+    "name": "mcp",
+    "passed": true,
+    "elapsed_ms": 7617
+  },
+  {
+    "name": "browser",
+    "passed": true,
+    "elapsed_ms": 8572
+  },
+  {
+    "name": "pipeline-kills",
+    "passed": true,
+    "elapsed_ms": 224740
+  },
+  {
+    "name": "infrastructure-kills",
+    "passed": true,
+    "elapsed_ms": 15069
+  }
+]

@@ -1,0 +1,31 @@
+import { strict as assert } from "node:assert";
+import { mkdir, writeFile } from "node:fs/promises";
+import { setup, Session, db, compose } from "./test-support";
+import { fixturePDF,source } from "./fixtures";
+await setup(process.env.SKIP_BUILD!=="1");
+const a=new Session(),b=new Session(),evidence:any[]=[];
+const prepared=await a.prepare();assert.equal(prepared.code,202);
+const q=await a.quote(prepared.data.job_id);assert.equal(q.stage,"AWAITING_APPROVAL");
+assert.equal(db(`select count(*) from calls where job_id='${q.job_id}'`),"0");
+assert.equal((await b.request(`/api/translations/${q.job_id}`)).code,404);
+assert.equal((await a.start(q)).code,200);
+const done=await a.done(q.job_id);assert.equal(done.stage,"SUCCEEDED");assert.equal(done.quality.numbers.rate,1);
+assert.equal(done.cost.unresolved_exposure_usd,0);assert.ok(done.cost.known_cost_usd>0);
+evidence.push({case:"markdown-quote-start-cost-isolation",job_id:q.job_id,stage:done.stage,cost:done.cost});
+const idempotency=crypto.randomUUID();
+const first=await a.prepare(source,"idem.md",idempotency),repeat=await a.prepare(source,"idem.md",idempotency);
+assert.equal(first.data.job_id,repeat.data.job_id);
+assert.equal((await a.prepare("different","idem.md",idempotency)).code,409);
+for(const [variant,expected] of [["marker","SENSITIVE_MARKING_DETECTED"],["tiny","PDF_VISIBILITY_UNSUPPORTED"]] as const){
+  const p=await a.prepare(await fixturePDF(1,variant),variant+".pdf");const result=await a.quote(p.data.job_id);
+  assert.equal(result.error,expected);assert.equal(db(`select count(*) from calls where job_id='${result.job_id}'`),"0");
+  evidence.push({case:variant,error:result.error});
+}
+const pdf=await a.prepare(await fixturePDF(),"sample.pdf"),pq=await a.quote(pdf.data.job_id);
+assert.equal(pq.stage,"AWAITING_APPROVAL");await a.start(pq);
+const pdfDone=await a.done(pq.job_id);assert.equal(pdfDone.stage,"SUCCEEDED");evidence.push({case:"pdf-output",job_id:pq.job_id,checksum:pdfDone.artifact.checksum});
+const huge=await a.prepare(await fixturePDF(400),"huge.pdf"),h=await a.quote(huge.data.job_id);assert.equal(h.error,"PDF_PAGE_LIMIT");
+const white=await a.prepare(await fixturePDF(1,"white"),"white.pdf"),w=await a.quote(white.data.job_id);
+assert.equal(w.stage,"AWAITING_APPROVAL");assert.ok(w.warnings.some((x:any)=>x.code==="HIDDEN_TEXT_EXCLUDED"));evidence.push({case:"white-text-excluded",warnings:w.warnings});
+await mkdir("evidence",{recursive:true});await writeFile("evidence/integration.json",JSON.stringify(evidence,null,2));
+console.log(JSON.stringify({passed:evidence.length,evidence:"evidence/integration.json"}));

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "typecheck",
+    "passed": true
+  },
+  {
+    "name": "unit-with-split-literal",
+    "passed": true
+  },
+  {
+    "name": "formats-and-isolation",
+    "passed": true
+  },
+  {
+    "name": "aliases-catalog-caps",
+    "passed": true
+  },
+  {
+    "name": "large-document-rerender",
+    "passed": true
+  },
+  {
+    "name": "artifact-publication-kill",
+    "passed": true
+  }
+]

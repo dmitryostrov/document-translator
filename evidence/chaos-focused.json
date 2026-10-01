@@ -1,0 +1,39 @@
+[
+  {
+    "boundary": "artifact-renamed",
+    "job_id": "ee3c3546-b288-49ca-8862-b9167cc9eea6",
+    "expected": "SUCCEEDED",
+    "result": "SUCCEEDED",
+    "recovery_ms": 31558,
+    "cost": {
+      "currency": "USD",
+      "known_cost_usd": 0.0006208,
+      "active_reserved_usd": 0,
+      "unresolved_exposure_usd": 0,
+      "completed_calls": 3,
+      "tokens": {
+        "input": 816,
+        "output": 184,
+        "cached": 0,
+        "cache_write": 0
+      },
+      "cap_usd": 1
+    },
+    "completed_preserved": 3
+  },
+  {
+    "boundary": "api-commit-before-notify",
+    "job_id": "92305d35-cb45-405d-aac5-de786949465f",
+    "durable": true
+  },
+  {
+    "boundary": "redis-SIGKILL",
+    "checksum_preserved": true,
+    "calls_preserved": true
+  },
+  {
+    "boundary": "postgres-SIGKILL",
+    "checksum_preserved": true,
+    "calls_preserved": true
+  }
+]

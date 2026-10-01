@@ -1,0 +1,23 @@
+# Build-AI Worklog
+
+## 2026-09-30–2026-10-01
+
+The user selected the Bun/BullMQ alternative, excluded Python and Cursor validation, and requested implementation with forced app/container kills. Codex implemented the application and tests. No human-authored code or delegated implementation is claimed.
+
+The supplied planning review rejected an outbox/dispatcher design, required generation-based repair of retained broker IDs, and required explicit duplicate handling for live domain leases. Its original source remains local in Git-ignored `.vscode`; these summaries and the implementation rationale are included in the published documents.
+
+Codex wrote the implementation and tests without subagent delegation. The following are actual corrected build approaches.
+
+### Actual corrections during implementation
+
+1. The initial PDF.js integration assumed `isEvalSupported` and `PDFDocumentProxy.destroy()` from an older API. Typechecking the installed v6 package rejected both. The implementation now uses the documented loading-task lifecycle and the current supported options.
+2. The first oversized-block splitter re-tokenized every appended character. Seeded property tests timed out at 12.65 seconds. It was replaced with bounded binary search over Unicode codepoints; the same 960 assertions subsequently passed, with the generated-document test at 0.67 seconds.
+3. The first Docker image used Bun 1.3.10 while the host emitted a version-2 lockfile. The frozen-lockfile build failed with `Unknown lockfile version`. The image was changed to published Bun 1.4.2; the containers subsequently built and started.
+4. BullMQ 6 treats `ioredis` as optional. The initial image omitted it, producing repeated queue-client errors while the accepted PostgreSQL job remained READY. The client dependency and explicit Redis instance were added; bounded infrastructure diagnostics replace the unhelpful hot error log.
+5. The first real-provider corpus rejected eight outputs because the model treated glossary evidence IDs as the translation selection. Paid checkpoints were retained rather than retried. Explicit all-block instructions and a count/ID-constrained schema fixed the subsequent 20/20 cold corpus. The first run remains in `evidence/live-measurements-initial.json`.
+6. A fixture showed that wholly off-page text is omitted by PDF.js text extraction while remaining in the operator list. Position-aware filtering now excludes proven off-page runs before alignment; unresolved cases still reject. Regression evidence includes invisible rendering mode, white, off-page, tiny/low-contrast and scanned fixtures.
+7. The host MCP-token setup script became obsolete after the Docker API generated its credential in a named volume. It was removed so fresh deployment needs only Docker and a key file. Streamed uploads and publication lease fencing replaced the initial buffered/unfenced approaches.
+8. Review found that cancellation/infrastructure failure could strand a submitted call as an active reservation. Those paths now preserve it as uncertain exposure. Another correction canonicalizes logical input hashes so JSONB key ordering cannot break replay of cached agent turns; killing the worker after both agent responses proved zero repeat calls. Quote policies and immutable receipt metadata are versioned separately from current runtime defaults.
+9. Validation of individual split units could miss a protected literal spanning the split boundary. Publication now assembles every canonical block, rejects missing/gapped pieces, and validates whole-block literals before exposing an artifact. Seven unit tests and six focused publication checks passed.
+10. A folder holding its two paid slots could remain the first eligible job in fair admission and delay another owner. Admission now excludes folders at their limit. The regression held both folder slots, admitted another owner in 171 ms, then completed all four documents; see `evidence/folder-fairness.json`.
+11. The first browser test was a standalone script, so a standard Playwright test runner/explorer could not discover it, and it checked download availability rather than downloaded bytes. It now has a root Playwright config and seven named specifications with actual file/checksum/receipt assertions and browser failure/cancel paths. All seven passed. Test orchestration restores the prior service state instead of leaving a stopped test stack running. GitHub Actions and a genuine remote-clone verifier replace the missing Git-dependent delivery gates; their execution status is recorded separately.

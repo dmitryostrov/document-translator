@@ -1,0 +1,19 @@
+[
+  {
+    "format": "pdf",
+    "job_id": "2d80150c-1c96-4af7-ac63-6cc9b491c845",
+    "checksum": "5a5f854a72879035589584a4626be8b31acbac291c1733e554c3355a22a2ba9c",
+    "metadata_only": true
+  },
+  {
+    "format": "md",
+    "job_id": "b2219b2a-0357-45f1-974e-6379ad1227e9",
+    "checksum": "e39256f5759c6434005ce183d83ed08c4f5a27a471d531db83c9c6ce55b3d9a6",
+    "metadata_only": true
+  },
+  {
+    "case": "folder-idempotency-and-cap",
+    "group_id": "0502eb39-436e-437b-87da-7369fb669ffa",
+    "children": 2
+  }
+]
