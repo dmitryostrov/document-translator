@@ -1,7 +1,7 @@
 import { spawnSync } from "node:child_process";
 import { source } from "./fixtures";
 export const project=`stark-test-${process.env.TEST_RUN_ID??"local"}`,base=process.env.TEST_API_URL??"http://127.0.0.1:3110";
-export const environment={...process.env,PROVIDER_MODE:"fake",APP_PORT:"3110",OPENAI_API_KEY:"",OPENAI_API_KEY_FILE:""};
+export const environment={...process.env,MODEL:process.env.TEST_MODEL??"gpt-4.1-mini",PROVIDER_MODE:"fake",APP_PORT:"3110",OPENAI_API_KEY:"",OPENAI_API_KEY_FILE:"",OPENAI_KEY_PATH:"/dev/null"};
 export function docker(args:string[]){
   const p=spawnSync("docker",args,{env:environment,encoding:"utf8",maxBuffer:4*1024*1024});
   if(p.status!==0)throw new Error(`DOCKER_COMMAND_FAILED: ${p.stderr.slice(-1500)}`);
@@ -17,7 +17,7 @@ export function testStackState(){
   return new Set(compose(["ps","--status","running","--services"]).split(/\r?\n/).filter(Boolean));
 }
 export function restoreTestStack(before:Set<string>){
-  const started=["api","worker","postgres","redis"].filter(service=>!before.has(service));
+  const started=["api","worker","parser","postgres","redis"].filter(service=>!before.has(service));
   if(started.length)compose(["stop",...started]);
 }
 export function db(query:string){return compose(["exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query]);}

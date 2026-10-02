@@ -1,0 +1,16 @@
+{
+  "files": [
+    "README.md",
+    "DECISIONS.md",
+    ".vscode/software_engineering_test_conformance.md",
+    ".vscode/plans/2026-09-30-document-translator-alternatives/02-bun-bullmq.md",
+    ".vscode/plans/2026-09-30-document-translator-alternatives/worklog.md",
+    "evidence/model-comparison-2026-10-02/report.md"
+  ],
+  "tables": 40,
+  "local_links": 189,
+  "fences": 11,
+  "json_fences": 2,
+  "mermaid_changed": false,
+  "scope": "Explicit six-file allowlist; only Markdown table spacing/separators formatted; local targets and JSON fences checked."
+}

@@ -1,0 +1,87 @@
+{
+  "blocks": [
+    {
+      "id": "p1b0",
+      "page": 1,
+      "text": "Battery service"
+    },
+    {
+      "id": "p1b1",
+      "page": 1,
+      "text": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit."
+    },
+    {
+      "id": "p1b2",
+      "page": 1,
+      "text": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor"
+    },
+    {
+      "id": "p1b3",
+      "page": 1,
+      "text": "during inspection."
+    },
+    {
+      "id": "p1b4",
+      "page": 1,
+      "text": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check."
+    },
+    {
+      "id": "p1b5",
+      "page": 1,
+      "text": "The current is electric current through the cable. Record the current at 15 A before the test ends."
+    },
+    {
+      "id": "p1b6",
+      "page": 1,
+      "text": "Service the drive system every 100 km. The drive means the motor assembly in this manual."
+    },
+    {
+      "id": "p1b7",
+      "page": 1,
+      "text": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual"
+    },
+    {
+      "id": "p1b8",
+      "page": 1,
+      "text": "unchanged."
+    }
+  ],
+  "translations": [
+    {
+      "id": "p1b0",
+      "text": "Akkuwartung"
+    },
+    {
+      "id": "p1b1",
+      "text": "Der Akku liefert 12 kW an das Antriebssystem. Prüfen Sie den Akku vor jedem Wartungstermin."
+    },
+    {
+      "id": "p1b2",
+      "text": "Der Elektromotor muss stillstehen, solange das Akkukabel getrennt ist. Bestromen Sie den Elektromotor niemals"
+    },
+    {
+      "id": "p1b3",
+      "text": "während der Inspektion."
+    },
+    {
+      "id": "p1b4",
+      "text": "Messen Sie die Spannung, bevor Sie die Abdeckung schließen. Die Spannung muss während dieser Prüfung unter 72 V bleiben."
+    },
+    {
+      "id": "p1b5",
+      "text": "Der Strom ist der elektrische Strom durch das Kabel. Protokollieren Sie den Strom bei 15 A, bevor der Test endet."
+    },
+    {
+      "id": "p1b6",
+      "text": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+    },
+    {
+      "id": "p1b7",
+      "text": "Protokollieren Sie die Akkutemperatur vor dem Laden. Lassen Sie MODEL-X und https://example.com/manual"
+    },
+    {
+      "id": "p1b8",
+      "text": "unverändert."
+    }
+  ]
+}

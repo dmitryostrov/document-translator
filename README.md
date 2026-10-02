@@ -2,6 +2,8 @@
 
 Private repository: [dmitryostrov/stark-document-translator](https://github.com/dmitryostrov/stark-document-translator).
 
+This revision includes Spanish/upload handling, parser isolation and review fixes, the guarded Astra model profile and its paired comparison. GitHub Actions runs the fake-provider verification gate for each pushed `main` revision; consult that commit's check status. The earlier real-provider fresh-clone evidence applies to its recorded baseline commit. AC1 human acceptance remains open.
+
 A local workbench for support staff and dealers translating non-sensitive technical prose. It accepts searchable PDF and UTF-8 Markdown, prepares a cost quote locally, and calls OpenAI only after explicit approval. PDF output is a readable Unicode reflow; Markdown preserves its document structure, code and link targets.
 
 Branding provisionally follows the user's [Stark Future](https://starkfuture.com/) candidate and its [team page](https://starkfuture.com/team). The dark/gold wordmark is a local interpretation, not a claim of official brand colors or employer affiliation.
@@ -25,9 +27,15 @@ cd stark-document-translator
 docker compose up --build
 ```
 
-Open [the workbench](http://127.0.0.1:3100). Choose a document/language, **Prepare and estimate**, then approve the displayed quote and cost cap. Targets are English, German and French. Quality evidence is currently limited to the synthetic English-to-German corpus; other pairs display an insufficient-evidence warning.
+Open [the workbench](http://127.0.0.1:3100). Choose a document/language, **Prepare and estimate**, then approve the displayed quote and cost cap. Targets are English, German, French and Spanish. Quality evidence is currently limited to the synthetic English-to-German corpus; other pairs display an insufficient-evidence warning. Spanish uses the same approval, accounting, literal checks and PDF/Markdown pipeline; its general translation quality has not been calibrated.
 
-Only the worker mounts the key as a read-only Docker secret. PostgreSQL, Redis, source/checkpoint/artifact files and the generated editor credential use named volumes. The API generates the credential automatically; do not run a host setup script. Services listen through a loopback HTTP port. This is a local assessment deployment; shared/public production deployment requires real user authentication and TLS.
+The default model is `gpt-6-astra` with low reasoning. Set `MODEL=gpt-4.1-mini` in `.env` for the cheaper baseline. The quote displays the model; switching requires a fresh approval, and approved work stops before another call if its model, rates or reasoning setting no longer matches. General latency and quality calibration remain unavailable. In the [eight-input comparison](evidence/model-comparison-2026-10-02/report.md), Astra completed 8/8 against mini's 6/8, at about 38.4 times the known cost per attempt and twice the time on common successful pairs. AC1 remains unmet.
+
+Normal startup requires an explicit `OPENAI_KEY_PATH`; missing setup fails Compose with `OPENAI_KEY_UNAVAILABLE`. A missing, unreadable or empty mounted key also fails document preflight with that named error before any paid call.
+
+Only the worker mounts the key as a read-only Docker secret. A separate unprivileged parser service has no key/database/editor credential mounts or environment, no network, a read-only root and dropped capabilities. Worker/parser communicate through a private Unix-socket volume; format children receive an allowlisted environment. Rendered bytes stay in unique staging files until the worker publishes them. This isolates the OpenAI secret; the parser still has the shared document volume and is not a complete per-owner filesystem sandbox.
+
+PostgreSQL, Redis, source/checkpoint/artifact files, format IPC and the generated editor credential use named volumes. The API generates the credential automatically; do not run a host setup script. HTTP listens through a loopback port. This is a local assessment deployment; shared/public production deployment requires real user authentication and TLS.
 
 Stopping/recreating containers preserves named volumes. Do not remove volumes to “repair” a job. No automatic cleanup deletes source or artifact versions.
 
@@ -43,6 +51,9 @@ flowchart LR
   Queue --> Worker[Bun worker]
   Worker --> PG
   Worker --> Files
+  Worker -->|Unix socket| Parser["Isolated format service<br/>no network or OpenAI key"]
+  Parser --> Files
+  Key[("OpenAI key")] --> Worker
   Worker --> Agent[Agents SDK terminology stage]
   Agent --> OpenAI[OpenAI]
   Worker --> OpenAI
@@ -54,14 +65,16 @@ flowchart LR
   classDef data fill:#3b2f16,stroke:#fbbf24,color:#fff7ed
   classDef broker fill:#173a4a,stroke:#38bdf8,color:#f8fafc
   classDef execution fill:#312e5a,stroke:#a78bfa,color:#f8fafc
+  classDef secret fill:#451a24,stroke:#fb7185,color:#fff1f2
   class Web,MCP edge
   class API,Repair control
   class PG,Files data
   class Queue broker
-  class Worker,Agent,OpenAI execution
+  class Worker,Parser,Agent,OpenAI execution
+  class Key secret
 ```
 
-Cyan is a front door, green is control, amber is durable data, blue is broker delivery and purple is execution.
+Cyan is a front door, green is control, amber is durable data, blue is broker delivery, purple is execution and red is the worker-only key.
 
 PostgreSQL owns job state, approval, fair admission, call accounting and artifact identity. BullMQ carries disposable notifications, not authoritative work. Accepted uploads stream to a flushed file, are renamed and directory-flushed before the job commit/202 response. Commit then best-effort enqueue; the reconciler repairs missed notifications. There is no outbox or dispatcher lease.
 
@@ -83,21 +96,25 @@ The assessment names the Python package `openai-agents`; the explicit user no-Py
 
 Exactly three criteria govern this delivery:
 
-1. **AC1 — Translation and fidelity:** PDF→PDF and Markdown→Markdown through both web and MCP, English→German; ≥95% approved terminology occurrences across ≥40 held-out references, 100% protected numeric occurrence preservation, complete accepted-visible coverage and no added output destinations. Automated candidate terminology measurement is 256/261 (98.1%), numeric preservation 161/161. Human reference/semantic review is pending; [40 examples](evidence/quality-review.md) are prepared.
+1. **AC1 — Translation and fidelity: UNMET.** Target: PDF→PDF and Markdown→Markdown through both web and MCP, English→German; ≥95% approved terminology occurrences across ≥40 held-out references, protected numeric preservation, complete accepted-visible coverage and no added destinations. The 256/261 (98.1%) candidate score counts loose substring matches for only four AI-curated terms on the prompt-development corpus. It is not held out or human approved. Numeric 161/161 is enforced by the publication gate and is not an independent model-quality metric. Human terminology/semantic review and a held-out evaluation remain required; [40 development examples](evidence/quality-review.md) are prepared.
 2. **AC2 — Recoverability:** forced process/container deaths resume safely eligible work or produce actionable uncertainty within 60 seconds after healthy dependencies, without repeating completed/uncertain calls or publishing partial artifacts. See the [ten-case SIGKILL evidence](evidence/chaos.json) and [queue/provider regressions](evidence/regressions.json).
-3. **AC3 — Isolation and bounded work:** two small owners plus a 200-page document, small paid admission within five seconds in deterministic fixtures, owner denial, and named corrupt/scanned/over-limit errors before model calls. See [fairness and rerender evidence](evidence/fairness.json). A separate [folder fairness regression](evidence/folder-fairness.json) admitted another owner in 172 ms while a folder held its two paid slots.
+3. **AC3 — Isolation and bounded work:** two small owners plus a 200-page document, small paid admission within five seconds in deterministic fixtures, owner denial, and named corrupt/scanned/over-limit errors before model calls. See [fairness and rerender evidence](evidence/fairness.json). The latest [folder fairness regression](evidence/folder-fairness.json) admitted another owner in 169 ms while a folder held its two paid slots.
 
-The current 20-sample real cold corpus has mean known cost **$0.0013247**, p50 **7.499 s**, p95 **13.952 s**. These small/medium synthetic documents are not a forecast for 200-page manuals. Quotes show the matching observed range/time window when available, otherwise a conservative reservation bound and unavailable time estimate. A separate identical-request prefix probe observed 1,536 cached tokens on each of three repeats, saving $0.0004608 input cost per repeat. The complete methods, first-run failures and limits are in [DECISIONS.md](DECISIONS.md).
+The earlier 20-sample real cold corpus has mean known cost **$0.0013247**, p50 **7.499 s**, p95 **13.952 s**. It repeats four closely related format/size template families, not twenty diverse documents. These figures predate the isolated parser/visibility policy and are not a forecast for real manuals or the current deployment. The 200-page concurrency fixture is short repeated prose; its actual token/chunk counts are recorded in [fairness evidence](evidence/fairness.json).
+
+Quotes now include a size-based token projection with explicit output/context/agent-turn assumptions. The approval reservation is a separate conservative ceiling; unmeasured latency remains unavailable. Earlier observed ranges are used only when their full policy/model/prompt/pair/size match. A separate identical-request prefix probe observed 1,536 cached tokens on three repeats, saving $0.0004608 input cost per repeat. Methods and limits are in [DECISIONS.md](DECISIONS.md).
 
 ## PDF, Markdown and content policy
 
-Limits: 25 MiB, 250 PDF pages, 300,000 extracted words, 120-minute job deadline; quotes expire after 15 minutes. Large text is split by Unicode codepoint under a token bound, with stable block IDs and previous-chunk context. Exact repeated margin text has canonical translations and ordered occurrence aliases. Ordinary body repetition is preserved.
+Limits: 25 MiB, 250 PDF pages, 300,000 extracted words, 120-minute job deadline; quotes expire after 15 minutes. The byte/page caps are chosen MVP bounds, not limits specified by the assessment or inherited from the model API; their exact thresholds have not been established by load testing. Oversized files receive an immediate browser error or a named API 413. Large text is split by Unicode codepoint under a token bound, with stable block IDs and previous-chunk context. Exact repeated margin text has canonical translations and ordered occurrence aliases. Ordinary body repetition is preserved.
 
-PDF.js operator/text alignment and local Poppler inspection accept a conservative prose profile. Proven invisible/white/off-page text is excluded with warnings. Tiny/low-contrast, clipping/painted backgrounds, unsupported rendering modes, annotations or unresolved visibility reject locally. Scans require OCR and are rejected. Images with visible text require an explicit text-only acknowledgment and a new preparation key. Source JavaScript, attachments and actions are never copied into the newly created PDF. Glyph-remapping attacks need the deferred render/OCR comparison; this is not a complete PDF security detector.
+Encrypted PDFs are currently rejected, including files that open with an empty password. Password collection, permission handling and consistent decryption across the extraction tools were deliberately excluded; encryption is not an inherent translation limitation. Export an unencrypted searchable copy with permission to do so. See [the format decisions](DECISIONS.md#deliberate-format-limits).
+
+PDF.js operator/text alignment and local Poppler inspection accept a conservative prose profile. Proven invisible/same-background/off-page text is excluded with warnings. PDF.js path-paint operations, form state/transforms/clips and horizontal glyph scaling are checked. One opaque uniform full-page background painted before content is supported, including white text on black; arbitrary painted paths, overlapping images, tiny/low-contrast text, unresolved clipping, unsupported rendering modes and annotations reject locally. Scans require OCR and are rejected. Images with visible text require explicit text-only acknowledgment and a new preparation key. Source JavaScript, attachments and actions are never copied into the new PDF. These checks address tested representations; glyph-remapping and visual equivalence still need render/OCR comparison. This is not a complete PDF security or injection detector.
 
 Markdown uses an AST, preserves code and destination values, rejects raw HTML and unsafe URI schemes, and checks UTF-8. Neither front door renders or fetches source HTML/images. Downloads use attachment/nosniff headers. Local screening rejects VS-NfD, NATO RESTRICTED, ITAR labels and unsupported concealment controls. Absence of those markers does not establish clearance.
 
-Validation protects ordered IDs, count/coverage, numeric/code/unit/URL/email multiplicity, length, language samples and unwanted refusal/chatty output. Paid validation failures retain the response/cost checkpoint; they are not silently paid for again. [Live attack fixtures](evidence/live-scenarios.json) are a bounded measurement, not a general injection guarantee.
+Validation protects ordered IDs, count/coverage, numeric/code/unit/URL/email multiplicity, bare `www.` targets, length, aggregate language samples and novel refusal/chatty output. Paid validation failures retain the response/cost checkpoint; they are not silently paid for again. The three [live attack fixtures](evidence/live-scenarios.json) report accepted-output gate outcomes; zero numeric/coverage mutations among published files is enforced by those gates and does not independently measure injection resistance.
 
 ## API and costs
 
@@ -113,7 +130,7 @@ Cookie-scoped browser sessions and a separate private bearer-scoped editor owner
 | `GET /api/translations/:id/receipt`  | Downloadable usage/model/policy/rates/glossary-hash/tool-count receipt                                                           |
 | `POST /api/translation-groups`       | Fixed Markdown manifest, at most 20 files/25 MiB; separate group quote/start and aggregate cap                                   |
 
-Preparation/retry with the same owner/key/content returns one job; changed content/target/options returns 409. A start key binds quote and cap. Stale/expired approvals are rejected. Job and group caps include completed costs, active reservations and unknown exposure atomically. The supported model is `gpt-4.1-mini`; changing model requires explicitly configured rates and new calibration.
+Preparation/retry with the same owner/key/content returns one job; changed content/target/options returns 409. A start key binds quote and cap. Stale/expired approvals are rejected. Job and group caps include completed costs, active reservations and unknown exposure atomically. Explicit rate profiles support `gpt-6-astra` and `gpt-4.1-mini`; other model names fail with `MODEL_RATES_UNCONFIGURED`.
 
 The initial response and every status include cost. Before calls, known cost is zero. A typical shape is:
 
@@ -124,12 +141,14 @@ The initial response and every status include cost. Before calls, known cost is 
   "active_reserved_usd": 0,
   "unresolved_exposure_usd": 0,
   "completed_calls": 3,
-  "tokens": {"input": 1653, "output": 415, "cached": 0, "cache_write": 0},
+  "tokens": {"input": 1653, "output": 415, "cached": 0, "cache_write": 0, "reasoning": 0},
   "cap_usd": 0.25
 }
 ```
 
 This is token-based accounting at versioned model rates, not a reconciled provider invoice. Unknown exposure is an upper reservation, not a confirmed bill. Agent turns count too. Local translation memory is owner/model/prompt/policy/glossary/context scoped. Provider prefix-cache read/write counters use actual usage; no caching benefit is assumed.
+
+Reasoning tokens are a reported subset of total output tokens, so they are not billed twice. Astra uses a 30-minute provider cache TTL; reservations price all possible input at the higher input/cache-write rate. Standard per-million-token Astra rates are $10 input, $1 cached input, $12.50 cache write and $50 output; mini remains $0.40/$0.10/$0.40/$1.60. See the official [Astra model reference](https://developers.openai.com/api/docs/models/gpt-6-astra) and [mini reference](https://developers.openai.com/api/docs/models/gpt-4.1-mini). Current bounded calls are below the long-context surcharge threshold.
 
 ## MCP configuration and three-step verification
 
@@ -163,7 +182,7 @@ Keep the normal stack running first. `translate_document` and `translate_folder`
 
 For a folder use `translate_folder` prepare with `glob:"docs/*.md"` and a key. Repeat preparation with that same key to get the completed preflight group quote/version. Start with `group_id`, `quote_version`, `max_total_cost_usd`, and a distinct key; check/save each child normally. The manifest is fixed and partial failures remain visible.
 
-Fresh SDK stdio clients verify all four tools and both formats without the UI. A clean isolated Claude Code 2.1.286 installation reports this configuration **Connected**. Its authentication status is `loggedIn:false`; an end-to-end translation initiated by Claude itself remains an external account gate.
+Fresh SDK stdio clients verify all four tools and both formats without the UI. The older Claude Code 2.1.286 record contains an author-entered `Connected` literal without captured CLI output; it is not independently verifiable connection evidence. Captured clean-client connection and authenticated Claude-initiated translation remain open account/client gates.
 
 ## Tests and on-call guide
 
@@ -182,15 +201,17 @@ bun scripts/mcp-test.ts
 bun run chaos
 ```
 
-`bun run test` explicitly runs `tests/unit`. Browser tests are conventional named Playwright specifications in [tests/e2e/translator.spec.ts](tests/e2e/translator.spec.ts), configured by [playwright.config.ts](playwright.config.ts). `test:e2e:list` lists seven tests without starting containers; `test:e2e:ui` opens the runner UI. The seven passing tests cover actual PDF/Markdown download bytes/checksums, preserved Markdown literals, receipt costs, reload, named corrupt/scanned/unsupported errors, cancellation before approval, mobile/keyboard and page errors. Metadata is in [e2e.json](evidence/e2e.json); traces/screenshots/downloads stay in ignored `test-results`.
+`bun run test` explicitly runs `tests/unit`. Browser tests are conventional named Playwright specifications in [tests/e2e/translator.spec.ts](tests/e2e/translator.spec.ts), configured by [playwright.config.ts](playwright.config.ts). `test:e2e:list` lists nine tests without starting containers; `test:e2e:ui` opens the runner UI. The nine passing tests cover actual PDF/Markdown download bytes/checksums, preserved Markdown literals, receipt costs, reload, Spanish target selection and accounting, named corrupt/scanned/unsupported errors, oversized browser/API rejection without a job, cancellation before approval, mobile/keyboard and page errors. Metadata is in [e2e.json](evidence/e2e.json); traces/screenshots/downloads stay in ignored `test-results`.
 
-`bun run verify` runs thirteen combined fake-provider stages, including the Playwright suite, native repeated stalls, slow-subprocess lease renewal, folder/API death, folder fairness and infrastructure death during a submitted call. It makes zero real provider calls and writes [verification.json](evidence/verification.json). All thirteen stages passed locally, including the seven browser tests and folder-fairness regression. The earlier six [publication-focused checks](evidence/publication-verification.json) remain available.
+`bun run verify` runs fourteen combined fake-provider stages, including the Playwright suite, review remediation/parser isolation, native repeated stalls, slow-subprocess lease renewal, folder/API death, folder fairness and infrastructure death during a submitted call. All fourteen passed locally on 2026-10-02, with 18 unit tests/1,029 assertions, nine browser tests and zero real provider calls; see [verification.json](evidence/verification.json), [approval/model guards](evidence/contracts.json) and [ten remediation cases](evidence/review-regressions.json). The earlier six [publication-focused checks](evidence/publication-verification.json) remain available. The baseline remote CI/real-provider clone proof covers its recorded commit; current remote CI is shown on each pushed commit.
 
 Standalone E2E and full verification restore the test services' prior running/stopped state. They do not remove named volumes. GitHub Actions runs the fake-only gate on pushes/PRs using [verify.yml](.github/workflows/verify.yml), with no OpenAI credential.
 
 Browser tests require `bunx playwright install chromium`. `bun run chaos` is the one-command actual SIGKILL matrix: worker before transport/after acceptance/after return/after call checkpoint/after complete agent output/after unit checkpoint/after artifact rename, API after commit/before enqueue, Redis and PostgreSQL. It checks unchanged checkpoint hashes, call invocation counts, artifact completeness and recovery time. Fake gates exist only in fake mode and are not public API routes.
 
 Explicit live measurements (separate from automated tests, charged): `bun run measure:live`, `bun scripts/live-scenarios.ts`, and `LIVE_MCP=1 bun scripts/mcp-test.ts` (set the environment with PowerShell `$env:LIVE_MCP='1'` on Windows). Each writes generated-fixture evidence. Repeated measurement runs spend again; old paid validation failures are preserved.
+
+The charged `compare:models` script requires `ALLOW_LIVE_COMPARISON=1` and refuses an existing output directory. It compares paired synthetic inputs with a $5 per-run accounting cap and leaves the normal app on Astra. The [comparison report](evidence/model-comparison-2026-10-02/report.md) distinguishes paid failures, provisional reference diagnostics and human acceptance.
 
 At 3am:
 
@@ -213,6 +234,8 @@ docker compose exec -T -e OWNER_ID=the-owner worker bun scripts/rerender.ts the-
 It creates a new immutable artifact version and proves zero additional provider calls. Obtain IDs from the local database without exposing source content. The prior artifact remains stored.
 
 Genuine fresh-clone delivery can be checked with `bun run test:fresh-clone`; the default uses fake mode. An explicitly charged real-provider check uses `FRESH_LIVE=1` and `FRESH_OPENAI_KEY_PATH` pointing to an external key file. The script clones the remote pushed HEAD into OS-temp, builds with Docker before any host dependency installation, checks PDF/Markdown through API and MCP, and removes only that run's containers/network while preserving named volumes. It never copies the key. The [real-provider fresh-clone proof](evidence/fresh-clone-live.json) records the exact pushed commit, source fingerprint and four successful API/MCP PDF/Markdown flows. The older `scripts/fresh-delivery.ts` source-copy evidence is retained as historical evidence.
+
+Fake fresh-clone verification approves the returned reservation without contacting OpenAI. Live verification keeps a $0.25 per-document budget unless `FRESH_MAX_COST_USD` is explicitly set higher; an insufficient cap rejects before calls. `FRESH_MODEL` selects the probe model, otherwise the configured/default Astra profile is used. For Astra, approve an appropriate live reservation explicitly; the script never increases its live budget from a quote automatically. Four documents are attempted, so the per-document cap is not a total-run cap.
 
 All `.vscode/` files are Git-ignored at the user's request, including the original assessment, local plans, conformance report and provided key. The published README/PROMPTS/DECISIONS are standalone; generated browser profiles, traces, `.env` files, local runtime data and dependencies are also ignored.
 

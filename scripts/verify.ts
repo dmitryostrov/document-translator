@@ -6,6 +6,7 @@ await setup(true);
 for(const [name,args] of [
   ["typecheck",["run","check"]],["unit",["run","test"]],["integration",["scripts/integration.ts"]],
   ["regressions",["scripts/regressions.ts"]],["contracts",["scripts/contracts.ts"]],
+  ["review-remediation",["scripts/review-regressions.ts"]],
   ["lease-and-native-stalls",["scripts/lease-proof.ts"]],["fairness-and-rerender",["scripts/fairness.ts"]],
   ["folder-api-kill",["scripts/folder-chaos.ts"]],["mcp",["scripts/mcp-test.ts"]],
   ["folder-fairness",["scripts/folder-fairness.ts"]],

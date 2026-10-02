@@ -8,6 +8,11 @@
     "paid_calls": 0
   },
   {
+    "case": "approved-model-settings-change",
+    "error": "MODEL_CONFIGURATION_CHANGED",
+    "paid_calls": 0
+  },
+  {
     "case": "running-text-alias-order",
     "header_occurrences": 3,
     "footer_and_body_occurrences": 6,

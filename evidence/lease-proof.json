@@ -1,16 +1,16 @@
 {
   "slow_pdf_pages": 200,
   "subprocess_hold_ms": 23000,
-  "db_lease_remaining_seconds": 25.176699,
-  "broker_lock_remaining_ms": 56574,
+  "db_lease_remaining_seconds": 25.174359,
+  "broker_lock_remaining_ms": 50543,
   "owner_preserved": true,
   "stalled": {
-    "notification_id": "wu-cfe54aaf-bc6a-4f0b-963e-de93ffd617c1-g0",
+    "notification_id": "wu-dc9314db-e154-4060-857b-dcd8269e4e55-g0",
     "stalls": 2,
     "max_stalled_count": 1,
     "deferred_failure": "job stalled more than allowable limit",
     "state": "failed"
   },
   "generation": 1,
-  "recovery_ms": 2317
+  "recovery_ms": 2581
 }

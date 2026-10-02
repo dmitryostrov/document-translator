@@ -1,0 +1,60 @@
+[
+  {
+    "case": "covered",
+    "error": "PDF_VISIBILITY_UNSUPPORTED",
+    "paid_calls": 0
+  },
+  {
+    "case": "squeezed",
+    "error": "PDF_VISIBILITY_UNSUPPORTED",
+    "paid_calls": 0
+  },
+  {
+    "case": "image-covered",
+    "error": "PDF_VISIBILITY_UNSUPPORTED",
+    "paid_calls": 0
+  },
+  {
+    "case": "plain",
+    "visible_blocks": 1,
+    "hidden_payload_absent": true,
+    "paid_calls": 0
+  },
+  {
+    "case": "white-on-black",
+    "visible_blocks": 1,
+    "hidden_payload_absent": true,
+    "paid_calls": 0
+  },
+  {
+    "case": "nested-form",
+    "visible_blocks": 2,
+    "hidden_payload_absent": true,
+    "paid_calls": 0
+  },
+  {
+    "case": "parser-key-isolation",
+    "canary_visible": false,
+    "key_mount_visible": false,
+    "credential_environment": [],
+    "network": "none",
+    "root_read_only": true,
+    "caps_dropped": true
+  },
+  {
+    "case": "missing-key-preflight",
+    "error": "OPENAI_KEY_UNAVAILABLE",
+    "paid_calls": 0
+  },
+  {
+    "case": "fresh-config-missing-key",
+    "error": "OPENAI_KEY_UNAVAILABLE",
+    "containers_started": 0
+  },
+  {
+    "case": "parser-SIGKILL-preflight",
+    "stage": "AWAITING_APPROVAL",
+    "recovery_after_healthy_ms": 3,
+    "paid_calls": 0
+  }
+]

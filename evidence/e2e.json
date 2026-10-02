@@ -6,37 +6,47 @@
     {
       "name": "Markdown: approve, download verified bytes and retain completion after reload",
       "status": "passed",
-      "elapsed_ms": 4070
+      "elapsed_ms": 3849
     },
     {
       "name": "PDF: approve, download verified bytes and retain completion after reload",
       "status": "passed",
-      "elapsed_ms": 3501
+      "elapsed_ms": 3404
+    },
+    {
+      "name": "Spanish: select the target, approve and download through the common core",
+      "status": "passed",
+      "elapsed_ms": 3558
     },
     {
       "name": "corrupt.pdf: specific preparation error with no model calls or artifact",
       "status": "passed",
-      "elapsed_ms": 1947
+      "elapsed_ms": 1925
     },
     {
       "name": "scanned.pdf: specific preparation error with no model calls or artifact",
       "status": "passed",
-      "elapsed_ms": 1923
+      "elapsed_ms": 2202
     },
     {
       "name": "Unsupported format: immediate named rejection",
       "status": "passed",
-      "elapsed_ms": 307
+      "elapsed_ms": 289
+    },
+    {
+      "name": "Oversized file: immediate browser rejection and named API 413 without a job",
+      "status": "passed",
+      "elapsed_ms": 3443
     },
     {
       "name": "Cancel before approval: persisted cancellation without spending",
       "status": "passed",
-      "elapsed_ms": 1475
+      "elapsed_ms": 1427
     },
     {
       "name": "Workbench: desktop/mobile layout and keyboard navigation",
       "status": "passed",
-      "elapsed_ms": 351
+      "elapsed_ms": 323
     }
   ],
   "test_retries": 0

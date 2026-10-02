@@ -4,7 +4,7 @@
     "phase": "submitted provider call",
     "stage": "SUCCEEDED",
     "error": null,
-    "recovery_after_healthy_ms": 1189,
+    "recovery_after_healthy_ms": 167,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006064,
@@ -15,7 +15,8 @@
         "input": 808,
         "output": 177,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -26,7 +27,7 @@
     "phase": "submitted provider call",
     "stage": "NEEDS_ATTENTION",
     "error": "OUTCOME_UNKNOWN",
-    "recovery_after_healthy_ms": 357,
+    "recovery_after_healthy_ms": 31057,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
@@ -37,7 +38,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },

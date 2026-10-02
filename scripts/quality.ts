@@ -19,7 +19,7 @@ for(const sample of measurements.rows.filter((r:any)=>r.concurrency===1&&r.targe
   }
   numbers+=sample.numeric.expected;preserved+=sample.numeric.correct;
 }
-const score={reference_status:"AI-curated candidate reference. Independent human approval pending; this is not final acceptance.",occurrences:expected,matched:correct,rate:expected?correct/expected:null,numeric:{occurrences:numbers,preserved,rate:numbers?preserved/numbers:null},review};
+const score={reference_status:"AC1 UNMET. Four AI-curated terms, loose substring counting on the prompt-development corpus; not a held-out or human-approved quality result.",method:{terms:4,matching:"Loose substring regex counts",corpus:"Prompt-development fixtures",held_out:false,human_approved:false},occurrences:expected,matched:correct,rate:expected?correct/expected:null,numeric:{kind:"Publication gate, not an independent quality metric",occurrences:numbers,preserved,rate:numbers?preserved/numbers:null},review};
 await writeFile("evidence/quality.json",JSON.stringify(score,null,2));
 const md="# Translation quality review\n\nThese 40 occurrences come from the fixed English-to-German corpus. Candidate references were curated by Codex, not approved by a human. Review the expected terminology and sentence meaning; approval is a separate acceptance gate. The complete numeric/terminology measurement is in [quality.json](quality.json).\n\n"+review.map(r=>`## ${r.index}. ${r.term} → ${r.reference}\n\nSource: ${r.source}\n\nOutput: ${r.translation}\n\nCandidate match: ${r.provisional_pass}. Job: \`${r.job_id}\`, block: \`${r.block_id}\`.\n`).join("\n");
 await writeFile("evidence/quality-review.md",md);

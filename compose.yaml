@@ -28,7 +28,7 @@ services:
       DATABASE_URL: postgres://stark:stark-local@postgres:5432/stark
       REDIS_URL: redis://redis:6379
       PROVIDER_MODE: ${PROVIDER_MODE:-openai}
-      MODEL: ${MODEL:-gpt-4.1-mini}
+      MODEL: ${MODEL:-gpt-6-astra}
       MCP_TOKEN_FILE: /auth/mcp-token
     volumes: [files:/data, tokens:/auth]
     depends_on:
@@ -47,11 +47,29 @@ services:
       <<: *appenv
       OPENAI_API_KEY_FILE: /run/secrets/openai_key
     secrets: [openai_key]
-    volumes: [files:/data]
+    volumes: [files:/data, format-ipc:/ipc]
     depends_on:
       postgres: {condition: service_healthy}
       redis: {condition: service_healthy}
+      parser: {condition: service_healthy}
     mem_limit: 1536m
+  parser:
+    build: .
+    command: [bun, src/format-server.ts]
+    environment:
+      PROVIDER_MODE: ${PROVIDER_MODE:-openai}
+    volumes: [files:/data, format-ipc:/ipc]
+    network_mode: none
+    read_only: true
+    tmpfs: ["/tmp:size=128m"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    mem_limit: 1536m
+    healthcheck:
+      test: [CMD, bun, -e, "fetch('http://parser/health',{unix:'/ipc/format.sock'}).then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
+      interval: 10s
+      timeout: 3s
+      retries: 12
   mcp:
     profiles: [mcp]
     image: ${COMPOSE_PROJECT_NAME:-stark-translator}-api
@@ -66,6 +84,7 @@ volumes:
   redis:
   files:
   tokens:
+  format-ipc:
 secrets:
   openai_key:
-    file: ${OPENAI_KEY_PATH:-./.vscode/openapi-key.txt}
+    file: ${OPENAI_KEY_PATH:?OPENAI_KEY_UNAVAILABLE - set OPENAI_KEY_PATH to an external readable key file}

@@ -56,7 +56,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     }
@@ -75,7 +76,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     }
@@ -94,7 +96,8 @@
         "input": 809,
         "output": 178,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     }
@@ -113,7 +116,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     }
@@ -130,22 +134,22 @@
   {
     "case": "queue-completed",
     "generation": 1,
-    "recovery_ms": 2334
+    "recovery_ms": 2307
   },
   {
     "case": "queue-failed",
     "generation": 1,
-    "recovery_ms": 2294
+    "recovery_ms": 2279
   },
   {
     "case": "queue-active",
     "generation": 1,
-    "recovery_ms": 7117
+    "recovery_ms": 7134
   },
   {
     "case": "queue-missing",
     "generation": 0,
-    "recovery_ms": 2300
+    "recovery_ms": 2303
   },
   {
     "case": "persisted-not-before",

@@ -1,12 +1,13 @@
 {
-  "reference_status": "AI-curated candidate reference. Independent human approval pending; this is not final acceptance.",
+  "reference_status": "AC1 UNMET. Four AI-curated terms, loose substring matches on the prompt-development corpus; not held out or human approved.",
   "occurrences": 261,
   "matched": 256,
   "rate": 0.9808429118773946,
   "numeric": {
     "occurrences": 161,
     "preserved": 161,
-    "rate": 1
+    "rate": 1,
+    "kind": "Publication gate, not an independent quality metric"
   },
   "review": [
     {
@@ -409,5 +410,12 @@
       "translation": "Die Batterie liefert 12 kW. Warten Sie den Motor alle 100 km. Notieren Sie die Batterietemperatur vor dem Laden. Prüfschritt 1 schützt den Motor und das Ladesystem.",
       "provisional_pass": true
     }
-  ]
+  ],
+  "method": {
+    "terms": 4,
+    "matching": "Loose substring regex counts",
+    "corpus": "Prompt-development fixtures",
+    "held_out": false,
+    "human_approved": false
+  }
 }

@@ -1,0 +1,101 @@
+{
+  "job_id": "23bd7a19-7b1d-4987-953d-30fd57181ff0",
+  "format": "md",
+  "source_sha256": "02687f70b99db6cdb526573ae6c745ab3ef288792f4cb308e1d4fe8e0697b73c",
+  "stage": "SUCCEEDED",
+  "checkpoint_analysis": true,
+  "blocks": [
+    {
+      "id": "b0",
+      "text": "Inspection label"
+    },
+    {
+      "id": "b1",
+      "text": "The seal must be replaced after every inspection. Photograph the seal before removing it."
+    },
+    {
+      "id": "b2",
+      "text": "Record inspection step 3 and the date before starting work. The motor must remain disconnected."
+    },
+    {
+      "id": "b3",
+      "text": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened."
+    },
+    {
+      "id": "b4",
+      "text": "This inspection is performed every 100 km. Keep MODEL-X in the service record."
+    },
+    {
+      "id": "b5",
+      "text": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing function."
+    },
+    {
+      "id": "b6",
+      "text": "A missing seal indicates that the cover may have been opened. Replace the seal after completing service."
+    },
+    {
+      "id": "b7",
+      "text": "Read "
+    },
+    {
+      "id": "b8",
+      "text": "the manual"
+    },
+    {
+      "id": "b9",
+      "text": "; keep "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "translations": [
+    {
+      "id": "b0",
+      "text": "Prüfetikett"
+    },
+    {
+      "id": "b1",
+      "text": "Das Siegeletikett muss nach jeder Inspektion ersetzt werden. Fotografieren Sie das Siegeletikett, bevor Sie es entfernen."
+    },
+    {
+      "id": "b2",
+      "text": "Dokumentieren Sie Prüfschritt 3 und das Datum, bevor Sie mit der Arbeit beginnen. Der Motor muss von der Stromversorgung getrennt bleiben."
+    },
+    {
+      "id": "b3",
+      "text": "Bringen Sie das neue Siegeletikett über der Deckelfuge an. Vergewissern Sie sich, dass das Siegeletikett beim Öffnen des Deckels zerstört wird."
+    },
+    {
+      "id": "b4",
+      "text": "Diese Inspektion wird alle 100 km durchgeführt. Behalten Sie MODEL-X im Wartungsprotokoll bei."
+    },
+    {
+      "id": "b5",
+      "text": "Das Siegeletikett ist ein selbstklebendes Sicherheitsetikett, das Manipulationen sichtbar macht. Es ist keine Gummidichtung und hat keine flüssigkeitsabdichtende Funktion."
+    },
+    {
+      "id": "b6",
+      "text": "Ein fehlendes Siegeletikett weist darauf hin, dass der Deckel möglicherweise geöffnet wurde. Ersetzen Sie das Siegeletikett nach Abschluss der Wartung."
+    },
+    {
+      "id": "b7",
+      "text": "Lesen Sie "
+    },
+    {
+      "id": "b8",
+      "text": "das Handbuch"
+    },
+    {
+      "id": "b9",
+      "text": "; bewahren Sie "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "validation": "passed",
+  "literal_violations": []
+}

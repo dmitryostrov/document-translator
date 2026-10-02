@@ -1,6 +1,7 @@
 import { mkdir,writeFile } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { hash } from "../src/domain";
+import { modelProfile } from "../src/models";
 import { fixturePDF } from "./fixtures";
 const base=process.env.LIVE_API_URL??"http://127.0.0.1:3100";
 const mode=await fetch(base+"/health").then(r=>r.json());
@@ -57,6 +58,7 @@ function summary(list:any[]){
     mean_cost_usd:list.length?list.reduce((n,r)=>n+r.cost.known_cost_usd,0)/list.length:null,
     input_tokens:list.reduce((n,r)=>n+r.cost.tokens.input,0),output_tokens:list.reduce((n,r)=>n+r.cost.tokens.output,0),cached_tokens:list.reduce((n,r)=>n+r.cost.tokens.cached,0),cache_write_tokens:list.reduce((n,r)=>n+r.cost.tokens.cache_write,0)};
 }
-const result={measured_at:new Date().toISOString(),model:"gpt-4.1-mini",rates_usd_per_million:{input:.4,cached:.1,write:.4,output:1.6},method:"Fixed synthetic corpus; cold means distinct owner, no local result-memory reuse. Wall time includes preflight, approval/start request, queue, all agent turns, validation and rendering. Provider prefix caching remains enabled. Warm memory and French samples excluded from cold p95.",cold:summary(rows.filter(r=>[1,4].includes(r.concurrency)&&r.target==="german")),concurrency_1:summary(rows.filter(r=>r.concurrency===1&&r.target==="german")),concurrency_4:summary(rows.filter(r=>r.concurrency===4)),warm_memory:warm?summary([warm]):null,failures,rows:rows.map(({cookie,...r})=>r),quality_reference_status:"Candidate references require independent human approval; numeric preservation measured automatically."};
+const result={measured_at:new Date().toISOString(),model:"gpt-4.1-mini",rates_usd_per_million:{input:.4,cached:.1,write:.4,output:1.6},method:"Repeated synthetic corpus with four format/size template families; cold means distinct owner, no local result-memory reuse. Wall time includes preflight, approval/start request, queue, all agent turns, validation and rendering. Provider prefix caching remains enabled. Warm memory and French samples excluded from cold p95. Not representative manual throughput.",cold:summary(rows.filter(r=>[1,4].includes(r.concurrency)&&r.target==="german")),concurrency_1:summary(rows.filter(r=>r.concurrency===1&&r.target==="german")),concurrency_4:summary(rows.filter(r=>r.concurrency===4)),warm_memory:warm?summary([warm]):null,failures,rows:rows.map(({cookie,...r})=>r),quality_reference_status:"AC1 UNMET; AI-curated development references require held-out human review. Numeric preservation is a publication gate, not an independent model-quality score."};
+result.model=mode.model;result.rates_usd_per_million=modelProfile(mode.model).rates;
 await writeFile("evidence/live-measurements.json",JSON.stringify(result,null,2));
 console.log(JSON.stringify({evidence:"evidence/live-measurements.json",cold:result.cold,failures:failures.length}));

@@ -1,0 +1,101 @@
+{
+  "job_id": "b9ade55d-4032-400e-b1a1-fadd92cc5440",
+  "format": "md",
+  "source_sha256": "712647a6f8ff8ba9b0ab8f42bf0f042d16e948bac4554fc1b25a7e104a372249",
+  "stage": "SUCCEEDED",
+  "checkpoint_analysis": true,
+  "blocks": [
+    {
+      "id": "b0",
+      "text": "Battery service"
+    },
+    {
+      "id": "b1",
+      "text": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit."
+    },
+    {
+      "id": "b2",
+      "text": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor during inspection."
+    },
+    {
+      "id": "b3",
+      "text": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check."
+    },
+    {
+      "id": "b4",
+      "text": "The current is electric current through the cable. Record the current at 15 A before the test ends."
+    },
+    {
+      "id": "b5",
+      "text": "Service the drive system every 100 km. The drive means the motor assembly in this manual."
+    },
+    {
+      "id": "b6",
+      "text": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual unchanged."
+    },
+    {
+      "id": "b7",
+      "text": "Read "
+    },
+    {
+      "id": "b8",
+      "text": "the manual"
+    },
+    {
+      "id": "b9",
+      "text": "; keep "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "translations": [
+    {
+      "id": "b0",
+      "text": "Batterieservice"
+    },
+    {
+      "id": "b1",
+      "text": "Die Batterie liefert 12 kW an das Antriebssystem. Prüfen Sie die Batterie vor jedem Servicebesuch."
+    },
+    {
+      "id": "b2",
+      "text": "Der Motor muss während des Trennens des Batteriekabels ausgeschaltet bleiben. Energetisieren Sie den Motor während der Inspektion niemals."
+    },
+    {
+      "id": "b3",
+      "text": "Messen Sie die Spannung, bevor Sie die Abdeckung schließen. Die Spannung muss bei dieser Prüfung unter 72 V bleiben."
+    },
+    {
+      "id": "b4",
+      "text": "Der Strom ist der elektrische Strom durch das Kabel. Zeichnen Sie den Strom bei 15 A auf, bevor der Test endet."
+    },
+    {
+      "id": "b5",
+      "text": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe."
+    },
+    {
+      "id": "b6",
+      "text": "Notieren Sie die Batterietemperatur vor dem Laden. Lassen Sie MODEL-X und https://example.com/manual unverändert."
+    },
+    {
+      "id": "b7",
+      "text": "Lesen Sie "
+    },
+    {
+      "id": "b8",
+      "text": "das Handbuch"
+    },
+    {
+      "id": "b9",
+      "text": "; behalten Sie "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "validation": "passed",
+  "literal_violations": []
+}

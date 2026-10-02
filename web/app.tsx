@@ -8,6 +8,10 @@ async function request(url:string,options:RequestInit={}){
 const money=(n:number)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:4}).format(n);
 const explain:Record<string,string>={
   SERVICE_UNAVAILABLE:"The local service is reconnecting. Accepted jobs are saved; progress will resume when it returns.",
+  OPENAI_KEY_UNAVAILABLE:"OpenAI is not configured. Set OPENAI_KEY_PATH to an external readable key file and recreate the worker. No model call was made.",
+  QUOTE_STALE:"The quote no longer matches the configured model or settings. Prepare the document again and review the new cost before approving.",
+  MODEL_CONFIGURATION_CHANGED:"The configured model changed after approval. This job stopped before another model call. Prepare a new job and review its quote.",
+  FORMAT_SERVICE_UNAVAILABLE:"The isolated document parser is unavailable. Restore the parser service and prepare again; no incomplete file was published.",
   SCANNED_PDF_UNSUPPORTED:"This PDF needs OCR. Upload a searchable text export.",
   PDF_PAGE_LIMIT:"Use a PDF with 250 pages or fewer.",
   PDF_VISIBILITY_UNSUPPORTED:"This PDF has text visibility or layout we cannot safely resolve. Export a simple searchable PDF.",
@@ -18,6 +22,7 @@ const explain:Record<string,string>={
   COST_CAP_REACHED:"The translation reached its reserved cost limit. Review the receipt before approving further work.",
   APPROVAL_EXPIRED:"The quote expired without approval. Prepare a new job.",
   CORRUPT_OR_ENCRYPTED_PDF:"This PDF cannot be opened. Try an unencrypted searchable export."
+  ,UPLOAD_SIZE_LIMIT:"This file exceeds the current 25 MiB upload limit. Choose a smaller file or split the document."
   ,SAFE_RATE_LIMIT_RETRY:"The provider repeatedly rejected requests due to rate limits. No translation call was charged. Try again later.",
   PROVIDER_REQUEST_REJECTED:"OpenAI rejected the request. Check the worker's model and credential configuration.",
   UNICODE_CONCEALMENT_UNSUPPORTED:"This file contains unsupported hidden or directional control characters. Export clean visible text.",
@@ -29,7 +34,9 @@ function App(){
   useEffect(()=>{void refresh();const t=setInterval(refresh,1500);return()=>clearInterval(t);},[]);
   const current=jobs.find(j=>j.job_id===selected)??jobs[0];
   async function prepare(e:React.FormEvent){
-    e.preventDefault();if(!file)return;setBusy(true);setError("");
+    e.preventDefault();if(!file)return;setError("");
+    if(file.size>25*1024*1024){setError("UPLOAD_SIZE_LIMIT");return;}
+    setBusy(true);
     try{const form=new FormData();form.append("file",file);form.append("target_language",target);form.append("acknowledge_text_only_pdf",String(ack));
       const j=await request("/api/translations",{method:"POST",headers:{"Idempotency-Key":crypto.randomUUID()},body:form});setSelected(j.job_id);await refresh();
     }catch(e:any){setError(e.message);}finally{setBusy(false);}
@@ -44,7 +51,7 @@ function App(){
       <section className="card upload"><div className="card-top"><span className="step">01</span><h2>Prepare a document</h2></div>
         <form onSubmit={prepare}>
           <label className="filebox">PDF or Markdown<input aria-label="Document file" type="file" accept=".pdf,.md" onChange={e=>setFile(e.target.files?.[0]??null)}/><span>{file?file.name:"Choose a searchable PDF or .md file"}</span></label>
-          <label>Translate into<select value={target} onChange={e=>setTarget(e.target.value)}><option value="german">German</option><option value="french">French</option><option value="english">English</option></select></label>
+          <label>Translate into<select value={target} onChange={e=>setTarget(e.target.value)}><option value="german">German</option><option value="french">French</option><option value="english">English</option><option value="spanish">Spanish</option></select></label>
           <label className="checkbox"><input type="checkbox" checked={ack} onChange={e=>setAck(e.target.checked)}/>I accept a text-only PDF if the source contains images.</label>
           <p className="hint">Up to 25 MiB · 250 PDF pages. Prose and bullets. Scans, complex tables and ambiguous text visibility are excluded.</p>
           <button disabled={!file||busy}>{busy?"Preparing…":"Prepare and estimate"}<span>↗</span></button>
@@ -56,7 +63,8 @@ function App(){
           <div className="progress-track"><div style={{width:`${current.progress.total?current.progress.completed/current.progress.total*100:0}%`}}/></div>
           <p className="hint" role="status" aria-live="polite">{current.progress.completed} / {current.progress.total} translation units completed</p>
           <div className="metrics"><div><span>Known cost</span><strong>{money(current.cost.known_cost_usd)}</strong></div><div><span>Active reservation</span><strong>{money(current.cost.active_reserved_usd)}</strong></div><div><span>Possible unresolved charge</span><strong>{money(current.cost.unresolved_exposure_usd)}</strong></div></div>
-          {current.quote&&<div className="quote"><h3>Cost estimate</h3><p>{money(current.quote.estimated_total_usd.min)} – {money(current.quote.estimated_total_usd.max)}</p><p className="hint">{current.quote.estimate_basis}. Maximum planned reservation: {money(current.quote.maximum_reserved_usd)} · {current.quote.eta_seconds?`Estimated time: ${Math.ceil(current.quote.eta_seconds.min)}–${Math.ceil(current.quote.eta_seconds.max)} seconds for a matching sample.`:"Time estimate unavailable for this document size or language pair."}</p>
+          {current.quote&&<div className="quote"><h3>Cost estimate</h3><p>{money(current.quote.estimated_total_usd.min)} – {money(current.quote.estimated_total_usd.max)}</p><p className="hint">Model: {current.quote.model}{current.quote.reasoning_effort?` · ${current.quote.reasoning_effort} reasoning`:""}</p><p className="hint">{current.quote.estimate_basis}. Maximum planned reservation: {money(current.quote.maximum_reserved_usd)} · {current.quote.eta_seconds?`Estimated time: ${Math.ceil(current.quote.eta_seconds.min)}–${Math.ceil(current.quote.eta_seconds.max)} seconds for a matching sample.`:"Time estimate unavailable for this document size or language pair."}</p>
+            {current.quote.size_projection&&<p className="hint">{current.quote.size_projection.source_tokens} source tokens · {current.quote.size_projection.translation_chunks} chunks. Projection assumes output at 0.9–1.6× source tokens and 2–4 terminology turns. This is an unmeasured planning range; actual usage, retries and caching can differ.</p>}
             {current.stage==="AWAITING_APPROVAL"&&<><label>Approved cap (USD)<input aria-label="Approved cap" type="number" step="0.01" min={current.quote.maximum_reserved_usd} value={caps[current.job_id]??Math.max(0.25,current.quote.maximum_reserved_usd*1.1).toFixed(6)} onChange={e=>setCaps({...caps,[current.job_id]:e.target.value})}/></label><button onClick={()=>start(current)}>Approve and translate<span>↗</span></button></>}</div>}
           {current.warnings?.length>0&&<div className="warnings"><h3>Document notes</h3>{current.warnings.map((w:any,i:number)=><p key={i}>{w.code.replaceAll("_"," ")}{w.page?` · page ${w.page}`:""}</p>)}</div>}
           {current.error&&<div className="error" role="alert"><strong>{current.error}</strong><p>{explain[current.error]??"The operation stopped safely. Review the receipt and use a supported source."}</p></div>}

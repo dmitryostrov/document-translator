@@ -1,8 +1,22 @@
 import { describe, expect, test } from "bun:test";
 process.env.PROVIDER_MODE="fake";
-const {splitBlocks,validateOutput,screenText,quote,cost,assembleTranslations}=await import("../../src/domain");
+process.env.MODEL="gpt-4.1-mini";
+const {splitBlocks,validateOutput,screenText,quote,cost,assembleTranslations,normalizeTarget}=await import("../../src/domain");
+const {config}=await import("../../src/config");
 const {markdownIR}=await import("../../src/formats");
 describe("document invariants",()=>{
+  test("Spanish is accepted and validates Spanish output without claiming calibrated quality",()=>{
+    expect(normalizeTarget("SPANISH")).toBe("spanish");
+    expect(()=>normalizeTarget("portuguese")).toThrow("LANGUAGE_UNSUPPORTED");
+    const source=[{id:"b0",text:"The battery supplies 12 kW. Before servicing the motor, disconnect the battery and carefully inspect the electrical connections. Keep all components clean and follow the maintenance instructions."}];
+    const spanish=[{id:"b0",text:"La batería suministra 12 kW. Antes de realizar el mantenimiento del motor, desconecte la batería e inspeccione cuidadosamente las conexiones eléctricas. Mantenga limpios todos los componentes y siga las instrucciones de mantenimiento."}];
+    const before=config.mode;config.mode="openai";
+    try{
+      expect(validateOutput(source,spanish,"spanish").rate).toBe(1);
+      expect(()=>validateOutput(source,source,"spanish")).toThrow("INVALID_MODEL_OUTPUT");
+    }finally{config.mode=before;}
+    expect(quote(markdownIR(source[0].text),"spanish").eta_seconds).toBeNull();
+  });
   test("whole-block checks protect a destination spanning split pieces and reject missing pieces",()=>{
     const source=[{id:"b0",text:"See https://example.com/manual. Keep 12 kW."}];
     const pieces=[{id:"b0.s0",text:"See https://example.com/"},{id:"b0.s1",text:"manual. Keep 12 kW."}];

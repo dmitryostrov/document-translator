@@ -19,7 +19,7 @@ app.use("*",async(c,next)=>{
   c.header("Content-Security-Policy","default-src 'self'; script-src 'self'; style-src 'self'; img-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'");
   await next();
 });
-app.get("/health",async c=>{await sql`select 1`;return c.json({ok:true,provider_mode:config.mode});});
+app.get("/health",async c=>{await sql`select 1`;return c.json({ok:true,provider_mode:config.mode,model:config.model,reasoning_effort:config.reasoning,rates_version:config.ratesVersion});});
 app.use("/api/*",async(c,next)=>{
   const origin=c.req.header("Origin");
   if(origin && origin!==new URL(c.req.url).origin)throw new AppError("ORIGIN_DENIED",403);
@@ -77,5 +77,24 @@ app.onError((error,c)=>{
   const code=error instanceof AppError?error.code:"SERVICE_UNAVAILABLE";log("request_failed",{code});
   return c.json({error:{code}},error instanceof AppError?error.status as any:503);
 });
-Bun.serve({port:config.port,hostname:"0.0.0.0",fetch:app.fetch,maxRequestBodySize:26*1024*1024});
+const requestLimit=26*1024*1024; // 25 MiB source plus bounded multipart overhead.
+async function boundedFetch(request:Request){
+  if(Number(request.headers.get("content-length")??0)>requestLimit){
+    return Response.json({error:{code:"UPLOAD_SIZE_LIMIT"}},{status:413,headers:{"X-Content-Type-Options":"nosniff"}});
+  }
+  if(!request.body)return app.fetch(request);
+  let bytes=0;
+  const body=request.body.pipeThrough(new TransformStream<Uint8Array,Uint8Array>({
+    transform(chunk,controller){
+      bytes+=chunk.byteLength;
+      if(bytes>requestLimit)throw new AppError("UPLOAD_SIZE_LIMIT",413);
+      controller.enqueue(chunk);
+    }
+  }));
+  return app.fetch(new Request(request,{body}));
+}
+// A higher transport ceiling lets the application answer ordinary oversized
+// uploads with JSON 413 instead of Bun resetting the connection first.
+// boundedFetch retains the 26 MiB request bound, including chunked bodies.
+Bun.serve({port:config.port,hostname:"0.0.0.0",fetch:boundedFetch,maxRequestBodySize:128*1024*1024});
 log("api_ready",{port:config.port});

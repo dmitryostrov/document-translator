@@ -1,0 +1,27 @@
+{
+  "checked_on": "2026-10-02, Europe/Belgrade",
+  "health": {
+    "ok": true,
+    "provider_mode": "openai",
+    "model": "gpt-6-astra",
+    "reasoning_effort": "low",
+    "rates_version": "2026-10-02-gpt-6-astra-standard"
+  },
+  "normal_running_services": ["api", "parser", "postgres", "redis", "worker"],
+  "test_running_services": [],
+  "active_normal_jobs": 0,
+  "comparison_attempts": 16,
+  "successful_downloads": 14,
+  "known_cost_usd": 0.391938,
+  "unresolved_exposure_usd": 0,
+  "fake_verification_stages_passed": 14,
+  "original_pdf_hashes_preserved": true,
+  "original_key_size_and_write_time_preserved": true,
+  "key_contents_copied_or_printed": false,
+  "vscode_and_env_gitignored": true,
+  "tracked_vscode_files": 0,
+  "head": "d4f5638ecc9721a0a68b73434eb007113e4051f7",
+  "new_commit_or_push": false,
+  "git_diff_check_passed": true,
+  "current_changes": "local and uncommitted"
+}

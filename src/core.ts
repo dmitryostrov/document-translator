@@ -52,10 +52,11 @@ export async function totals(id:string) {
     coalesce(sum((usage->>'input')::bigint),0) as input_tokens,
     coalesce(sum((usage->>'output')::bigint),0) as output_tokens,
     coalesce(sum((usage->>'cached')::bigint),0) as cached_tokens,
-    coalesce(sum((usage->>'write')::bigint),0) as cache_write_tokens from calls where job_id=${id}`;
+    coalesce(sum((usage->>'write')::bigint),0) as cache_write_tokens,
+    coalesce(sum((usage->>'reasoning')::bigint),0) as reasoning_tokens from calls where job_id=${id}`;
   return {currency:"USD",known_cost_usd:Number(r.known),active_reserved_usd:Number(r.active),
     unresolved_exposure_usd:Number(r.unknown),completed_calls:r.completed,
-    tokens:{input:Number(r.input_tokens),output:Number(r.output_tokens),cached:Number(r.cached_tokens),cache_write:Number(r.cache_write_tokens)}};
+    tokens:{input:Number(r.input_tokens),output:Number(r.output_tokens),cached:Number(r.cached_tokens),cache_write:Number(r.cache_write_tokens),reasoning:Number(r.reasoning_tokens)}};
 }
 export async function status(owner:string,id:string) {
   const job=await jobFor(owner,id);
@@ -80,6 +81,7 @@ export async function start(owner:string,id:string,version:string,cap:number,req
     if(!job.quote || job.quote.version!==version)throw new AppError("QUOTE_STALE",409);
     if(job.quote.model!==config.model||job.quote.prompt_version!==config.prompt||job.quote.rates_version!==config.ratesVersion)throw new AppError("QUOTE_STALE",409);
     if(job.quote.policy_version!==config.policy)throw new AppError("QUOTE_STALE",409);
+    if((job.quote.reasoning_effort??null)!==config.reasoning)throw new AppError("QUOTE_STALE",409);
     if(!job.approved && new Date(job.quote.expires_at).getTime()<Date.now())throw new AppError("APPROVAL_EXPIRED",409);
     if(cap<job.quote.maximum_reserved_usd)throw new AppError("COST_CAP_TOO_LOW",409);
     const recoverCap=job.stage==="NEEDS_ATTENTION"&&job.error==="COST_CAP_REACHED";
@@ -112,7 +114,7 @@ export async function cancel(owner:string,id:string) {
 export async function receipt(owner:string,id:string) {
   const j=await jobFor(owner,id), result=await status(owner,id);
   const [events]=await sql`select count(*)::int as count from tool_events where job_id=${id}`;
-  return {...result,source_checksum:j.source_hash,model:j.quote?.model??config.model,prompt_version:j.quote?.prompt_version??config.prompt,
+  return {...result,source_checksum:j.source_hash,model:j.quote?.model??config.model,reasoning_effort:j.quote?.reasoning_effort??null,prompt_version:j.quote?.prompt_version??config.prompt,
     policy_version:j.quote?.policy_version??"visible-v1",rates_version:j.quote?.rates_version??config.ratesVersion,glossary:{hash:hash(JSON.stringify(j.glossary)),entries:j.glossary.entries.length,tool_calls:events.count}};
 }
 export async function artifact(owner:string,id:string) {

@@ -1,0 +1,12 @@
+{
+  "measured_at": "2026-10-02",
+  "job_id": "163d41cd-a1b4-48f0-a36d-29cf833821db",
+  "model": "gpt-6-astra",
+  "reasoning_effort": "low",
+  "quote_displayed": true,
+  "stage": "CANCELED",
+  "known_cost_usd": 0,
+  "completed_calls": 0,
+  "page_errors": [],
+  "method": "Own Playwright browser; prepare synthetic Markdown, verify displayed model/effort, cancel before approval, inspect returned status. An initial harness locator matched two CANCELED labels; corrected the selector and reran without paid calls."
+}

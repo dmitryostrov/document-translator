@@ -1,19 +1,19 @@
 [
   {
     "format": "pdf",
-    "job_id": "f1da7750-ab15-43df-845b-2153d0ec9754",
-    "checksum": "44942c479a341891311d7fad94314609d4022cb83a6e6abcfb486a2dfa4d754c",
+    "job_id": "53f9cc1d-f8f4-438c-967c-1118caad4dc0",
+    "checksum": "e4099562027335d9bade2a862c340c0458d7cb54337fa667b5ded77b9ca30644",
     "metadata_only": true
   },
   {
     "format": "md",
-    "job_id": "b5d8dca8-8d9b-48b2-bd23-b98d267bf0c9",
+    "job_id": "31c60057-0ccf-42ff-a827-78069c395169",
     "checksum": "e39256f5759c6434005ce183d83ed08c4f5a27a471d531db83c9c6ce55b3d9a6",
     "metadata_only": true
   },
   {
     "case": "folder-idempotency-and-cap",
-    "group_id": "171d2969-5bf7-4776-9a67-70abc3b3ba82",
+    "group_id": "6393cc55-c813-4cee-b563-fe4b894e2d5c",
     "children": 2
   }
 ]

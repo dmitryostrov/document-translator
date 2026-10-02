@@ -3,6 +3,7 @@ import { encode, decode } from "gpt-tokenizer";
 import { franc } from "franc-min";
 import { rates, AppError, config } from "./config";
 import calibration from "./calibration.json";
+import type { Rates } from "./models";
 
 export type Block = { id: string; text: string; page?: number; aliases?: string[] };
 export type IR = { format: "pdf" | "md"; blocks: Block[]; tree?: any; order?: string[]; warnings: any[]; pages: number };
@@ -10,14 +11,18 @@ export type Translated = { id: string; text: string };
 export const hash = (value: string | Uint8Array) => createHash("sha256").update(value).digest("hex");
 export const tokens = (s: string) => encode(s).length;
 export const terminal = ["SUCCEEDED", "FAILED", "NEEDS_ATTENTION", "CANCELED"];
+export const targetLanguageCodes = { english: "eng", german: "deu", french: "fra", spanish: "spa" } as const;
 export const normalizeTarget = (value: unknown) => {
   const target = String(value ?? "").toLowerCase();
-  if (!["english", "german", "french"].includes(target)) throw new AppError("LANGUAGE_UNSUPPORTED");
+  if (!Object.hasOwn(targetLanguageCodes,target)) throw new AppError("LANGUAGE_UNSUPPORTED");
   return target;
 };
+const withoutTypographicControls = (text:string) => text.replace(/[\u00AD\u200C\u200D\uFE00-\uFE0F]|[\u{E0100}-\u{E01EF}]/gu, "");
+const proseForPolicy = (text:string) => withoutTypographicControls(text).normalize("NFKC").replace(/[‘’]/g,"'").replace(/\s+/gu," ");
 export function screenText(text: string) {
-  if (/\b(?:VS[\s-]*NfD|NATO[\s-]+RESTRICTED|ITAR)\b/i.test(text.normalize("NFKC"))) throw new AppError("SENSITIVE_MARKING_DETECTED");
-  if (/[\u202A-\u202E\u2066-\u2069\u200B\uFEFF]|\p{Default_Ignorable_Code_Point}/u.test(text.replace(/[\u200C\u200D]/g, ""))) {
+  const policyText=withoutTypographicControls(text);
+  if (/\b(?:VS[\s-]*NfD|NATO[\s-]+RESTRICTED|ITAR)\b/i.test(policyText.normalize("NFKC"))) throw new AppError("SENSITIVE_MARKING_DETECTED");
+  if (/[\u202A-\u202E\u2066-\u2069\u200B\uFEFF]|\p{Default_Ignorable_Code_Point}/u.test(policyText)) {
     throw new AppError("UNICODE_CONCEALMENT_UNSUPPORTED");
   }
 }
@@ -45,8 +50,8 @@ export function splitBlocks(blocks: Block[], max = 1200): Block[][] {
   if (chunk.length) chunks.push(chunk);
   return chunks;
 }
-const literalPattern = /(?:https?:\/\/[^\s<>"')\]]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|[+-]?\d+(?:[.,]\d+)*(?:[-–]\d+(?:[.,]\d+)*)?|(?:\b[A-Z]{2,}[-_]\w+\b)|\b(?:kg|kW|kWh|Nm|mm|cm|km|mph|rpm|°C|°F)\b)/g;
-export const literals = (s: string) => s.match(literalPattern) ?? [];
+const literalPattern = /(?:(?:[Hh][Tt][Tt][Pp][Ss]?:\/\/|[Ww][Ww][Ww]\.)[^\s<>"')\]]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|[+-]?\d+(?:[.,]\d+)*(?:[-–]\d+(?:[.,]\d+)*)?|(?:\b[A-Z]{2,}[-_]\w+\b)|\b(?:kg|kW|kWh|Nm|mm|cm|km|mph|rpm|°C|°F)\b)/g;
+export const literals = (s: string) => withoutTypographicControls(s).match(literalPattern) ?? [];
 export function assembleTranslations(blocks:Block[],translations:Translated[]):Translated[]{
   return blocks.map(b=>{
     const direct=translations.filter(t=>t.id===b.id),parts=translations.filter(t=>t.id.startsWith(b.id+".s")).sort((a,c)=>Number(a.id.slice(b.id.length+2))-Number(c.id.slice(b.id.length+2)));
@@ -66,30 +71,41 @@ export function validateOutput(source: Block[], output: Translated[], target: st
     const nums = before.filter(x => /^[+-]?\d/.test(x)); expected += nums.length*(1+(s.aliases?.length??0));
     if (bag(before) !== bag(after)) throw new AppError("INVALID_MODEL_OUTPUT");
     correct += nums.length*(1+(s.aliases?.length??0));
-    if (/!\[|\]\(|<\s*(?:script|img|iframe)|javascript:|data:/i.test(out.text) && !/!\[|\]\(|<\s*(?:script|img|iframe)|javascript:|data:/i.test(s.text)) throw new AppError("INVALID_MODEL_OUTPUT");
-    if (/\b(?:I (?:cannot|can't)|as an AI|ignore previous|here is (?:the|your) translation)\b/i.test(out.text) && !/\b(?:I (?:cannot|can't)|as an AI|ignore previous|here is (?:the|your) translation)\b/i.test(s.text)) throw new AppError("INVALID_MODEL_OUTPUT");
-    if (out.text.length > 100) {
-      const lang = franc(out.text, { only: ["eng", "deu", "fra"], minLength: 100 });
-      const wanted: Record<string,string> = { english: "eng", german: "deu", french: "fra" };
-      if (lang !== "und" && lang !== wanted[target] && config.mode !== "fake") throw new AppError("INVALID_MODEL_OUTPUT");
-    } else warnings.push("LANGUAGE_SAMPLE_TOO_SHORT");
+    const markup=/!\[|\]\(|<\s*(?:script|img|iframe)\b|\bjavascript:|\bdata:[^,\s]+,/i;
+    if (markup.test(out.text) && !markup.test(s.text)) throw new AppError("INVALID_MODEL_OUTPUT");
+    const refusal=/\b(?:I (?:cannot|can't|won't|will not|am unable)|I['’]m sorry|as an AI|ignore previous|here is (?:the|your) translation|no puedo traducir|je ne peux pas traduire|ich kann .*nicht .*übersetzen)\b/i;
+    if (refusal.test(proseForPolicy(out.text)) && !refusal.test(proseForPolicy(s.text))) throw new AppError("INVALID_MODEL_OUTPUT");
   }
+  const sample=output.map(b=>b.text).join(" ").replace(/https?:\/\/\S+|www\.\S+/gi,"");
+  if(sample.length>=100){
+    const lang=franc(sample,{only:Object.values(targetLanguageCodes),minLength:100});
+    if(lang!=="und"&&lang!==targetLanguageCodes[target as keyof typeof targetLanguageCodes]&&config.mode!=="fake")throw new AppError("INVALID_MODEL_OUTPUT");
+    if(lang==="und")warnings.push("LANGUAGE_SAMPLE_UNCERTAIN");
+  }else warnings.push("LANGUAGE_SAMPLE_TOO_SHORT");
   return { expected, correct, rate: expected ? correct / expected : null, warnings: [...new Set(warnings)] };
 }
-export function cost(usage: { input: number; output: number; cached?: number; write?: number }) {
-  return ((usage.input - (usage.cached ?? 0) - (usage.write ?? 0)) * rates.input + (usage.cached ?? 0) * rates.cached + (usage.write ?? 0) * rates.write + usage.output * rates.output) / 1e6;
+export function cost(usage: { input: number; output: number; cached?: number; write?: number },pricing:Rates=rates) {
+  return ((usage.input - (usage.cached ?? 0) - (usage.write ?? 0)) * pricing.input + (usage.cached ?? 0) * pricing.cached + (usage.write ?? 0) * pricing.write + usage.output * pricing.output) / 1e6;
 }
+export const reservedCost = (usage:{input:number;output:number},pricing:Rates=rates) =>
+  (usage.input*Math.max(pricing.input,pricing.write)+usage.output*pricing.output)/1e6;
 export function quote(ir: IR,target="german") {
   const chunks = splitBlocks(ir.blocks);
   const sourceText=ir.blocks.map(b=>b.text).join("\n"),inputTokens=tokens(sourceText);
-  const measured=target===calibration.target&&calibration.model===config.model&&calibration.prompt===config.prompt&&chunks.length===1&&inputTokens>=calibration.input_tokens.min&&inputTokens<=calibration.input_tokens.max&&franc(sourceText,{minLength:80})==="eng";
+  const measured=target===calibration.target&&calibration.model===config.model&&calibration.prompt===config.prompt&&calibration.policy===config.policy&&chunks.length===1&&inputTokens>=calibration.input_tokens.min&&inputTokens<=calibration.input_tokens.max&&franc(sourceText,{minLength:80})==="eng";
   // Bounded direct outputs plus four bounded agent turns (context/input <= 24000).
-  const ceiling = chunks.length * cost({ input:20000,output:6000 })
-    + 4 * cost({ input: 24000, output: 2000 });
-  return { version: hash(JSON.stringify(ir) +target+config.model+config.prompt+config.policy+config.ratesVersion+JSON.stringify(calibration)), model: config.model,
+  const ceiling = chunks.length * reservedCost({ input:20000,output:6000 })
+    + 4 * reservedCost({ input: 24000, output: 2000 });
+  const previousTokens=chunks.slice(0,-1).reduce((n,c)=>n+tokens(c.slice(-2).map(b=>b.text).join("\n").slice(-4000)),0);
+  const projected={
+    min:cost({input:inputTokens+previousTokens+chunks.length*600,output:Math.ceil(inputTokens*.9)})+2*cost({input:Math.min(inputTokens,16000)+1000,output:400}),
+    max:Math.min(ceiling,cost({input:inputTokens+previousTokens+chunks.length*2400,output:Math.ceil(inputTokens*1.6)})+4*cost({input:24000,output:2000}))
+  };
+  return { version: hash(JSON.stringify(ir) +target+config.model+config.reasoning+config.prompt+config.policy+config.ratesVersion+JSON.stringify(calibration)), model: config.model,reasoning_effort:config.reasoning,
     policy_version:config.policy,rates_version: config.ratesVersion, prompt_version: config.prompt, maximum_reserved_usd: Math.ceil(ceiling * 1e6) / 1e6,
-    estimated_total_usd: measured?{min:calibration.observed_cost_usd.min,max:calibration.observed_cost_usd.max}:{min:0,max:ceiling},
-    estimate_basis:measured?`Observed synthetic English-to-German range, N=${calibration.n}`:"Conservative reservation bound; no matching measurement",
+    estimated_total_usd: measured?{min:calibration.observed_cost_usd.min,max:calibration.observed_cost_usd.max}:projected,
+    size_projection:{...projected,source_tokens:inputTokens,translation_chunks:chunks.length,output_token_ratio:{min:.9,max:1.6},agent_turns:{min:2,max:4},basis:"Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee."},
+    estimate_basis:measured?`Observed synthetic English-to-German range, N=${calibration.n}`:"Unmeasured size-based token projection; approval reservation is separate",
     eta_seconds:measured?{min:calibration.latency_seconds.p50,max:calibration.latency_seconds.p95*2,evidence_n:calibration.n}:null,
     expires_at: new Date(Date.now() + 15*60_000).toISOString(), chunk_count: chunks.length, input_tokens:inputTokens };
 }

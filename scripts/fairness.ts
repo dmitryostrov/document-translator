@@ -21,5 +21,5 @@ assert.equal(db(`select count(*) from calls where job_id='${id}'`),before);
 assert.equal(db(`select count(*) from artifacts where id='${old}'`),"1");
 assert.equal(rerender.provider_calls,0);
 const memory=docker(["stats","--no-stream","--format","{{.Name}} {{.MemUsage}}"]);
-await writeFile("evidence/fairness.json",JSON.stringify({large_pages:200,owners:3,small_admission_ms:admission,ownership_denials:6,completed:3,rerender:{provider_calls:0,old_artifact_preserved:true},container_memory:memory},null,2));
+await writeFile("evidence/fairness.json",JSON.stringify({large_pages:200,large_source_tokens:quotes[0].quote.input_tokens,large_translation_chunks:quotes[0].quote.chunk_count,fixture_scope:"Repeated synthetic prose, not a representative 200-page manual",owners:3,small_admission_ms:admission,ownership_denials:6,completed:3,rerender:{provider_calls:0,old_artifact_preserved:true},container_memory:memory},null,2));
 console.log(JSON.stringify({passed:true,admission,evidence:"evidence/fairness.json"}));

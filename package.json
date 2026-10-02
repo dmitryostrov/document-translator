@@ -18,6 +18,7 @@
     "verify": "bun scripts/verify.ts",
     "rerender": "bun scripts/rerender.ts",
     "measure:live": "bun scripts/measure.ts",
+    "compare:models": "bun scripts/model-compare.ts",
     "test:fresh-clone": "bun scripts/fresh-clone.ts"
   },
   "dependencies": {

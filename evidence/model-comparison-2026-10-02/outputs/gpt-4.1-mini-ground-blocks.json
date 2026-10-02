@@ -1,0 +1,87 @@
+{
+  "blocks": [
+    {
+      "id": "p1b0",
+      "page": 1,
+      "text": "Isolated electrical return"
+    },
+    {
+      "id": "p1b1",
+      "page": 1,
+      "text": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the"
+    },
+    {
+      "id": "p1b2",
+      "page": 1,
+      "text": "test."
+    },
+    {
+      "id": "p1b3",
+      "page": 1,
+      "text": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit."
+    },
+    {
+      "id": "p1b4",
+      "page": 1,
+      "text": "The ground connection is attached to the chassis. It is not a protective earth connection to the soil."
+    },
+    {
+      "id": "p1b5",
+      "page": 1,
+      "text": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the"
+    },
+    {
+      "id": "p1b6",
+      "page": 1,
+      "text": "metal lead."
+    },
+    {
+      "id": "p1b7",
+      "page": 1,
+      "text": "Keep the current below 15 A. Record the voltage and inspect the battery after the test."
+    },
+    {
+      "id": "p1b8",
+      "page": 1,
+      "text": "Do not confuse ground with earth. The circuit remains electrically isolated during service."
+    }
+  ],
+  "translations": [
+    {
+      "id": "p1b0",
+      "text": "Isolierte elektrische Rückführung"
+    },
+    {
+      "id": "p1b1",
+      "text": "Verbinden Sie die Messleitung vor der Spannungsmessung mit der Masse. Trennen Sie die Leitung nach dem"
+    },
+    {
+      "id": "p1b2",
+      "text": "Test."
+    },
+    {
+      "id": "p1b3",
+      "text": "Messen Sie 12 V relativ zur Masse. Die Masse ist der gemeinsame Rückführungspunkt für diesen isolierten Batteriekreis."
+    },
+    {
+      "id": "p1b4",
+      "text": "Der Masseanschluss ist mit dem Chassis verbunden. Es ist keine Schutzerdung mit dem Boden."
+    },
+    {
+      "id": "p1b5",
+      "text": "Überprüfen Sie die Leitung auf Beschädigungen, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht der"
+    },
+    {
+      "id": "p1b6",
+      "text": "Metallleiter."
+    },
+    {
+      "id": "p1b7",
+      "text": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+    },
+    {
+      "id": "p1b8",
+      "text": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+    }
+  ]
+}

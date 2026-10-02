@@ -2,66 +2,71 @@
   {
     "name": "typecheck",
     "passed": true,
-    "elapsed_ms": 421
+    "elapsed_ms": 436
   },
   {
     "name": "unit",
     "passed": true,
-    "elapsed_ms": 1128
+    "elapsed_ms": 1507
   },
   {
     "name": "integration",
     "passed": true,
-    "elapsed_ms": 8875
+    "elapsed_ms": 9141
   },
   {
     "name": "regressions",
     "passed": true,
-    "elapsed_ms": 74310
+    "elapsed_ms": 76077
   },
   {
     "name": "contracts",
     "passed": true,
-    "elapsed_ms": 12926
+    "elapsed_ms": 22910
+  },
+  {
+    "name": "review-remediation",
+    "passed": true,
+    "elapsed_ms": 24630
   },
   {
     "name": "lease-and-native-stalls",
     "passed": true,
-    "elapsed_ms": 31217
+    "elapsed_ms": 31454
   },
   {
     "name": "fairness-and-rerender",
     "passed": true,
-    "elapsed_ms": 9275
+    "elapsed_ms": 9308
   },
   {
     "name": "folder-api-kill",
     "passed": true,
-    "elapsed_ms": 9730
+    "elapsed_ms": 9775
   },
   {
     "name": "mcp",
     "passed": true,
-    "elapsed_ms": 7369
+    "elapsed_ms": 7635
   },
   {
     "name": "folder-fairness",
     "passed": true,
-    "elapsed_ms": 13037
+    "elapsed_ms": 12530
   },
   {
     "name": "browser",
     "passed": true,
-    "elapsed_ms": 16671
+    "elapsed_ms": 23651
   },
   {
     "name": "pipeline-kills",
     "passed": true,
-    "elapsed_ms": 227159
+    "elapsed_ms": 224715
   },
   {
     "name": "infrastructure-kills",
     "passed": true,
-    "elapsed_ms": 12018
+    "elapsed_ms": 44933
   }
 ]

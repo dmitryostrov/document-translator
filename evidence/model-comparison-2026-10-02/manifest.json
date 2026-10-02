@@ -1,0 +1,42 @@
+[
+  {
+    "id": "battery",
+    "format": "md",
+    "source_sha256": "712647a6f8ff8ba9b0ab8f42bf0f042d16e948bac4554fc1b25a7e104a372249"
+  },
+  {
+    "id": "battery",
+    "format": "pdf",
+    "source_sha256": "7cfb4aea52b91880db59d9f256221826dce48d05c03072ca474efbf23092467b"
+  },
+  {
+    "id": "seal",
+    "format": "md",
+    "source_sha256": "02687f70b99db6cdb526573ae6c745ab3ef288792f4cb308e1d4fe8e0697b73c"
+  },
+  {
+    "id": "seal",
+    "format": "pdf",
+    "source_sha256": "677003e0767d82c788329b152f7a55ac5eddaeaeb5145eb30bae05808a29d53a"
+  },
+  {
+    "id": "ground",
+    "format": "md",
+    "source_sha256": "e8b37b9640aae59a6322a97bc6fe317188aff1952ba07fe5d2a61da96afa68fa"
+  },
+  {
+    "id": "ground",
+    "format": "pdf",
+    "source_sha256": "76e5eac493080ad5ebaced7077070ba2c2c2edb9bd37897aae21bd7d69bb037e"
+  },
+  {
+    "id": "cell",
+    "format": "md",
+    "source_sha256": "db340cbd776cacc44628dfbbf395d848dc9beee303e9268d5f229d17040f2c6a"
+  },
+  {
+    "id": "cell",
+    "format": "pdf",
+    "source_sha256": "faf26511b4d5363a8523e0c39088df0e307d135219656b9e046eab9ca1fd2dc0"
+  }
+]

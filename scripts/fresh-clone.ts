@@ -32,12 +32,14 @@ const digest=createHash("sha256");
 for(const path of runtimeFiles.sort()){digest.update(path+"\0");digest.update(await readFile(join(checkout,path)));digest.update("\0");}
 const runtimeTreeSha256=digest.digest("hex");
 const live=process.env.FRESH_LIVE==="1",project=`stark-clone-${crypto.randomUUID().slice(0,8)}`,base="http://127.0.0.1:3112";
+const liveCap=Number(process.env.FRESH_MAX_COST_USD??.25);
+assert.ok(Number.isFinite(liveCap)&&liveCap>0,"FRESH_MAX_COST_USD must be a positive per-document live budget");
 const workspace=join(scratch,"workspace");await mkdir(workspace);await mkdir(join(workspace,"out"));
 await writeFile(join(workspace,"manual.md"),source);await writeFile(join(workspace,"manual.pdf"),await fixturePDF());
 const unusedKey=join(scratch,"unused-key.txt");if(!live)await writeFile(unusedKey,"");
 const keyPath=live?resolve(process.env.FRESH_OPENAI_KEY_PATH??".vscode/openapi-key.txt"):unusedKey;
 if(live)assert.ok((await stat(keyPath)).isFile(),"Provide an existing external OpenAI key file");
-const environment={...process.env,COMPOSE_PROJECT_NAME:project,APP_PORT:"3112",PROVIDER_MODE:live?"openai":"fake",OPENAI_KEY_PATH:keyPath.replaceAll("\\","/")};
+const environment={...process.env,MODEL:process.env.FRESH_MODEL??process.env.MODEL??"gpt-6-astra",COMPOSE_PROJECT_NAME:project,APP_PORT:"3112",PROVIDER_MODE:live?"openai":"fake",OPENAI_KEY_PATH:keyPath.replaceAll("\\","/")};
 const composeArgs=["compose","--project-directory",checkout,"-p",project,"-f",join(checkout,"compose.yaml"),...(live?[]:["-f",join(checkout,"compose.test.yaml")])];
 const compose=(args:string[])=>run("docker",[...composeArgs,...args],checkout,environment);
 const hash=(bytes:Uint8Array)=>createHash("sha256").update(bytes).digest("hex");
@@ -57,7 +59,7 @@ try{
     const submitted=await api("/api/translations",form,crypto.randomUUID());
     const quote=await poll(()=>api(`/api/translations/${submitted.job_id}`),j=>["AWAITING_APPROVAL","FAILED"].includes(j.stage));
     assert.equal(quote.stage,"AWAITING_APPROVAL");assert.equal(quote.cost.completed_calls,0);
-    await api(`/api/translations/${quote.job_id}/start`,JSON.stringify({quote_version:quote.quote.version,max_cost_usd:.25}),crypto.randomUUID());
+    await api(`/api/translations/${quote.job_id}/start`,JSON.stringify({quote_version:quote.quote.version,max_cost_usd:live?liveCap:quote.quote.maximum_reserved_usd}),crypto.randomUUID());
     const done=await poll(()=>api(`/api/translations/${quote.job_id}`),j=>["SUCCEEDED","FAILED","NEEDS_ATTENTION"].includes(j.stage));
     assert.equal(done.stage,"SUCCEEDED");
     const response=await fetch(base+done.artifact.url,{headers:{Cookie:cookie}});assert.ok(response.ok);
@@ -77,7 +79,7 @@ try{
       const accepted=await call("translate_document",{action:"prepare",input_path:`/workspace/manual.${format}`,target_language:"german",idempotency_key:crypto.randomUUID()});
       const quote=await poll(()=>call("translation_status",{job_id:accepted.job_id}),j=>["AWAITING_APPROVAL","FAILED"].includes(j.stage));
       assert.equal(quote.stage,"AWAITING_APPROVAL");assert.equal(quote.cost.completed_calls,0);
-      await call("translate_document",{action:"start",job_id:quote.job_id,quote_version:quote.quote.version,max_cost_usd:.25,idempotency_key:crypto.randomUUID()});
+      await call("translate_document",{action:"start",job_id:quote.job_id,quote_version:quote.quote.version,max_cost_usd:live?liveCap:quote.quote.maximum_reserved_usd,idempotency_key:crypto.randomUUID()});
       const done=await poll(()=>call("translation_status",{job_id:quote.job_id}),j=>["SUCCEEDED","FAILED","NEEDS_ATTENTION"].includes(j.stage));
       assert.equal(done.stage,"SUCCEEDED");
       const saved=await call("save_translation",{job_id:quote.job_id,output_path:`/workspace/out/manual.de.${format}`});

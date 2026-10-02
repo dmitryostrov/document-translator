@@ -7,13 +7,17 @@ import fontkit from "@pdf-lib/fontkit";
 import { AppError } from "./config";
 import { screenText, splitBlocks, type IR, type Block, type Translated } from "./domain";
 import { atomic } from "./files";
+import { fileURLToPath } from "node:url";
 
 export function markdownIR(text: string): IR {
   screenText(text);
   const tree = fromMarkdown(text); const blocks: Block[] = [];
   visit(tree, (node: any) => {
     if (node.type === "html") throw new AppError("MARKDOWN_HTML_UNSUPPORTED");
-    if (node.url && !/^(?:https?:|mailto:|\/|\.|#)/i.test(node.url)) throw new AppError("MARKDOWN_URI_UNSUPPORTED");
+    if (node.url) {
+      const scheme=/^([a-z][a-z0-9+.-]*):/i.exec(node.url)?.[1];
+      if (/[\u0000-\u001f\u007f]/.test(node.url) || /^[\\/]{2}/.test(node.url) || scheme && !/^(https?|mailto)$/i.test(scheme)) throw new AppError("MARKDOWN_URI_UNSUPPORTED");
+    }
     if (node.type === "text" && node.value.trim()) {
       node.blockId = `b${blocks.length}`; blocks.push({ id: node.blockId, text: node.value });
     }
@@ -47,7 +51,7 @@ export async function pdfIR(path: string, acknowledge: boolean): Promise<IR> {
   const canvas = await import("@napi-rs/canvas");
   Object.assign(globalThis, { DOMMatrix: canvas.DOMMatrix, ImageData: canvas.ImageData, Path2D: canvas.Path2D });
   const pdfjs = await import("pdfjs-dist/legacy/build/pdf.mjs");
-  const loading = pdfjs.getDocument({ data: bytes, stopAtErrors: true, disableFontFace: true });
+  const loading = pdfjs.getDocument({ data: bytes, stopAtErrors: true, disableFontFace: true, standardFontDataUrl: fileURLToPath(new URL("../node_modules/pdfjs-dist/standard_fonts/",import.meta.url)).replaceAll("\\","/") });
   const pdf = await loading.promise;
   const optional = await pdf.getOptionalContentConfig({ intent: "display" });
   const blocks: Block[] = [], warnings: any[] = [],order:string[]=[]; let anyImage = false,occurrence=0;
@@ -57,36 +61,71 @@ export async function pdfIR(path: string, acknowledge: boolean): Promise<IR> {
       if ((await page.getAnnotations()).length) throw new AppError("PDF_ANNOTATIONS_UNSUPPORTED");
       const content = await page.getTextContent();
       const operators = await page.getOperatorList({ annotationMode: pdfjs.AnnotationMode.DISABLE, intent: "display" });
-      let mode = 0, color = "#000000", alpha = 1, markedHidden = false,fontSize=12,matrix=[1,0,0,1,0,0],ctm=[1,0,0,1,0,0];
+      let mode = 0, color = "#000000", alpha = 1, markedHidden = false,fontSize=12,hScale=1,matrix=[1,0,0,1,0,0],ctm=[1,0,0,1,0,0],clip=Array.from(page.view);
+      let background="#ffffff",backgroundPainted=false;
       const multiply=(a:number[],b:number[])=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
-      const states: any[] = [], marked: boolean[] = [], runs: { text:string; hidden:boolean; suspect:boolean; off:boolean }[] = [];
+      const states: any[] = [], marked: boolean[] = [], runs: { text:string; hidden:boolean; suspect:boolean; off:boolean; clip:number[]; index:number }[] = [];
+      const snapshot=()=>({mode,color,alpha,markedHidden,fontSize,hScale,matrix:[...matrix],ctm:[...ctm],clip:[...clip]});
+      const restore=()=>{const s=states.pop();if(!s)throw new AppError("PDF_VISIBILITY_UNSUPPORTED");({mode,color,alpha,markedHidden,fontSize,hScale,matrix,ctm,clip}=s);};
+      const bounds=(box:ArrayLike<number>)=>{
+        const points=[[box[0],box[1]],[box[0],box[3]],[box[2],box[1]],[box[2],box[3]]].map(([x,y])=>[ctm[0]*x+ctm[2]*y+ctm[4],ctm[1]*x+ctm[3]*y+ctm[5]]);
+        return [Math.min(...points.map(p=>p[0])),Math.min(...points.map(p=>p[1])),Math.max(...points.map(p=>p[0])),Math.max(...points.map(p=>p[1]))];
+      };
+      const luminance=(value:string)=>{const channels=value.match(/[a-f0-9]{2}/gi)?.map(s=>parseInt(s,16)/255)??[0,0,0];return channels.reduce((n,c,i)=>n+[.2126,.7152,.0722][i]*(c<=.04045?c/12.92:((c+.055)/1.055)**2.4),0);};
+      const images:{index:number;box:number[]}[]=[];
       let pageImage = false;
       for (let n = 0; n < operators.fnArray.length; n++) {
         const op = operators.fnArray[n], args = operators.argsArray[n] ?? [];
-        if (op === pdfjs.OPS.save) states.push({mode,color,alpha,ctm,fontSize});
-        if (op === pdfjs.OPS.restore) { const s=states.pop(); if(s) ({mode,color,alpha,ctm,fontSize}=s); }
+        if (op === pdfjs.OPS.save) states.push(snapshot());
+        if (op === pdfjs.OPS.restore) restore();
+        if (op === pdfjs.OPS.paintFormXObjectBegin) {
+          states.push(snapshot());
+          if(args[0])ctm=multiply(ctm,Array.from(args[0]));
+          if(args[1]){const b=bounds(args[1]);clip=[Math.max(clip[0],b[0]),Math.max(clip[1],b[1]),Math.min(clip[2],b[2]),Math.min(clip[3],b[3])];}
+        }
+        if (op === pdfjs.OPS.paintFormXObjectEnd) restore();
         if (op === pdfjs.OPS.setFont)fontSize=Math.abs(args[1]);
+        if (op === pdfjs.OPS.setHScale)hScale=Number(args[0])/100;
         if (op === pdfjs.OPS.setTextMatrix)matrix=Array.from(args[0]);
         if (op === pdfjs.OPS.transform)ctm=multiply(ctm,Array.isArray(args[0])||ArrayBuffer.isView(args[0])?Array.from(args[0] as ArrayLike<number>):args);
         if (op === pdfjs.OPS.setTextRenderingMode) mode = args[0];
         if (op === pdfjs.OPS.setFillRGBColor) color = paint(args);
         if (op === pdfjs.OPS.setFillGray) color = paint([args[0],args[0],args[0]]);
-        if (op === pdfjs.OPS.setGState) for (const [k,v] of args[0]) if (k === "ca") alpha=Number(v);
+        if (op === pdfjs.OPS.setGState) for (const [k,v] of args[0]) {
+          if (k === "ca") alpha=Number(v);
+          if(k==="SMask"&&v || k==="BM"&&v!=="Normal")throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
+        }
         if (op === pdfjs.OPS.clip || op === pdfjs.OPS.eoClip || op === pdfjs.OPS.shadingFill) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
-        // Arbitrary painted backgrounds/overlapping paths are outside the simple profile.
-        if ([pdfjs.OPS.fill,pdfjs.OPS.eoFill,pdfjs.OPS.fillStroke,pdfjs.OPS.eoFillStroke].includes(op)) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
+        // PDF.js 6 encodes path painting inside constructPath. Only an opaque,
+        // uniform full-page rectangle before content has resolved visibility.
+        if(op===pdfjs.OPS.constructPath){
+          const path=Array.from(args[1]?.[0]??[]) as number[], box=args[2]?bounds(args[2]):[];
+          const rectangle=path.length===13&&path[0]===0&&path[3]===1&&path[6]===1&&path[9]===1&&path[12]===4
+            && new Set([path[1],path[4],path[7],path[10]]).size===2&&new Set([path[2],path[5],path[8],path[11]]).size===2
+            && new Set([1,4,7,10].map(i=>path[i]+","+path[i+1])).size===4;
+          if(args[0]!==pdfjs.OPS.fill||!rectangle||runs.length||pageImage||backgroundPainted||states.length>1||alpha!==1
+            ||ctm[1]!==0||ctm[2]!==0||box.length!==4||box[0]>page.view[0]||box[1]>page.view[1]||box[2]<page.view[2]||box[3]<page.view[3]
+            ||clip.some((v,i)=>v!==page.view[i]))throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
+          background=color;backgroundPainted=true;
+        }
+        if ([pdfjs.OPS.fill,pdfjs.OPS.eoFill,pdfjs.OPS.fillStroke,pdfjs.OPS.eoFillStroke,pdfjs.OPS.closeFillStroke,pdfjs.OPS.closeEOFillStroke,pdfjs.OPS.rawFillPath,
+          pdfjs.OPS.setFillColorN,pdfjs.OPS.setFillTransparent,pdfjs.OPS.beginGroup,pdfjs.OPS.paintSolidColorImageMask,pdfjs.OPS.paintImageMaskXObjectGroup,
+          pdfjs.OPS.paintImageXObjectRepeat,pdfjs.OPS.paintImageMaskXObjectRepeat,pdfjs.OPS.paintInlineImageXObjectGroup].includes(op)) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
         if (op === pdfjs.OPS.beginMarkedContentProps) { marked.push(markedHidden); if(args[0]==="OC") markedHidden ||= !optional.isVisible(args[1]); }
         if (op === pdfjs.OPS.endMarkedContent) markedHidden=marked.pop() ?? false;
-        if ([pdfjs.OPS.paintImageXObject,pdfjs.OPS.paintInlineImageXObject,pdfjs.OPS.paintImageMaskXObject].includes(op)) pageImage=true;
+        if ([pdfjs.OPS.paintImageXObject,pdfjs.OPS.paintInlineImageXObject,pdfjs.OPS.paintImageMaskXObject].includes(op)){pageImage=true;images.push({index:n,box:bounds([0,0,1,1])});}
+        if([pdfjs.OPS.showSpacedText,pdfjs.OPS.nextLineShowText,pdfjs.OPS.nextLineSetSpacingShowText].includes(op))throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
         if (op === pdfjs.OPS.showText) {
           const text = args[0].filter((g:any)=>typeof g!=="number").map((g:any)=>g.unicode ?? "").join("");
-          const channels = color.match(/[a-f0-9]{2}/gi)?.map(s=>parseInt(s,16)) ?? [0,0,0];
           if (![0,3].includes(mode)) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
           const position=multiply(ctm,matrix),[left,bottom,right,top]=page.view;
+          if(!Number.isFinite(hScale)||Math.abs(hScale)<.1||fontSize*Math.hypot(position[0],position[1])*Math.abs(hScale)<3)throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
           const width=args[0].filter((g:any)=>typeof g!=="number").reduce((n:number,g:any)=>n+(g.width??0),0)/1000*fontSize*Math.abs(position[0]);
           const off=position[4]>right || position[4]+width<left || position[5]>top || position[5]+fontSize*Math.abs(position[3])<bottom;
           if(off)warnings.push({code:"HIDDEN_TEXT_EXCLUDED",page:pageNum,count:1});
-          runs.push({ text, off,hidden: mode===3 || alpha===0 || color==="#ffffff" || markedHidden, suspect: alpha>0 && alpha<0.95 || channels.every(c=>c>210)&&color!=="#ffffff" });
+          const a=luminance(color),b=luminance(background),contrast=(Math.max(a,b)+.05)/(Math.min(a,b)+.05);
+          runs.push({ text, off,hidden: mode===3 || alpha===0 || color===background || markedHidden,
+            suspect: alpha>0&&alpha<.95 || color!==background&&contrast<1.5,clip:[...clip],index:n });
         }
       }
       anyImage ||= pageImage;
@@ -102,6 +141,9 @@ export async function pdfIR(path: string, acknowledge: boolean): Promise<IR> {
         const [x,y] = [item.transform[4],item.transform[5]];
         const [left,bottom,right,top] = page.view;
         const off = x+item.width<left || x>right || y<bottom || y>top;
+        const box=[x,y-item.height*.3,x+item.width,y+item.height];
+        if(!off&&matched.some(c=>box[0]<c.clip[0]||box[1]<c.clip[1]||box[2]>c.clip[2]||box[3]>c.clip[3]))throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
+        if(images.some(image=>matched.some(c=>c.index<image.index)&&box[0]<image.box[2]&&box[2]>image.box[0]&&box[1]<image.box[3]&&box[3]>image.box[1]))throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
         if (matched.some(c=>c.suspect) || (!off && item.height<3)) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
         const hidden = matched.every(c=>c.hidden) || off;
         if (!hidden && matched.some(c=>c.hidden)) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");

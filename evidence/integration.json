@@ -1,7 +1,7 @@
 [
   {
     "case": "markdown-quote-start-cost-isolation",
-    "job_id": "fd91c97b-3555-4e6d-803b-73e3ca1a98b8",
+    "job_id": "21e476ea-5e46-4e14-93e4-c043a215b910",
     "stage": "SUCCEEDED",
     "cost": {
       "currency": "USD",
@@ -13,7 +13,8 @@
         "input": 803,
         "output": 172,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     }
@@ -28,8 +29,8 @@
   },
   {
     "case": "pdf-output",
-    "job_id": "1b343aaa-0489-47e9-9cef-d50811650c70",
-    "checksum": "6fdce4b52c28e293847c50ffeb96b40417e72dbe7164a90365545a16a8c2e7da"
+    "job_id": "f219513a-d1ca-4d68-8dc5-6c51f4a7393b",
+    "checksum": "3173acf99f00bc9d56c62eb935e6ca5f4bef684d30b8b0c73500fb749a8ca92b"
   },
   {
     "case": "white-text-excluded",
@@ -40,7 +41,7 @@
         "count": 1
       },
       {
-        "code": "QUALITY_REFERENCE_HUMAN_REVIEW_PENDING"
+        "code": "QUALITY_PAIR_INSUFFICIENT_EVIDENCE"
       }
     ]
   }

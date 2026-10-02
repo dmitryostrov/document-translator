@@ -1,0 +1,3430 @@
+{
+  "measured_at": "2026-10-01T23:03:03.551Z",
+  "budget_usd": 5,
+  "consumed_usd": 0.39193799999999995,
+  "error": null,
+  "method": "Eight paired PDF/Markdown inputs from four fresh synthetic topics; sequential, separate owners, no local result reuse. Same prompts, policy and pipeline. Mini first then Astra low; order/cache/provider variability can affect timing. p95 over eight successful samples is descriptive, not a population estimate. Actual completed-call usage includes agent turns, reasoning output and cache writes; unknown charges remain separate. Diagnostic lexemes were fixed before outputs, but are AI-authored and do not close AC1.",
+  "policy": "visible-v3",
+  "prompt": "translation-v2",
+  "summaries": {
+    "mini": {
+      "attempted": 8,
+      "succeeded": 6,
+      "artifacts_verified": 6,
+      "failed": 2,
+      "p50_success_ms": 7094,
+      "p95_success_ms": 8455,
+      "known_cost_usd": 0.009948,
+      "unresolved_exposure_usd": 0,
+      "mean_known_cost_per_attempt_usd": 0.0012435,
+      "terminology": {
+        "reference_status": "AI-authored diagnostic references, not human approved; AC1 remains unmet",
+        "expected": 92,
+        "matched": 57,
+        "rate": 0.6195652173913043
+      },
+      "tokens": {
+        "input": 12050,
+        "output": 3205,
+        "cached": 0,
+        "cache_write": 0,
+        "reasoning": 0
+      },
+      "rates": {
+        "input": 0.4,
+        "cached": 0.1,
+        "write": 0.4,
+        "output": 1.6
+      },
+      "reasoning_effort": null
+    },
+    "astra": {
+      "attempted": 8,
+      "succeeded": 8,
+      "artifacts_verified": 8,
+      "failed": 0,
+      "p50_success_ms": 15019,
+      "p95_success_ms": 18271,
+      "known_cost_usd": 0.38199,
+      "unresolved_exposure_usd": 0,
+      "mean_known_cost_per_attempt_usd": 0.04774875,
+      "terminology": {
+        "reference_status": "AI-authored diagnostic references, not human approved; AC1 remains unmet",
+        "expected": 136,
+        "matched": 83,
+        "rate": 0.6102941176470589
+      },
+      "tokens": {
+        "input": 17834,
+        "output": 4073,
+        "cached": 0,
+        "cache_write": 0,
+        "reasoning": 134
+      },
+      "rates": {
+        "input": 10,
+        "cached": 1,
+        "write": 12.5,
+        "output": 50
+      },
+      "reasoning_effort": "low"
+    }
+  },
+  "controls": [
+    {
+      "case": "old-mini-quote-after-switch",
+      "error": "QUOTE_STALE",
+      "paid_calls": 0
+    }
+  ],
+  "rows": [
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "md",
+      "source_sha256": "712647a6f8ff8ba9b0ab8f42bf0f042d16e948bac4554fc1b25a7e104a372249",
+      "job_id": "b9ade55d-4032-400e-b1a1-fadd92cc5440",
+      "elapsed_ms": 8455,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.001188,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1470,
+          "output": 375,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "330c40a7b251329732e66a5de9c682280c57fd6a2969c5b525dea7c6fb5c1085",
+        "expires_at": "2026-10-01T23:14:54.435Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 130,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.0525448,
+          "min": 0.0026632,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 130,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.0525448,
+          "min": 0.0026632
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "1e5498b1f0daa239eaeb61309091face5cd5e0db2767eae1c359a8c209a41581",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 519,
+            "write": 0,
+            "cached": 0,
+            "output": 94,
+            "reasoning": 0
+          },
+          "cost": 0.000358,
+          "reserved": 0.0128
+        },
+        {
+          "id": "3c5797f44d560513f7a7976a9f51c80b55c6a54022e0f839503f6b9ca00723ea",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 403,
+            "write": 0,
+            "cached": 0,
+            "output": 16,
+            "reasoning": 0
+          },
+          "cost": 0.0001868,
+          "reserved": 0.0128
+        },
+        {
+          "id": "7eb9daa5cf2cd90839db85460e4856461a67876a8fef4096b8f5977a252afee5",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 548,
+            "write": 0,
+            "cached": 0,
+            "output": 265,
+            "reasoning": 0
+          },
+          "cost": 0.0006432,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-battery.md",
+      "terminology": {
+        "expected": 19,
+        "matched": 11,
+        "rate": 0.5789473684210527,
+        "details": [
+          {
+            "block_id": "b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Batterieservice"
+          },
+          {
+            "block_id": "b0",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Batterieservice"
+          },
+          {
+            "block_id": "b1",
+            "term": "battery",
+            "expected": 2,
+            "matched": 2,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Prüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "b1",
+            "term": "drive",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Prüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "b1",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Prüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor during inspection.",
+            "translation": "Der Motor muss während des Trennens des Batteriekabels ausgeschaltet bleiben. Energetisieren Sie den Motor während der Inspektion niemals."
+          },
+          {
+            "block_id": "b2",
+            "term": "motor",
+            "expected": 2,
+            "matched": 2,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor during inspection.",
+            "translation": "Der Motor muss während des Trennens des Batteriekabels ausgeschaltet bleiben. Energetisieren Sie den Motor während der Inspektion niemals."
+          },
+          {
+            "block_id": "b3",
+            "term": "voltage",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check.",
+            "translation": "Messen Sie die Spannung, bevor Sie die Abdeckung schließen. Die Spannung muss bei dieser Prüfung unter 72 V bleiben."
+          },
+          {
+            "block_id": "b4",
+            "term": "current",
+            "expected": 3,
+            "matched": 3,
+            "source": "The current is electric current through the cable. Record the current at 15 A before the test ends.",
+            "translation": "Der Strom ist der elektrische Strom durch das Kabel. Zeichnen Sie den Strom bei 15 A auf, bevor der Test endet."
+          },
+          {
+            "block_id": "b5",
+            "term": "motor",
+            "expected": 1,
+            "matched": 0,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "b5",
+            "term": "drive",
+            "expected": 2,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "b5",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bezeichnet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "b6",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual unchanged.",
+            "translation": "Notieren Sie die Batterietemperatur vor dem Laden. Lassen Sie MODEL-X und https://example.com/manual unverändert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "pdf",
+      "source_sha256": "7cfb4aea52b91880db59d9f256221826dce48d05c03072ca474efbf23092467b",
+      "job_id": "a951e54f-b2f5-4268-8727-c0ef6b31ec98",
+      "elapsed_ms": 7858,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0011488,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1380,
+          "output": 373,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "f1578920e5bc56d76452be4e945e1526991f16bfb03ab5142b8cfc0b54057d08",
+        "expires_at": "2026-10-01T23:15:03.325Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 124,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.052528000000000005,
+          "min": 0.0026479999999999997,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 124,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.052528000000000005,
+          "min": 0.0026479999999999997
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "e513e0ee6a37fe291c9c86fe05a1d055cef36ac300b2b6d20bf2b4f07c2fe9be",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 391,
+            "write": 0,
+            "cached": 0,
+            "output": 17,
+            "reasoning": 0
+          },
+          "cost": 0.0001836,
+          "reserved": 0.0128
+        },
+        {
+          "id": "7b702556152b97adf93efe656912db6a78103ef95524154ddb121dcb3444a9a0",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 429,
+            "write": 0,
+            "cached": 0,
+            "output": 99,
+            "reasoning": 0
+          },
+          "cost": 0.00033,
+          "reserved": 0.0128
+        },
+        {
+          "id": "faea82449472f1aa2eedb9a683ebd024825189624d8c133488afdadfc8799ecb",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 560,
+            "write": 0,
+            "cached": 0,
+            "output": 257,
+            "reasoning": 0
+          },
+          "cost": 0.0006352,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-battery.pdf",
+      "terminology": {
+        "expected": 19,
+        "matched": 11,
+        "rate": 0.5789473684210527,
+        "details": [
+          {
+            "block_id": "p1b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Batterieservice"
+          },
+          {
+            "block_id": "p1b0",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Batterieservice"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "battery",
+            "expected": 2,
+            "matched": 2,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "drive",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Servicebesuch."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor",
+            "translation": "Der Motor muss während des Abkoppelns des Batteriekabels ausgeschaltet bleiben. Den Motor niemals einschalten"
+          },
+          {
+            "block_id": "p1b2",
+            "term": "motor",
+            "expected": 2,
+            "matched": 2,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor",
+            "translation": "Der Motor muss während des Abkoppelns des Batteriekabels ausgeschaltet bleiben. Den Motor niemals einschalten"
+          },
+          {
+            "block_id": "p1b4",
+            "term": "voltage",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check.",
+            "translation": "Messen Sie die Spannung vor dem Schließen der Abdeckung. Die Spannung muss bei dieser Prüfung unter 72 V bleiben."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "current",
+            "expected": 3,
+            "matched": 3,
+            "source": "The current is electric current through the cable. Record the current at 15 A before the test ends.",
+            "translation": "Der Strom ist der elektrische Strom durch das Kabel. Notieren Sie den Strom bei 15 A, bevor der Test endet."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "motor",
+            "expected": 1,
+            "matched": 0,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bedeutet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "drive",
+            "expected": 2,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bedeutet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Warten Sie das Antriebssystem alle 100 km. Der Antrieb bedeutet in diesem Handbuch die Motorbaugruppe."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual",
+            "translation": "Notieren Sie die Batterietemperatur vor dem Laden. Halten Sie MODEL-X und https://example.com/manual"
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "md",
+      "source_sha256": "02687f70b99db6cdb526573ae6c745ab3ef288792f4cb308e1d4fe8e0697b73c",
+      "job_id": "45ee38bc-d378-4a85-b274-87b5be84cda5",
+      "elapsed_ms": 8166,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0013884,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1619,
+          "output": 463,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "da5e1c77068292c5358949ed39986f477a936e6f94094ba510cca1f7a9477a99",
+        "expires_at": "2026-10-01T23:15:11.108Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 129,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.0525428,
+          "min": 0.002662,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 129,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.0525428,
+          "min": 0.002662
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "d0d8988b9e07c9f4be59415817294cb7c08c55e9f1773bb02a1d47344c76ad99",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 672,
+            "write": 0,
+            "cached": 0,
+            "output": 97,
+            "reasoning": 0
+          },
+          "cost": 0.000424,
+          "reserved": 0.0128
+        },
+        {
+          "id": "fd13b79dd77748ce71ac2c14c3813b8c2a44a5d71dbfb987e11f2ccb024af78e",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 550,
+            "write": 0,
+            "cached": 0,
+            "output": 287,
+            "reasoning": 0
+          },
+          "cost": 0.0006792,
+          "reserved": 0.0176
+        },
+        {
+          "id": "78d85c03fb8bb690df900772b10323ad747436ca10f529827df19f55e9aa9a2f",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 397,
+            "write": 0,
+            "cached": 0,
+            "output": 79,
+            "reasoning": 0
+          },
+          "cost": 0.0002852,
+          "reserved": 0.0128
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-seal.md",
+      "terminology": {
+        "expected": 10,
+        "matched": 8,
+        "rate": 0.8,
+        "details": [
+          {
+            "block_id": "b1",
+            "term": "seal",
+            "expected": 2,
+            "matched": 2,
+            "source": "The seal must be replaced after every inspection. Photograph the seal before removing it.",
+            "translation": "Das Siegel muss nach jeder Inspektion ersetzt werden. Fotografieren Sie das Siegel, bevor Sie es entfernen."
+          },
+          {
+            "block_id": "b2",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Record inspection step 3 and the date before starting work. The motor must remain disconnected.",
+            "translation": "Notieren Sie Inspektionsschritt 3 und das Datum, bevor Sie mit der Arbeit beginnen. Der Motor muss abgeschaltet bleiben."
+          },
+          {
+            "block_id": "b3",
+            "term": "seal",
+            "expected": 2,
+            "matched": 2,
+            "source": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened.",
+            "translation": "Bringen Sie das neue Siegel über der Abdeckungsnaht an. Bestätigen Sie, dass das Siegel reißt, wenn die Abdeckung geöffnet wird."
+          },
+          {
+            "block_id": "b4",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "This inspection is performed every 100 km. Keep MODEL-X in the service record.",
+            "translation": "Diese Inspektion wird alle 100 km durchgeführt. Führen Sie das Modell MODEL-X im Serviceheft."
+          },
+          {
+            "block_id": "b5",
+            "term": "seal",
+            "expected": 1,
+            "matched": 1,
+            "source": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing function.",
+            "translation": "Das Siegel ist ein manipulationssicheres selbstklebendes Sicherheitsetikett. Es ist keine Dichtung aus Gummi und hat keine Flüssigkeitsdichtungsfunktion."
+          },
+          {
+            "block_id": "b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing service.",
+            "translation": "Ein fehlendes Siegel weist darauf hin, dass die Abdeckung möglicherweise geöffnet wurde. Ersetzen Sie das Siegel nach Abschluss des Service."
+          },
+          {
+            "block_id": "b6",
+            "term": "seal",
+            "expected": 2,
+            "matched": 2,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing service.",
+            "translation": "Ein fehlendes Siegel weist darauf hin, dass die Abdeckung möglicherweise geöffnet wurde. Ersetzen Sie das Siegel nach Abschluss des Service."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "pdf",
+      "source_sha256": "677003e0767d82c788329b152f7a55ac5eddaeaeb5145eb30bae05808a29d53a",
+      "job_id": "c6fcae41-f472-494a-bc40-45c907f793a3",
+      "elapsed_ms": 7094,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0012064,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1404,
+          "output": 403,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "8f5cabdb977a340aa3201fd238ad7a31e107cde878667d2041f801d5509b131f",
+        "expires_at": "2026-10-01T23:15:19.705Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 122,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.052522400000000004,
+          "min": 0.0026424,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 122,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.052522400000000004,
+          "min": 0.0026424
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "1cace5985c28a5dc2a854aace4337d8fad49cf1e928a14fb26eff1658db9f8ef",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 405,
+            "write": 0,
+            "cached": 0,
+            "output": 49,
+            "reasoning": 0
+          },
+          "cost": 0.0002404,
+          "reserved": 0.0128
+        },
+        {
+          "id": "409d8b00d43428e2815a6b23f035c1438b67d1008e330dc112e96939a830d113",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 455,
+            "write": 0,
+            "cached": 0,
+            "output": 85,
+            "reasoning": 0
+          },
+          "cost": 0.000318,
+          "reserved": 0.0128
+        },
+        {
+          "id": "02ca2245f8f4cfaebf2025ed1f3a23a7647d126fbf0e20f627d02e01ee1b7e09",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 544,
+            "write": 0,
+            "cached": 0,
+            "output": 269,
+            "reasoning": 0
+          },
+          "cost": 0.000648,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-seal.pdf",
+      "terminology": {
+        "expected": 10,
+        "matched": 1,
+        "rate": 0.1,
+        "details": [
+          {
+            "block_id": "p1b1",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "The seal must be replaced after every inspection. Photograph the seal before removing it.",
+            "translation": "Die Dichtung muss nach jeder Inspektion ersetzt werden. Fotografieren Sie die Dichtung vor dem Entfernen."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Record inspection step 3 and the date before starting work. The motor must remain disconnected.",
+            "translation": "Notieren Sie Inspektionsschritt 3 und das Datum, bevor Sie mit der Arbeit beginnen. Der Motor muss abgeschaltet bleiben."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened.",
+            "translation": "Befestigen Sie die neue Dichtung über der Abdeckungsfuge. Stellen Sie sicher, dass die Dichtung reißt, wenn die Abdeckung geöffnet wird."
+          },
+          {
+            "block_id": "p1b4",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "This inspection is performed every 100 km. Keep MODEL-X in the service record.",
+            "translation": "Diese Inspektion wird alle 100 km durchgeführt. Führen Sie MODEL-X im Serviceheft."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "seal",
+            "expected": 1,
+            "matched": 0,
+            "source": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing",
+            "translation": "Die Dichtung ist ein manipulationssicheres Klebeetikett. Sie ist keine Gummidichtung und hat keine Flüssigkeitsdichtungs"
+          },
+          {
+            "block_id": "p1b7",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing",
+            "translation": "Eine fehlende Dichtung weist darauf hin, dass die Abdeckung möglicherweise geöffnet wurde. Ersetzen Sie die Dichtung nach Abschluss"
+          },
+          {
+            "block_id": "p1b8",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "service.",
+            "translation": "des Service."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "md",
+      "source_sha256": "e8b37b9640aae59a6322a97bc6fe317188aff1952ba07fe5d2a61da96afa68fa",
+      "job_id": "dad8015f-592c-4e2f-882f-913f9be1727a",
+      "elapsed_ms": 6898,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0012772,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1561,
+          "output": 408,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "e0334b01ad92e05948448ad55bc02ea18e7c31d79743d3cdace385fb39f699ed",
+        "expires_at": "2026-10-01T23:15:26.724Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 129,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.0525428,
+          "min": 0.002662,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 129,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.0525428,
+          "min": 0.002662
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "ea037b044ccedb80083b580e11c4991dd3bb17a10f7c2d1e86f41df8e4dbf0cd",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 625,
+            "write": 0,
+            "cached": 0,
+            "output": 80,
+            "reasoning": 0
+          },
+          "cost": 0.000378,
+          "reserved": 0.0128
+        },
+        {
+          "id": "e7f5bf3e44515bd631894cdc3a0ff67e060b4e04234541a86f75bb82094136da",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 403,
+            "write": 0,
+            "cached": 0,
+            "output": 66,
+            "reasoning": 0
+          },
+          "cost": 0.0002668,
+          "reserved": 0.0128
+        },
+        {
+          "id": "01e04ea31c110550c969804bbf8b92ac7fd0a936665f603ea5110d0f3054c95a",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 533,
+            "write": 0,
+            "cached": 0,
+            "output": 262,
+            "reasoning": 0
+          },
+          "cost": 0.0006324,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-ground.md",
+      "terminology": {
+        "expected": 17,
+        "matched": 13,
+        "rate": 0.7647058823529411,
+        "details": [
+          {
+            "block_id": "b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 0,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung vor der Spannungsmessung an die Masse an. Trennen Sie die Leitung nach dem Test."
+          },
+          {
+            "block_id": "b1",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung vor der Spannungsmessung an die Masse an. Trennen Sie die Leitung nach dem Test."
+          },
+          {
+            "block_id": "b1",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung vor der Spannungsmessung an die Masse an. Trennen Sie die Leitung nach dem Test."
+          },
+          {
+            "block_id": "b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V relativ zur Masse. Die Masse ist die gemeinsame Rückführung für diesen isolierten Batteriekreis."
+          },
+          {
+            "block_id": "b2",
+            "term": "ground",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V relativ zur Masse. Die Masse ist die gemeinsame Rückführung für diesen isolierten Batteriekreis."
+          },
+          {
+            "block_id": "b3",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "The ground connection is attached to the chassis. It is not a protective earth connection to the soil.",
+            "translation": "Der Masseanschluss ist am Fahrgestell befestigt. Es ist keine Schutz-Schutzleiterverbindung zur Erde."
+          },
+          {
+            "block_id": "b4",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the metal lead.",
+            "translation": "Überprüfen Sie die Leitung auf Beschädigungen, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht die Metallleitung."
+          },
+          {
+            "block_id": "b4",
+            "term": "lead",
+            "expected": 3,
+            "matched": 3,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the metal lead.",
+            "translation": "Überprüfen Sie die Leitung auf Beschädigungen, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht die Metallleitung."
+          },
+          {
+            "block_id": "b5",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "b5",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "b5",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während des Betriebs elektrisch isoliert."
+          },
+          {
+            "block_id": "b6",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während des Betriebs elektrisch isoliert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "pdf",
+      "source_sha256": "76e5eac493080ad5ebaced7077070ba2c2c2edb9bd37897aae21bd7d69bb037e",
+      "job_id": "205837f7-08ed-4e3d-b45d-5dc5dfef21b2",
+      "elapsed_ms": 6085,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0010232,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1322,
+          "output": 309,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "4ee3f427667baf37a9a4cba662903aa47795525771338a24a1ec75ab4912db65",
+        "expires_at": "2026-10-01T23:15:34.042Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 122,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.052522400000000004,
+          "min": 0.0026424,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 122,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.052522400000000004,
+          "min": 0.0026424
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "5612135d86c3902e0900667e78d7e1f278163a9b1bcbaa41c06b15efa7c5057b",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 391,
+            "write": 0,
+            "cached": 0,
+            "output": 19,
+            "reasoning": 0
+          },
+          "cost": 0.0001868,
+          "reserved": 0.0128
+        },
+        {
+          "id": "64ea8d964de0f95049eb21dd67b7427c19fe4d78efe4c9f3cc81709c3ce82c1b",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 433,
+            "write": 0,
+            "cached": 0,
+            "output": 39,
+            "reasoning": 0
+          },
+          "cost": 0.0002356,
+          "reserved": 0.0128
+        },
+        {
+          "id": "1827d6d8dbc18d6eb2846f6a0f36c68b0a02c822e32d3acdecc52c4595f414a7",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 498,
+            "write": 0,
+            "cached": 0,
+            "output": 251,
+            "reasoning": 0
+          },
+          "cost": 0.0006008,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-4.1-mini-ground.pdf",
+      "terminology": {
+        "expected": 17,
+        "matched": 13,
+        "rate": 0.7647058823529411,
+        "details": [
+          {
+            "block_id": "p1b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 0,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Verbinden Sie die Messleitung vor der Spannungsmessung mit der Masse. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Verbinden Sie die Messleitung vor der Spannungsmessung mit der Masse. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Verbinden Sie die Messleitung vor der Spannungsmessung mit der Masse. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b3",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V relativ zur Masse. Die Masse ist der gemeinsame Rückführungspunkt für diesen isolierten Batteriekreis."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "ground",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V relativ zur Masse. Die Masse ist der gemeinsame Rückführungspunkt für diesen isolierten Batteriekreis."
+          },
+          {
+            "block_id": "p1b4",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "The ground connection is attached to the chassis. It is not a protective earth connection to the soil.",
+            "translation": "Der Masseanschluss ist mit dem Chassis verbunden. Es ist keine Schutzerdung mit dem Boden."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the",
+            "translation": "Überprüfen Sie die Leitung auf Beschädigungen, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht der"
+          },
+          {
+            "block_id": "p1b5",
+            "term": "lead",
+            "expected": 2,
+            "matched": 2,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the",
+            "translation": "Überprüfen Sie die Leitung auf Beschädigungen, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht der"
+          },
+          {
+            "block_id": "p1b6",
+            "term": "lead",
+            "expected": 1,
+            "matched": 0,
+            "source": "metal lead.",
+            "translation": "Metallleiter."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Notieren Sie die Spannung und überprüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b8",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          },
+          {
+            "block_id": "p1b8",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "md",
+      "source_sha256": "db340cbd776cacc44628dfbbf395d848dc9beee303e9268d5f229d17040f2c6a",
+      "job_id": "b13f86a2-fdbf-4bc5-b25b-913a30b0fb07",
+      "elapsed_ms": 6391,
+      "stage": "FAILED",
+      "error": "INVALID_MODEL_OUTPUT",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0012996,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1593,
+          "output": 414,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "e2b2062977ca4081046b69536723787d7b1aa82543a1db16d3a0eb0dd5d6f01c",
+        "expires_at": "2026-10-01T23:15:40.091Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 139,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.052572400000000005,
+          "min": 0.0026884,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 139,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.052572400000000005,
+          "min": 0.0026884
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": null,
+      "calls": [
+        {
+          "id": "531f794c41fa21397d5580a0366ac85cf9a018a4e9062bdedf10ccabf72ec74f",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 527,
+            "write": 0,
+            "cached": 0,
+            "output": 288,
+            "reasoning": 0
+          },
+          "cost": 0.0006716,
+          "reserved": 0.0176
+        },
+        {
+          "id": "6c73fb884038cc238ee02c0d5dee72a846966329e7f4c2041d06a272c8a661e7",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 398,
+            "write": 0,
+            "cached": 0,
+            "output": 62,
+            "reasoning": 0
+          },
+          "cost": 0.0002584,
+          "reserved": 0.0128
+        },
+        {
+          "id": "6789dccc443d2c3e00d90d11a8360d4f2a9a65a639b5fcae64f850c9f98060d2",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 668,
+            "write": 0,
+            "cached": 0,
+            "output": 64,
+            "reasoning": 0
+          },
+          "cost": 0.0003696,
+          "reserved": 0.0128
+        }
+      ],
+      "artifact_verified": false,
+      "receipt_verified": true,
+      "accounting_verified": true
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "pdf",
+      "source_sha256": "faf26511b4d5363a8523e0c39088df0e307d135219656b9e046eab9ca1fd2dc0",
+      "job_id": "eb55fc92-7066-48ff-961d-f76d52d2a8e7",
+      "elapsed_ms": 7603,
+      "stage": "FAILED",
+      "error": "INVALID_MODEL_OUTPUT",
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0014164,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1701,
+          "output": 460,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 0.0688
+      },
+      "quote": {
+        "model": "gpt-4.1-mini",
+        "version": "8197c1c9a5020945c80680af472b8fab80381fb7c6e3ebaee2e1538aef687ad8",
+        "expires_at": "2026-10-01T23:15:46.704Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 132,
+        "rates_version": "2026-09-30",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 0.052552,
+          "min": 0.0026688,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 132,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": null,
+        "estimated_total_usd": {
+          "max": 0.052552,
+          "min": 0.0026688
+        },
+        "maximum_reserved_usd": 0.0688
+      },
+      "numeric": null,
+      "calls": [
+        {
+          "id": "30992ff4262d83f20ed2d8e9684bae8861601bb6af761d7402095eecfa1209e3",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 406,
+            "write": 0,
+            "cached": 0,
+            "output": 78,
+            "reasoning": 0
+          },
+          "cost": 0.0002872,
+          "reserved": 0.0128
+        },
+        {
+          "id": "c06609e26d339a308bf7af41f254453c1bee8b155f8d497251ab6bd203b4f270",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 729,
+            "write": 0,
+            "cached": 0,
+            "output": 97,
+            "reasoning": 0
+          },
+          "cost": 0.0004468,
+          "reserved": 0.0128
+        },
+        {
+          "id": "b4367f033939ee2dbae3a826672efe57296d992fb8e8f8ceabad71c58add2966",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 566,
+            "write": 0,
+            "cached": 0,
+            "output": 285,
+            "reasoning": 0
+          },
+          "cost": 0.0006824,
+          "reserved": 0.0176
+        }
+      ],
+      "artifact_verified": false,
+      "receipt_verified": true,
+      "accounting_verified": true
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "md",
+      "source_sha256": "712647a6f8ff8ba9b0ab8f42bf0f042d16e948bac4554fc1b25a7e104a372249",
+      "job_id": "b41a6d19-71ad-47fa-b492-910e99b69b8f",
+      "elapsed_ms": 13013,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.04358,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1838,
+          "output": 504,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "96e0fa619de697b93e78771586aad2817d45942985b36712e7aa3e943b0aa036",
+        "expires_at": "2026-10-01T23:16:00.072Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 130,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.3957000000000002,
+          "min": 0.07575,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 130,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.3957000000000002,
+          "min": 0.07575
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "5e1daed327dcef5983430097b2e7f4ee1d552f10061ec8a337363d7b4858a709",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 97,
+            "reasoning": 0
+          },
+          "cost": 0.00892,
+          "reserved": 0.4
+        },
+        {
+          "id": "8e6e0cbfab0e9489732df45fb0e4fcfe56ba731e08f1692a59dd88710b2e3140",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 861,
+            "write": 0,
+            "cached": 0,
+            "output": 120,
+            "reasoning": 0
+          },
+          "cost": 0.01461,
+          "reserved": 0.4
+        },
+        {
+          "id": "2fbddf5bd2848ec3c19c566d42c65d8a29d1cef0693725c8b41a4fb04a2eaa81",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 570,
+            "write": 0,
+            "cached": 0,
+            "output": 287,
+            "reasoning": 0
+          },
+          "cost": 0.02005,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-battery.md",
+      "terminology": {
+        "expected": 19,
+        "matched": 12,
+        "rate": 0.631578947368421,
+        "details": [
+          {
+            "block_id": "b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Battery service",
+            "translation": "Wartung der Batterie"
+          },
+          {
+            "block_id": "b0",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Battery service",
+            "translation": "Wartung der Batterie"
+          },
+          {
+            "block_id": "b1",
+            "term": "battery",
+            "expected": 2,
+            "matched": 2,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "b1",
+            "term": "drive",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "b1",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Die Batterie liefert 12 kW an das Antriebssystem. Überprüfen Sie die Batterie vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor during inspection.",
+            "translation": "Der Elektromotor muss stillstehen, solange das Batteriekabel getrennt ist. Setzen Sie den Elektromotor während der Überprüfung niemals unter Spannung."
+          },
+          {
+            "block_id": "b2",
+            "term": "motor",
+            "expected": 2,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor during inspection.",
+            "translation": "Der Elektromotor muss stillstehen, solange das Batteriekabel getrennt ist. Setzen Sie den Elektromotor während der Überprüfung niemals unter Spannung."
+          },
+          {
+            "block_id": "b3",
+            "term": "voltage",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check.",
+            "translation": "Messen Sie die Spannung, bevor Sie die Abdeckung schließen. Die Spannung muss während dieser Prüfung unter 72 V bleiben."
+          },
+          {
+            "block_id": "b4",
+            "term": "current",
+            "expected": 3,
+            "matched": 3,
+            "source": "The current is electric current through the cable. Record the current at 15 A before the test ends.",
+            "translation": "Mit Strom ist der elektrische Strom durch das Kabel gemeint. Protokollieren Sie den Strom bei 15 A, bevor der Test endet."
+          },
+          {
+            "block_id": "b5",
+            "term": "motor",
+            "expected": 1,
+            "matched": 0,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "b5",
+            "term": "drive",
+            "expected": 2,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "b5",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "b6",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual unchanged.",
+            "translation": "Protokollieren Sie die Temperatur der Batterie vor dem Laden. Lassen Sie MODEL-X und https://example.com/manual unverändert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "pdf",
+      "source_sha256": "7cfb4aea52b91880db59d9f256221826dce48d05c03072ca474efbf23092467b",
+      "job_id": "cc08c855-f287-42c3-a011-1127d6fce921",
+      "elapsed_ms": 18271,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.063,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 5,
+        "tokens": {
+          "input": 3365,
+          "output": 587,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "57fbb03d843374bd8189e2eaf181d6866f9ed486d3b6019052896e14dffce91b",
+        "expires_at": "2026-10-01T23:16:13.507Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 124,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.3951900000000002,
+          "min": 0.07532,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 124,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.3951900000000002,
+          "min": 0.07532
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "95c8053ea8d4aa8ca5626b4a1536f0b673249648aa0a24f944d518479860d095",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 395,
+            "write": 0,
+            "cached": 0,
+            "output": 19,
+            "reasoning": 0
+          },
+          "cost": 0.0049,
+          "reserved": 0.4
+        },
+        {
+          "id": "3a4fe5c228bac4d78fc5697eaa5ca9f7ca5782694bbfb89e3e6315e7c241a8c8",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 524,
+            "write": 0,
+            "cached": 0,
+            "output": 82,
+            "reasoning": 0
+          },
+          "cost": 0.00934,
+          "reserved": 0.4
+        },
+        {
+          "id": "8ccb0e6e1c8094ef3677215004fa8e4e2830b4e755fd0a2494f2bcf2d8502556",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 870,
+            "write": 0,
+            "cached": 0,
+            "output": 70,
+            "reasoning": 0
+          },
+          "cost": 0.0122,
+          "reserved": 0.4
+        },
+        {
+          "id": "f501c1d9c2d473273f71c1ab85a08eb9637f8d26b000944fdf428605b86608ff",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 978,
+            "write": 0,
+            "cached": 0,
+            "output": 141,
+            "reasoning": 0
+          },
+          "cost": 0.01683,
+          "reserved": 0.4
+        },
+        {
+          "id": "cf21bcefad7140bce19d4a0f4fc1cd6a2fc94a6399c8d18f066235cd3a5d32ea",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 598,
+            "write": 0,
+            "cached": 0,
+            "output": 275,
+            "reasoning": 0
+          },
+          "cost": 0.01973,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-battery.pdf",
+      "terminology": {
+        "expected": 19,
+        "matched": 9,
+        "rate": 0.47368421052631576,
+        "details": [
+          {
+            "block_id": "p1b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Akkuwartung"
+          },
+          {
+            "block_id": "p1b0",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery service",
+            "translation": "Akkuwartung"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "battery",
+            "expected": 2,
+            "matched": 2,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Der Akku liefert 12 kW an das Antriebssystem. Prüfen Sie den Akku vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "drive",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Der Akku liefert 12 kW an das Antriebssystem. Prüfen Sie den Akku vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "The battery supplies 12 kW to the drive system. Inspect the battery before every service visit.",
+            "translation": "Der Akku liefert 12 kW an das Antriebssystem. Prüfen Sie den Akku vor jedem Wartungstermin."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor",
+            "translation": "Der Elektromotor muss stillstehen, solange das Akkukabel getrennt ist. Bestromen Sie den Elektromotor niemals"
+          },
+          {
+            "block_id": "p1b2",
+            "term": "motor",
+            "expected": 2,
+            "matched": 0,
+            "source": "The motor must remain stopped while the battery cable is disconnected. Never energize the motor",
+            "translation": "Der Elektromotor muss stillstehen, solange das Akkukabel getrennt ist. Bestromen Sie den Elektromotor niemals"
+          },
+          {
+            "block_id": "p1b4",
+            "term": "voltage",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure the voltage before closing the cover. The voltage must remain below 72 V during this check.",
+            "translation": "Messen Sie die Spannung, bevor Sie die Abdeckung schließen. Die Spannung muss während dieser Prüfung unter 72 V bleiben."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "current",
+            "expected": 3,
+            "matched": 3,
+            "source": "The current is electric current through the cable. Record the current at 15 A before the test ends.",
+            "translation": "Der Strom ist der elektrische Strom durch das Kabel. Protokollieren Sie den Strom bei 15 A, bevor der Test endet."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "motor",
+            "expected": 1,
+            "matched": 0,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "drive",
+            "expected": 2,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the drive system every 100 km. The drive means the motor assembly in this manual.",
+            "translation": "Führen Sie alle 100 km eine Wartung des Antriebssystems durch. Der Antrieb bezeichnet in diesem Handbuch die Elektromotorbaugruppe."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Record the battery temperature before charging. Keep MODEL-X and https://example.com/manual",
+            "translation": "Protokollieren Sie die Akkutemperatur vor dem Laden. Lassen Sie MODEL-X und https://example.com/manual"
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "md",
+      "source_sha256": "02687f70b99db6cdb526573ae6c745ab3ef288792f4cb308e1d4fe8e0697b73c",
+      "job_id": "23bd7a19-7b1d-4987-953d-30fd57181ff0",
+      "elapsed_ms": 15019,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.0472,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 2195,
+          "output": 505,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 24
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "1f58a0929e801407aa8e85173bf6bcad291f3d8348a8cc6190706b35c6f8d74e",
+        "expires_at": "2026-10-01T23:16:31.712Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 129,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.39564,
+          "min": 0.07572,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 129,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.39564,
+          "min": 0.07572
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "e01e7ef5e7462ded2e456c117b20c9109fdb196239b8dbdd1164e741a7351e19",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 401,
+            "write": 0,
+            "cached": 0,
+            "output": 19,
+            "reasoning": 0
+          },
+          "cost": 0.00496,
+          "reserved": 0.4
+        },
+        {
+          "id": "11878aedbc98d03577071c4e70b611171b9c5e0b6def5fd8140bda9c3b0fc447",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 527,
+            "write": 0,
+            "cached": 0,
+            "output": 314,
+            "reasoning": 0
+          },
+          "cost": 0.02097,
+          "reserved": 0.55
+        },
+        {
+          "id": "42a70e41480cfb6d2c368e8f12c4e815476501d40c012bc74a4b6cfcfb1408cd",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 548,
+            "write": 0,
+            "cached": 0,
+            "output": 94,
+            "reasoning": 24
+          },
+          "cost": 0.01018,
+          "reserved": 0.4
+        },
+        {
+          "id": "8ca80f5fa4ba1d6784aac0398b57a13c1927c2ba0e43f39ffba1c0b74e081741",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 719,
+            "write": 0,
+            "cached": 0,
+            "output": 78,
+            "reasoning": 0
+          },
+          "cost": 0.01109,
+          "reserved": 0.4
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-seal.md",
+      "terminology": {
+        "expected": 10,
+        "matched": 3,
+        "rate": 0.3,
+        "details": [
+          {
+            "block_id": "b1",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "The seal must be replaced after every inspection. Photograph the seal before removing it.",
+            "translation": "Das Siegeletikett muss nach jeder Inspektion ersetzt werden. Fotografieren Sie das Siegeletikett, bevor Sie es entfernen."
+          },
+          {
+            "block_id": "b2",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Record inspection step 3 and the date before starting work. The motor must remain disconnected.",
+            "translation": "Dokumentieren Sie Prüfschritt 3 und das Datum, bevor Sie mit der Arbeit beginnen. Der Motor muss von der Stromversorgung getrennt bleiben."
+          },
+          {
+            "block_id": "b3",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened.",
+            "translation": "Bringen Sie das neue Siegeletikett über der Deckelfuge an. Vergewissern Sie sich, dass das Siegeletikett beim Öffnen des Deckels zerstört wird."
+          },
+          {
+            "block_id": "b4",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "This inspection is performed every 100 km. Keep MODEL-X in the service record.",
+            "translation": "Diese Inspektion wird alle 100 km durchgeführt. Behalten Sie MODEL-X im Wartungsprotokoll bei."
+          },
+          {
+            "block_id": "b5",
+            "term": "seal",
+            "expected": 1,
+            "matched": 1,
+            "source": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing function.",
+            "translation": "Das Siegeletikett ist ein selbstklebendes Sicherheitsetikett, das Manipulationen sichtbar macht. Es ist keine Gummidichtung und hat keine flüssigkeitsabdichtende Funktion."
+          },
+          {
+            "block_id": "b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing service.",
+            "translation": "Ein fehlendes Siegeletikett weist darauf hin, dass der Deckel möglicherweise geöffnet wurde. Ersetzen Sie das Siegeletikett nach Abschluss der Wartung."
+          },
+          {
+            "block_id": "b6",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing service.",
+            "translation": "Ein fehlendes Siegeletikett weist darauf hin, dass der Deckel möglicherweise geöffnet wurde. Ersetzen Sie das Siegeletikett nach Abschluss der Wartung."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "pdf",
+      "source_sha256": "677003e0767d82c788329b152f7a55ac5eddaeaeb5145eb30bae05808a29d53a",
+      "job_id": "1ed83d70-a0d4-4dbe-8468-f51a873507a7",
+      "elapsed_ms": 15734,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.04794,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 2244,
+          "output": 510,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 33
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "399f8e806d5fc18e660f6ca9ab0ce683f375b62b19b554994a83bd22b45471f3",
+        "expires_at": "2026-10-01T23:16:47.160Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 122,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.3950200000000001,
+          "min": 0.07516,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 122,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.3950200000000001,
+          "min": 0.07516
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "30e917c237337494902153e01a1679456b3f454e20954b9af3696b5252abaded",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 725,
+            "write": 0,
+            "cached": 0,
+            "output": 129,
+            "reasoning": 33
+          },
+          "cost": 0.0137,
+          "reserved": 0.4
+        },
+        {
+          "id": "4745b124392d4df8aaa18d728e18f07c5dcec885d9dc4a5da4d4fa947a47ec01",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 561,
+            "write": 0,
+            "cached": 0,
+            "output": 68,
+            "reasoning": 0
+          },
+          "cost": 0.00901,
+          "reserved": 0.4
+        },
+        {
+          "id": "a26fafb9e40fcdc4fe9152c56bebed2429a9599c56efa83f566c899b736b6bc6",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 409,
+            "write": 0,
+            "cached": 0,
+            "output": 19,
+            "reasoning": 0
+          },
+          "cost": 0.00504,
+          "reserved": 0.4
+        },
+        {
+          "id": "be36d7b94d5b147151f9616be7ec6970b8f667c5e28fd55744c5a706baea55a5",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 549,
+            "write": 0,
+            "cached": 0,
+            "output": 294,
+            "reasoning": 0
+          },
+          "cost": 0.02019,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-seal.pdf",
+      "terminology": {
+        "expected": 10,
+        "matched": 3,
+        "rate": 0.3,
+        "details": [
+          {
+            "block_id": "p1b1",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "The seal must be replaced after every inspection. Photograph the seal before removing it.",
+            "translation": "Das Sicherheitssiegel muss nach jeder Inspektion ersetzt werden. Fotografieren Sie das Sicherheitssiegel, bevor Sie es entfernen."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Record inspection step 3 and the date before starting work. The motor must remain disconnected.",
+            "translation": "Dokumentieren Sie Inspektionsschritt 3 und das Datum vor Arbeitsbeginn. Der Motor muss getrennt bleiben."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened.",
+            "translation": "Bringen Sie das neue Sicherheitssiegel über der Deckelfuge an. Vergewissern Sie sich, dass das Sicherheitssiegel beim Öffnen des Deckels reißt."
+          },
+          {
+            "block_id": "p1b4",
+            "term": "service",
+            "expected": 1,
+            "matched": 0,
+            "source": "This inspection is performed every 100 km. Keep MODEL-X in the service record.",
+            "translation": "Diese Inspektion wird alle 100 km durchgeführt. Behalten Sie MODEL-X im Wartungsnachweis bei."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "seal",
+            "expected": 1,
+            "matched": 1,
+            "source": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing",
+            "translation": "Das Sicherheitssiegel ist ein selbstklebendes Sicherheitsetikett, das Manipulationen erkennbar macht. Es ist keine Gummidichtung und hat keine flüssigkeitsabdichtende"
+          },
+          {
+            "block_id": "p1b7",
+            "term": "seal",
+            "expected": 2,
+            "matched": 0,
+            "source": "A missing seal indicates that the cover may have been opened. Replace the seal after completing",
+            "translation": "Ein fehlendes Sicherheitssiegel deutet darauf hin, dass der Deckel möglicherweise geöffnet wurde. Ersetzen Sie das Sicherheitssiegel nach Abschluss der"
+          },
+          {
+            "block_id": "p1b8",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "service.",
+            "translation": "Wartung."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "md",
+      "source_sha256": "e8b37b9640aae59a6322a97bc6fe317188aff1952ba07fe5d2a61da96afa68fa",
+      "job_id": "55deedaf-6874-49eb-8ace-573a9dbebeb8",
+      "elapsed_ms": 17301,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.05446,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 2636,
+          "output": 562,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 10
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "462f2a98a34dc6f4d8289595b92c3e15d6fdc6cad6c0fa54636010211dea8131",
+        "expires_at": "2026-10-01T23:17:02.862Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 129,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.39564,
+          "min": 0.07572,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 129,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.39564,
+          "min": 0.07572
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "f96fe29ce560ec96f9b9618c8e996fe8fe827cd61fe5f653c38ad3e9afaa9181",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 769,
+            "write": 0,
+            "cached": 0,
+            "output": 80,
+            "reasoning": 10
+          },
+          "cost": 0.01169,
+          "reserved": 0.4
+        },
+        {
+          "id": "0940736aba2b0975b8ca9da6e6a7c71bf9c78d1885cf3ecef24212e302a0eb28",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 407,
+            "write": 0,
+            "cached": 0,
+            "output": 82,
+            "reasoning": 0
+          },
+          "cost": 0.00817,
+          "reserved": 0.4
+        },
+        {
+          "id": "2c5c1c028c0be8a92f9c6ae6da108146f816213ac2e2b7352f4f93df498787b8",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 887,
+            "write": 0,
+            "cached": 0,
+            "output": 124,
+            "reasoning": 0
+          },
+          "cost": 0.01507,
+          "reserved": 0.4
+        },
+        {
+          "id": "e9e60ba8daa9aa07c5a75852d1154255e3128f183a43f719e6a82110a73af0cf",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 573,
+            "write": 0,
+            "cached": 0,
+            "output": 276,
+            "reasoning": 0
+          },
+          "cost": 0.01953,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-ground.md",
+      "terminology": {
+        "expected": 17,
+        "matched": 15,
+        "rate": 0.8823529411764706,
+        "details": [
+          {
+            "block_id": "b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach der Prüfung."
+          },
+          {
+            "block_id": "b1",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach der Prüfung."
+          },
+          {
+            "block_id": "b1",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the test.",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach der Prüfung."
+          },
+          {
+            "block_id": "b2",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V gegenüber Masse. Masse ist das gemeinsame Bezugspotenzial des elektrischen Rückleiters für diesen isolierten Batteriestromkreis."
+          },
+          {
+            "block_id": "b2",
+            "term": "ground",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V gegenüber Masse. Masse ist das gemeinsame Bezugspotenzial des elektrischen Rückleiters für diesen isolierten Batteriestromkreis."
+          },
+          {
+            "block_id": "b3",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "The ground connection is attached to the chassis. It is not a protective earth connection to the soil.",
+            "translation": "Der Masseanschluss ist am Chassis befestigt. Er ist kein Schutzerdeanschluss zum Erdreich."
+          },
+          {
+            "block_id": "b4",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the metal lead.",
+            "translation": "Prüfen Sie die Leitung auf Schäden, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht das Metall Blei."
+          },
+          {
+            "block_id": "b4",
+            "term": "lead",
+            "expected": 3,
+            "matched": 3,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the metal lead.",
+            "translation": "Prüfen Sie die Leitung auf Schäden, bevor der Motor startet. Die Leitung ist ein isoliertes elektrisches Kabel, nicht das Metall Blei."
+          },
+          {
+            "block_id": "b5",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach der Prüfung."
+          },
+          {
+            "block_id": "b5",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach der Prüfung."
+          },
+          {
+            "block_id": "b5",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach der Prüfung."
+          },
+          {
+            "block_id": "b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          },
+          {
+            "block_id": "b6",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "pdf",
+      "source_sha256": "76e5eac493080ad5ebaced7077070ba2c2c2edb9bd37897aae21bd7d69bb037e",
+      "job_id": "3e20dfb7-d473-43df-bf84-bd4fe96e927c",
+      "elapsed_ms": 16229,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.04778,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 4,
+        "tokens": {
+          "input": 2248,
+          "output": 506,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 51
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "7432134d4e5ca859f45d660d44ea284f57c632974f89e22c2fd66da072dd0575",
+        "expires_at": "2026-10-01T23:17:20.594Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 122,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.3950200000000001,
+          "min": 0.07516,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 122,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.3950200000000001,
+          "min": 0.07516
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 2,
+        "expected": 2
+      },
+      "calls": [
+        {
+          "id": "939d6e3df2d374d567abb68d6e4bde341b422dcd14594a0701f4940c3c05b7ce",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 395,
+            "write": 0,
+            "cached": 0,
+            "output": 19,
+            "reasoning": 0
+          },
+          "cost": 0.0049,
+          "reserved": 0.4
+        },
+        {
+          "id": "a8e2d1bd83a84e18fd773f63e702e7e1677a6cacbf14b991eb35a2ac74b07170",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 539,
+            "write": 0,
+            "cached": 0,
+            "output": 66,
+            "reasoning": 0
+          },
+          "cost": 0.00869,
+          "reserved": 0.4
+        },
+        {
+          "id": "d03bf3ebf569f884e4a6bf142dd08ff80bfc79044e8b3c63446c317089c94ccc",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 558,
+            "write": 0,
+            "cached": 0,
+            "output": 265,
+            "reasoning": 0
+          },
+          "cost": 0.01883,
+          "reserved": 0.55
+        },
+        {
+          "id": "36911f1489f5c40520ab9419caedad6121025b69c3a2d4c73c5462d6dbef0571",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 756,
+            "write": 0,
+            "cached": 0,
+            "output": 156,
+            "reasoning": 51
+          },
+          "cost": 0.01536,
+          "reserved": 0.4
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-ground.pdf",
+      "terminology": {
+        "expected": 17,
+        "matched": 12,
+        "rate": 0.7058823529411765,
+        "details": [
+          {
+            "block_id": "p1b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "Connect the measurement lead to ground before measuring the voltage. Disconnect the lead after the",
+            "translation": "Schließen Sie die Messleitung an Masse an, bevor Sie die Spannung messen. Trennen Sie die Leitung nach dem"
+          },
+          {
+            "block_id": "p1b3",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V gegen Masse. Masse ist das gemeinsame Bezugspotenzial der Rückleitung für diesen isolierten Batteriestromkreis."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "ground",
+            "expected": 2,
+            "matched": 2,
+            "source": "Measure 12 V relative to ground. Ground is the common return reference for this isolated battery circuit.",
+            "translation": "Messen Sie 12 V gegen Masse. Masse ist das gemeinsame Bezugspotenzial der Rückleitung für diesen isolierten Batteriestromkreis."
+          },
+          {
+            "block_id": "p1b4",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "The ground connection is attached to the chassis. It is not a protective earth connection to the soil.",
+            "translation": "Der Masseanschluss ist am Chassis befestigt. Er ist keine Schutzerdungsverbindung zum Erdreich."
+          },
+          {
+            "block_id": "p1b5",
+            "term": "motor",
+            "expected": 1,
+            "matched": 0,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the",
+            "translation": "Prüfen Sie die Messleitung vor dem Start des Motors auf Beschädigungen. Die Messleitung ist ein isoliertes elektrisches Kabel, nicht das"
+          },
+          {
+            "block_id": "p1b5",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "Inspect the lead for damage before the motor starts. The lead is an insulated electrical cable, not the",
+            "translation": "Prüfen Sie die Messleitung vor dem Start des Motors auf Beschädigungen. Die Messleitung ist ein isoliertes elektrisches Kabel, nicht das"
+          },
+          {
+            "block_id": "p1b6",
+            "term": "lead",
+            "expected": 1,
+            "matched": 0,
+            "source": "metal lead.",
+            "translation": "Metall Blei."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "battery",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the current below 15 A. Record the voltage and inspect the battery after the test.",
+            "translation": "Halten Sie den Strom unter 15 A. Protokollieren Sie die Spannung und prüfen Sie die Batterie nach dem Test."
+          },
+          {
+            "block_id": "p1b8",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          },
+          {
+            "block_id": "p1b8",
+            "term": "ground",
+            "expected": 1,
+            "matched": 1,
+            "source": "Do not confuse ground with earth. The circuit remains electrically isolated during service.",
+            "translation": "Verwechseln Sie Masse nicht mit Erde. Der Stromkreis bleibt während der Wartung elektrisch isoliert."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "md",
+      "source_sha256": "db340cbd776cacc44628dfbbf395d848dc9beee303e9268d5f229d17040f2c6a",
+      "job_id": "dab0fc7e-9854-4ff1-b4e8-f3e4dfd5433b",
+      "elapsed_ms": 12983,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.03817,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1632,
+          "output": 437,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 0
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "d1babb5a8319ff3e6800e347fe493ba4ca39fa6788d61792e7a7c1d392c08263",
+        "expires_at": "2026-10-01T23:17:36.738Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 139,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.3965400000000001,
+          "min": 0.07647000000000001,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 139,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.3965400000000001,
+          "min": 0.07647000000000001
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "2f23292b76f6eb632b603428a77509ea53e6dfcaf2b6d63b889e428c1790c4fe",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 402,
+            "write": 0,
+            "cached": 0,
+            "output": 65,
+            "reasoning": 0
+          },
+          "cost": 0.00727,
+          "reserved": 0.4
+        },
+        {
+          "id": "b630112e569c0adf102e633a520263dd1a7a4f5a944d4b2c0731c2e8c36bc346",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 703,
+            "write": 0,
+            "cached": 0,
+            "output": 68,
+            "reasoning": 0
+          },
+          "cost": 0.01043,
+          "reserved": 0.4
+        },
+        {
+          "id": "ebbd864820ed83ce6acb53d0f48242c6abeda5f99c53ddc15c4f75bd0cab7f81",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 527,
+            "write": 0,
+            "cached": 0,
+            "output": 304,
+            "reasoning": 0
+          },
+          "cost": 0.02047,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-cell.md",
+      "terminology": {
+        "expected": 22,
+        "matched": 13,
+        "rate": 0.5909090909090909,
+        "details": [
+          {
+            "block_id": "b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery cell connections",
+            "translation": "Batteriezellenanschlüsse"
+          },
+          {
+            "block_id": "b0",
+            "term": "cell",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery cell connections",
+            "translation": "Batteriezellenanschlüsse"
+          },
+          {
+            "block_id": "b1",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Zelle ist eine elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Zellspannung."
+          },
+          {
+            "block_id": "b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 0,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Zelle ist eine elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Zellspannung."
+          },
+          {
+            "block_id": "b1",
+            "term": "cell",
+            "expected": 2,
+            "matched": 1,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Zelle ist eine elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Zellspannung."
+          },
+          {
+            "block_id": "b2",
+            "term": "lead",
+            "expected": 1,
+            "matched": 1,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschlusskontakt ist der elektrische Verbinder der Zelle. Überprüfen Sie den Anschlusskontakt, bevor Sie die Anschlussleitung anschließen."
+          },
+          {
+            "block_id": "b2",
+            "term": "cell",
+            "expected": 1,
+            "matched": 1,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschlusskontakt ist der elektrische Verbinder der Zelle. Überprüfen Sie den Anschlusskontakt, bevor Sie die Anschlussleitung anschließen."
+          },
+          {
+            "block_id": "b2",
+            "term": "terminal",
+            "expected": 2,
+            "matched": 0,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschlusskontakt ist der elektrische Verbinder der Zelle. Überprüfen Sie den Anschlusskontakt, bevor Sie die Anschlussleitung anschließen."
+          },
+          {
+            "block_id": "b3",
+            "term": "lead",
+            "expected": 2,
+            "matched": 2,
+            "source": "The lead is the insulated cable attached to the terminal. This lead contains no exposed conductor.",
+            "translation": "Die Anschlussleitung ist das isolierte Kabel, das am Anschlusskontakt befestigt ist. Diese Anschlussleitung enthält keinen freiliegenden Leiter."
+          },
+          {
+            "block_id": "b3",
+            "term": "terminal",
+            "expected": 1,
+            "matched": 0,
+            "source": "The lead is the insulated cable attached to the terminal. This lead contains no exposed conductor.",
+            "translation": "Die Anschlussleitung ist das isolierte Kabel, das am Anschlusskontakt befestigt ist. Diese Anschlussleitung enthält keinen freiliegenden Leiter."
+          },
+          {
+            "block_id": "b4",
+            "term": "cell",
+            "expected": 1,
+            "matched": 1,
+            "source": "The charge is electric charge stored in the cell, not a fee. Record the charge transferred during the 10 second test.",
+            "translation": "Die Ladung ist die in der Zelle gespeicherte elektrische Ladung, keine Gebühr. Protokollieren Sie die während des 10 Sekunden dauernden Tests übertragene Ladung."
+          },
+          {
+            "block_id": "b4",
+            "term": "charge",
+            "expected": 3,
+            "matched": 3,
+            "source": "The charge is electric charge stored in the cell, not a fee. Record the charge transferred during the 10 second test.",
+            "translation": "Die Ladung ist die in der Zelle gespeicherte elektrische Ladung, keine Gebühr. Protokollieren Sie die während des 10 Sekunden dauernden Tests übertragene Ladung."
+          },
+          {
+            "block_id": "b5",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "b5",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "b5",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "b6",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the motor every 100 km. Keep MODEL-X and https://example.com/manual in the inspection record.",
+            "translation": "Warten Sie den Motor alle 100 km. Bewahren Sie MODEL-X und https://example.com/manual im Prüfprotokoll auf."
+          },
+          {
+            "block_id": "b6",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the motor every 100 km. Keep MODEL-X and https://example.com/manual in the inspection record.",
+            "translation": "Warten Sie den Motor alle 100 km. Bewahren Sie MODEL-X und https://example.com/manual im Prüfprotokoll auf."
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 11,
+        "translated": 11
+      }
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "pdf",
+      "source_sha256": "faf26511b4d5363a8523e0c39088df0e307d135219656b9e046eab9ca1fd2dc0",
+      "job_id": "8e51d5eb-1b50-4621-bf1a-6e2c2fbef0fc",
+      "elapsed_ms": 13948,
+      "stage": "SUCCEEDED",
+      "error": null,
+      "cost": {
+        "currency": "USD",
+        "known_cost_usd": 0.03986,
+        "active_reserved_usd": 0,
+        "unresolved_exposure_usd": 0,
+        "completed_calls": 3,
+        "tokens": {
+          "input": 1676,
+          "output": 462,
+          "cached": 0,
+          "cache_write": 0,
+          "reasoning": 16
+        },
+        "cap_usd": 2.150001
+      },
+      "quote": {
+        "model": "gpt-6-astra",
+        "version": "e6194e8fc920d39f81b27bc2b246833db2d605698cac3a10a278da9b90a0d8c2",
+        "expires_at": "2026-10-01T23:17:50.153Z",
+        "chunk_count": 1,
+        "eta_seconds": null,
+        "input_tokens": 132,
+        "rates_version": "2026-10-02-gpt-6-astra-standard",
+        "estimate_basis": "Unmeasured size-based token projection; approval reservation is separate",
+        "policy_version": "visible-v3",
+        "prompt_version": "translation-v2",
+        "size_projection": {
+          "max": 1.39592,
+          "min": 0.07591,
+          "basis": "Unmeasured token projection: source + previous-chunk context + 600–2400 prompt/glossary tokens per chunk; 2–4 bounded terminology turns. Excludes discounts/retries and is not a guarantee.",
+          "agent_turns": {
+            "max": 4,
+            "min": 2
+          },
+          "source_tokens": 132,
+          "output_token_ratio": {
+            "max": 1.6,
+            "min": 0.9
+          },
+          "translation_chunks": 1
+        },
+        "reasoning_effort": "low",
+        "estimated_total_usd": {
+          "max": 1.39592,
+          "min": 0.07591
+        },
+        "maximum_reserved_usd": 2.150001
+      },
+      "numeric": {
+        "rate": 1,
+        "correct": 4,
+        "expected": 4
+      },
+      "calls": [
+        {
+          "id": "ee5fcdf8e2078e04e3a04fa4cb65e4eff661daab7ae037042100a41ba7fb3cac",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 410,
+            "write": 0,
+            "cached": 0,
+            "output": 65,
+            "reasoning": 0
+          },
+          "cost": 0.00735,
+          "reserved": 0.4
+        },
+        {
+          "id": "e55395e20dc3d398c8a5a03183837ce1e776b4f75432c2f2ee649df1ce8032d0",
+          "kind": "AGENT",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 725,
+            "write": 0,
+            "cached": 0,
+            "output": 94,
+            "reasoning": 16
+          },
+          "cost": 0.01195,
+          "reserved": 0.4
+        },
+        {
+          "id": "71ab1fd01a27a159a704cc47fc602cc9053e8593978b38861c35b144d3d9d4f2",
+          "kind": "TRANSLATE",
+          "state": "COMPLETED",
+          "usage": {
+            "input": 541,
+            "write": 0,
+            "cached": 0,
+            "output": 303,
+            "reasoning": 0
+          },
+          "cost": 0.02056,
+          "reserved": 0.55
+        }
+      ],
+      "artifact_verified": true,
+      "receipt_verified": true,
+      "accounting_verified": true,
+      "artifact": "outputs/gpt-6-astra-cell.pdf",
+      "terminology": {
+        "expected": 22,
+        "matched": 16,
+        "rate": 0.7272727272727273,
+        "details": [
+          {
+            "block_id": "p1b0",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Battery cell connections",
+            "translation": "Anschlüsse der Batteriezelle"
+          },
+          {
+            "block_id": "p1b0",
+            "term": "cell",
+            "expected": 1,
+            "matched": 1,
+            "source": "Battery cell connections",
+            "translation": "Anschlüsse der Batteriezelle"
+          },
+          {
+            "block_id": "p1b1",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Batteriezelle ist eine einzelne elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Spannung der Batteriezelle."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Batteriezelle ist eine einzelne elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Spannung der Batteriezelle."
+          },
+          {
+            "block_id": "p1b1",
+            "term": "cell",
+            "expected": 2,
+            "matched": 2,
+            "source": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging.",
+            "translation": "Die Batteriezelle ist eine einzelne elektrochemische Einheit innerhalb des Batteriepacks. Messen Sie vor dem Laden die Spannung der Batteriezelle."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "lead",
+            "expected": 1,
+            "matched": 0,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschluss ist der elektrische Verbinder der Batteriezelle. Überprüfen Sie den Anschluss, bevor Sie das Anschlusskabel anschließen."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "cell",
+            "expected": 1,
+            "matched": 1,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschluss ist der elektrische Verbinder der Batteriezelle. Überprüfen Sie den Anschluss, bevor Sie das Anschlusskabel anschließen."
+          },
+          {
+            "block_id": "p1b2",
+            "term": "terminal",
+            "expected": 2,
+            "matched": 2,
+            "source": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead.",
+            "translation": "Der Anschluss ist der elektrische Verbinder der Batteriezelle. Überprüfen Sie den Anschluss, bevor Sie das Anschlusskabel anschließen."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "lead",
+            "expected": 2,
+            "matched": 1,
+            "source": "The lead is the insulated cable attached to the terminal. This lead contains no exposed conductor.",
+            "translation": "Das Anschlusskabel ist das isolierte Kabel, das am Anschluss befestigt ist. Dieses Anschlusskabel enthält keinen freiliegenden Leiter."
+          },
+          {
+            "block_id": "p1b3",
+            "term": "terminal",
+            "expected": 1,
+            "matched": 1,
+            "source": "The lead is the insulated cable attached to the terminal. This lead contains no exposed conductor.",
+            "translation": "Das Anschlusskabel ist das isolierte Kabel, das am Anschluss befestigt ist. Dieses Anschlusskabel enthält keinen freiliegenden Leiter."
+          },
+          {
+            "block_id": "p1b4",
+            "term": "cell",
+            "expected": 1,
+            "matched": 1,
+            "source": "The charge is electric charge stored in the cell, not a fee. Record the charge transferred during the 10",
+            "translation": "Die Ladung ist die in der Batteriezelle gespeicherte elektrische Ladung, keine Gebühr. Zeichnen Sie die während des 10"
+          },
+          {
+            "block_id": "p1b4",
+            "term": "charge",
+            "expected": 3,
+            "matched": 2,
+            "source": "The charge is electric charge stored in the cell, not a fee. Record the charge transferred during the 10",
+            "translation": "Die Ladung ist die in der Batteriezelle gespeicherte elektrische Ladung, keine Gebühr. Zeichnen Sie die während des 10"
+          },
+          {
+            "block_id": "p1b6",
+            "term": "battery",
+            "expected": 1,
+            "matched": 0,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "voltage",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "p1b6",
+            "term": "current",
+            "expected": 1,
+            "matched": 1,
+            "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+            "translation": "Halten Sie die Spannung unter 4.2 V und den Strom unter 15 A. Beenden Sie den Ladevorgang, wenn die Batterietemperatur steigt."
+          },
+          {
+            "block_id": "p1b7",
+            "term": "motor",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the motor every 100 km. Keep MODEL-X and https://example.com/manual in the inspection",
+            "translation": "Warten Sie den Motor alle 100 km. Halten Sie MODEL-X und https://example.com/manual im Inspektionsprotokoll"
+          },
+          {
+            "block_id": "p1b7",
+            "term": "service",
+            "expected": 1,
+            "matched": 1,
+            "source": "Service the motor every 100 km. Keep MODEL-X and https://example.com/manual in the inspection",
+            "translation": "Warten Sie den Motor alle 100 km. Halten Sie MODEL-X und https://example.com/manual im Inspektionsprotokoll"
+          }
+        ]
+      },
+      "coverage": {
+        "expected": 9,
+        "translated": 9
+      }
+    }
+  ]
+}

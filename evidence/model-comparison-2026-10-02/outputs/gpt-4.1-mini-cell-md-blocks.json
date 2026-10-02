@@ -1,0 +1,115 @@
+{
+  "job_id": "b13f86a2-fdbf-4bc5-b25b-913a30b0fb07",
+  "format": "md",
+  "source_sha256": "db340cbd776cacc44628dfbbf395d848dc9beee303e9268d5f229d17040f2c6a",
+  "stage": "FAILED",
+  "checkpoint_analysis": true,
+  "blocks": [
+    {
+      "id": "b0",
+      "text": "Battery cell connections"
+    },
+    {
+      "id": "b1",
+      "text": "The cell is one electrochemical unit inside the battery pack. Measure the cell voltage before charging."
+    },
+    {
+      "id": "b2",
+      "text": "The terminal is the cell's electrical connector. Inspect the terminal before connecting the lead."
+    },
+    {
+      "id": "b3",
+      "text": "The lead is the insulated cable attached to the terminal. This lead contains no exposed conductor."
+    },
+    {
+      "id": "b4",
+      "text": "The charge is electric charge stored in the cell, not a fee. Record the charge transferred during the 10 second test."
+    },
+    {
+      "id": "b5",
+      "text": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises."
+    },
+    {
+      "id": "b6",
+      "text": "Service the motor every 100 km. Keep MODEL-X and https://example.com/manual in the inspection record."
+    },
+    {
+      "id": "b7",
+      "text": "Read "
+    },
+    {
+      "id": "b8",
+      "text": "the manual"
+    },
+    {
+      "id": "b9",
+      "text": "; keep "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "translations": [
+    {
+      "id": "b0",
+      "text": "Verbindungen der Batteriezelle"
+    },
+    {
+      "id": "b1",
+      "text": "Die Zelle ist eine elektrochemische Einheit im Inneren des Batteriepacks. Messen Sie die Zellspannung vor dem Laden."
+    },
+    {
+      "id": "b2",
+      "text": "Der Anschluss ist der elektrische Verbinder der Zelle. Prüfen Sie den Anschluss vor dem Verbinden der Leitung."
+    },
+    {
+      "id": "b3",
+      "text": "Die Leitung ist das isolierte Kabel, das am Anschluss befestigt ist. Diese Leitung enthält keinen freiliegenden Leiter."
+    },
+    {
+      "id": "b4",
+      "text": "Die Ladung ist elektrische Ladung, die in der Zelle gespeichert ist, keine Gebühr. Notieren Sie die während des 10-Sekunden-Tests übertragene Ladung."
+    },
+    {
+      "id": "b5",
+      "text": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Beenden Sie das Laden, wenn die Batterietemperatur steigt."
+    },
+    {
+      "id": "b6",
+      "text": "Warten Sie den Motor alle 100 km. Halten Sie MODEL-X und https://example.com/manual im Inspektionsbericht fest."
+    },
+    {
+      "id": "b7",
+      "text": "Lesen Sie "
+    },
+    {
+      "id": "b8",
+      "text": "das Handbuch"
+    },
+    {
+      "id": "b9",
+      "text": "; bewahren Sie "
+    },
+    {
+      "id": "b10",
+      "text": "."
+    }
+  ],
+  "validation": "INVALID_MODEL_OUTPUT",
+  "literal_violations": [
+    {
+      "block_id": "b5",
+      "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+      "translation": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Beenden Sie das Laden, wenn die Batterietemperatur steigt.",
+      "expected": [
+        "15",
+        "4.2"
+      ],
+      "actual": [
+        "15",
+        "4,2"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+{
+  "reference_status": "AI-authored before model outputs; not human approved",
+  "references": [
+    {
+      "source": "battery",
+      "accepted": [
+        "Batterie",
+        "Batterien",
+        "Akku",
+        "Akkus"
+      ]
+    },
+    {
+      "source": "motor",
+      "accepted": [
+        "Motor",
+        "Motoren"
+      ]
+    },
+    {
+      "source": "drive",
+      "accepted": [
+        "Antrieb",
+        "Antriebs",
+        "Antriebe"
+      ]
+    },
+    {
+      "source": "service",
+      "accepted": [
+        "Wartung",
+        "Warten",
+        "warten",
+        "gewartet"
+      ]
+    },
+    {
+      "source": "voltage",
+      "accepted": [
+        "Spannung",
+        "Spannungen"
+      ]
+    },
+    {
+      "source": "current",
+      "accepted": [
+        "Strom",
+        "Stromstärke"
+      ]
+    },
+    {
+      "source": "seal",
+      "accepted": [
+        "Siegel",
+        "Manipulationssiegel",
+        "Sicherungsetikett",
+        "Sicherheitsetikett",
+        "Versiegelung"
+      ]
+    },
+    {
+      "source": "ground",
+      "accepted": [
+        "Masse",
+        "Masseanschluss",
+        "Masseverbindung"
+      ]
+    },
+    {
+      "source": "lead",
+      "accepted": [
+        "Leitung",
+        "Kabel",
+        "Anschlussleitung"
+      ]
+    },
+    {
+      "source": "cell",
+      "accepted": [
+        "Zelle",
+        "Zellen",
+        "Batteriezelle",
+        "Batteriezellen",
+        "Akkuzelle"
+      ]
+    },
+    {
+      "source": "terminal",
+      "accepted": [
+        "Anschluss",
+        "Anschlüsse",
+        "Anschlussklemme",
+        "Anschlussklemmen",
+        "Klemme",
+        "Klemmen",
+        "Pol",
+        "Pole"
+      ]
+    },
+    {
+      "source": "charge",
+      "accepted": [
+        "Ladung",
+        "Ladezustand"
+      ]
+    }
+  ]
+}

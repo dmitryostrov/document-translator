@@ -1,0 +1,670 @@
+{
+  "method": "Read-only extraction of existing completed call checkpoints. Format-specific filenames recover Markdown evidence overwritten by the original runner's PDF block filename; original ambiguous files remain and are superseded by this explicit manifest. No extra provider calls or changed references. The executed runner snapshot is runner-source.ts; the current runner fixes the filename.",
+  "comparison_source_sha256": "339ded755e01f054ed091ac192ca9269fa1ba44cbe533d5a8843898733260f99",
+  "records": [
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-battery-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "6332e4bc3e5ac669b967c428444857098a0ad174c198a01d1c73027b5c32e711",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-battery-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "271f106497d90272a371409a17755890c2f2512345f0de87b4ef6307b3811e07",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-seal-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "94c29cbba050cfa78865bd3c7037f2c3144f0c8c0aba275489e5e671c74e1390",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-seal-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "72379709c345ccf856e16a28116d6b40a0bc0b5bff738d69729338bdc013f5da",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-ground-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "5ed91d8c518e40300a878c4573dd69214059fc9c7b44f3f17ec7436b9f68f92d",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-4.1-mini-ground-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "ec876128f235673d42142f52eeb2cbac6f3b2abf55a58c2bdf8a0022bf3e3321",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "md",
+      "stage": "FAILED",
+      "path": "outputs/gpt-4.1-mini-cell-md-blocks.json",
+      "validation": "INVALID_MODEL_OUTPUT",
+      "artifact_checksum": null,
+      "literal_violations": [
+        {
+          "block_id": "b5",
+          "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+          "translation": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Beenden Sie das Laden, wenn die Batterietemperatur steigt.",
+          "expected": [
+            "15",
+            "4.2"
+          ],
+          "actual": [
+            "15",
+            "4,2"
+          ]
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "pdf",
+      "stage": "FAILED",
+      "path": "outputs/gpt-4.1-mini-cell-pdf-blocks.json",
+      "validation": "INVALID_MODEL_OUTPUT",
+      "artifact_checksum": null,
+      "literal_violations": [
+        {
+          "block_id": "p1b6",
+          "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+          "translation": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Stoppen Sie das Laden, wenn die Batterietemperatur steigt.",
+          "expected": [
+            "15",
+            "4.2"
+          ],
+          "actual": [
+            "15",
+            "4,2"
+          ]
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-battery-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "bb1909f8ef2cead3170ee502c75bd367edf8461aeb7f3c78fdfdbf0325b26d0d",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-battery-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "e1250a128b93a9c8111a7007467364fcf527817881bded4300364a73c6c882f7",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-seal-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "63a15d0a5f469df664e6a2b207cda3d3932d75bce4792eb90f6d7a5bef66e4a4",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-seal-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "f8068efba76d74561ff61241a3318fbb23698e9cde5d9782e6e9337de9d9e230",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-ground-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "c55d3dd979276a91384d0aa7ca4267d303c7b71af820b7a7efc17105accc84e0",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-ground-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "f7615c5e2f4c3992ff1f28c8e31dc1016176660f8b709d1cd659f2772636faa1",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "md",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-cell-md-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "fc161b267832870666354712e599b64e92983dcd8f45d82763b0f6c7058fd261",
+      "literal_violations": []
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "pdf",
+      "stage": "SUCCEEDED",
+      "path": "outputs/gpt-6-astra-cell-pdf-blocks.json",
+      "validation": "passed",
+      "artifact_checksum": "892b7085b39c67af73fd6d315f730ade497a7dc27615b4a0da8a33a987b66535",
+      "literal_violations": []
+    }
+  ],
+  "observed": [
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "battery",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "seal",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "ground",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        },
+        {
+          "model": "gpt-4.1-mini-2025-04-14",
+          "reasoning_effort": null,
+          "cache_options": null,
+          "cache_retention": "in_memory"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "battery",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "seal",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "ground",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "md",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    },
+    {
+      "model": "gpt-6-astra",
+      "id": "cell",
+      "format": "pdf",
+      "responses": [
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        },
+        {
+          "model": "gpt-6-astra",
+          "reasoning_effort": "low",
+          "cache_options": {
+            "ttl": "30m",
+            "mode": "implicit"
+          },
+          "cache_retention": "24h"
+        }
+      ]
+    }
+  ],
+  "common_successful_pairs": {
+    "gpt-4.1-mini": {
+      "documents": 6,
+      "expected": 92,
+      "matched": 57,
+      "rate": 0.6195652173913043,
+      "mean_elapsed_ms": 7426
+    },
+    "gpt-6-astra": {
+      "documents": 6,
+      "expected": 92,
+      "matched": 54,
+      "rate": 0.5869565217391305,
+      "mean_elapsed_ms": 15927.833333333334
+    }
+  },
+  "failures": [
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "md",
+      "stage": "FAILED",
+      "path": "outputs/gpt-4.1-mini-cell-md-blocks.json",
+      "validation": "INVALID_MODEL_OUTPUT",
+      "artifact_checksum": null,
+      "literal_violations": [
+        {
+          "block_id": "b5",
+          "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+          "translation": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Beenden Sie das Laden, wenn die Batterietemperatur steigt.",
+          "expected": [
+            "15",
+            "4.2"
+          ],
+          "actual": [
+            "15",
+            "4,2"
+          ]
+        }
+      ]
+    },
+    {
+      "model": "gpt-4.1-mini",
+      "id": "cell",
+      "format": "pdf",
+      "stage": "FAILED",
+      "path": "outputs/gpt-4.1-mini-cell-pdf-blocks.json",
+      "validation": "INVALID_MODEL_OUTPUT",
+      "artifact_checksum": null,
+      "literal_violations": [
+        {
+          "block_id": "p1b6",
+          "source": "Keep the voltage below 4.2 V and the current below 15 A. Stop charging if the battery temperature rises.",
+          "translation": "Halten Sie die Spannung unter 4,2 V und den Strom unter 15 A. Stoppen Sie das Laden, wenn die Batterietemperatur steigt.",
+          "expected": [
+            "15",
+            "4.2"
+          ],
+          "actual": [
+            "15",
+            "4,2"
+          ]
+        }
+      ]
+    }
+  ],
+  "known_cost_ratio": 38.398673100120625,
+  "known_cost_usd": 0.391938
+}

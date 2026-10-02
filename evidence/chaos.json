@@ -1,10 +1,10 @@
 [
   {
     "boundary": "before-provider-submission",
-    "job_id": "94fcd303-bd0c-464a-9f41-9519aca734bf",
+    "job_id": "293a6194-dd1b-4482-92ef-25745dcddae0",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32352,
+    "recovery_ms": 32329,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -15,7 +15,8 @@
         "input": 817,
         "output": 185,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -23,10 +24,10 @@
   },
   {
     "boundary": "provider-accepted",
-    "job_id": "42e90828-b6db-4093-be00-83c4c24fe1fa",
+    "job_id": "7e70e593-7021-4383-8c4c-0f90802e68b4",
     "expected": "NEEDS_ATTENTION",
     "result": "NEEDS_ATTENTION",
-    "recovery_ms": 31593,
+    "recovery_ms": 31583,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
@@ -37,7 +38,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -45,10 +47,10 @@
   },
   {
     "boundary": "provider-returned",
-    "job_id": "cad53053-d467-4921-8976-cb71d799f885",
+    "job_id": "ef0b328a-aaf0-43bd-bf24-dcbc1666b697",
     "expected": "NEEDS_ATTENTION",
     "result": "NEEDS_ATTENTION",
-    "recovery_ms": 31599,
+    "recovery_ms": 31553,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0,
@@ -59,7 +61,8 @@
         "input": 0,
         "output": 0,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -67,10 +70,10 @@
   },
   {
     "boundary": "call-checkpointed",
-    "job_id": "79fa962b-ac10-4a91-a2b4-37638c76e67f",
+    "job_id": "4f0fc8d2-84c2-4d44-8077-fddac90c6bbb",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32340,
+    "recovery_ms": 32376,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -81,7 +84,8 @@
         "input": 817,
         "output": 185,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -89,10 +93,10 @@
   },
   {
     "boundary": "terms-output-ready",
-    "job_id": "833a63b8-17e6-4609-9669-938073165f1e",
+    "job_id": "15d45694-887e-4204-aae7-3d08afcb8cfd",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 32498,
+    "recovery_ms": 32364,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006208,
@@ -103,7 +107,8 @@
         "input": 816,
         "output": 184,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -111,10 +116,10 @@
   },
   {
     "boundary": "unit-checkpointed",
-    "job_id": "2bcbfee8-62c5-4fea-88ac-52cd19a011f5",
+    "job_id": "c9802620-57b6-4826-9f40-8936387059c3",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 2399,
+    "recovery_ms": 2397,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006228,
@@ -125,7 +130,8 @@
         "input": 817,
         "output": 185,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -133,10 +139,10 @@
   },
   {
     "boundary": "artifact-renamed",
-    "job_id": "d7c7bc42-361c-45b1-8db2-a9f806ba4d73",
+    "job_id": "92d2ff9f-4b35-4c68-abe4-db58d4801cfc",
     "expected": "SUCCEEDED",
     "result": "SUCCEEDED",
-    "recovery_ms": 31580,
+    "recovery_ms": 31574,
     "cost": {
       "currency": "USD",
       "known_cost_usd": 0.0006208,
@@ -147,7 +153,8 @@
         "input": 816,
         "output": 184,
         "cached": 0,
-        "cache_write": 0
+        "cache_write": 0,
+        "reasoning": 0
       },
       "cap_usd": 1
     },
@@ -155,7 +162,7 @@
   },
   {
     "boundary": "api-commit-before-notify",
-    "job_id": "cc80e321-c5a7-45ed-a5a7-51943c5891e1",
+    "job_id": "c42b8ed6-b723-427a-b0d2-717d66bd966a",
     "durable": true
   },
   {

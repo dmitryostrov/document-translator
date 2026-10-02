@@ -1,0 +1,87 @@
+{
+  "blocks": [
+    {
+      "id": "p1b0",
+      "page": 1,
+      "text": "Inspection label"
+    },
+    {
+      "id": "p1b1",
+      "page": 1,
+      "text": "The seal must be replaced after every inspection. Photograph the seal before removing it."
+    },
+    {
+      "id": "p1b2",
+      "page": 1,
+      "text": "Record inspection step 3 and the date before starting work. The motor must remain disconnected."
+    },
+    {
+      "id": "p1b3",
+      "page": 1,
+      "text": "Attach the new seal across the cover joint. Confirm that the seal breaks if the cover is opened."
+    },
+    {
+      "id": "p1b4",
+      "page": 1,
+      "text": "This inspection is performed every 100 km. Keep MODEL-X in the service record."
+    },
+    {
+      "id": "p1b5",
+      "page": 1,
+      "text": "The seal is a tamper-evident adhesive security label. It is not a rubber gasket and has no fluid-sealing"
+    },
+    {
+      "id": "p1b6",
+      "page": 1,
+      "text": "function."
+    },
+    {
+      "id": "p1b7",
+      "page": 1,
+      "text": "A missing seal indicates that the cover may have been opened. Replace the seal after completing"
+    },
+    {
+      "id": "p1b8",
+      "page": 1,
+      "text": "service."
+    }
+  ],
+  "translations": [
+    {
+      "id": "p1b0",
+      "text": "Inspektionsetikett"
+    },
+    {
+      "id": "p1b1",
+      "text": "Das Sicherheitssiegel muss nach jeder Inspektion ersetzt werden. Fotografieren Sie das Sicherheitssiegel, bevor Sie es entfernen."
+    },
+    {
+      "id": "p1b2",
+      "text": "Dokumentieren Sie Inspektionsschritt 3 und das Datum vor Arbeitsbeginn. Der Motor muss getrennt bleiben."
+    },
+    {
+      "id": "p1b3",
+      "text": "Bringen Sie das neue Sicherheitssiegel über der Deckelfuge an. Vergewissern Sie sich, dass das Sicherheitssiegel beim Öffnen des Deckels reißt."
+    },
+    {
+      "id": "p1b4",
+      "text": "Diese Inspektion wird alle 100 km durchgeführt. Behalten Sie MODEL-X im Wartungsnachweis bei."
+    },
+    {
+      "id": "p1b5",
+      "text": "Das Sicherheitssiegel ist ein selbstklebendes Sicherheitsetikett, das Manipulationen erkennbar macht. Es ist keine Gummidichtung und hat keine flüssigkeitsabdichtende"
+    },
+    {
+      "id": "p1b6",
+      "text": "Funktion."
+    },
+    {
+      "id": "p1b7",
+      "text": "Ein fehlendes Sicherheitssiegel deutet darauf hin, dass der Deckel möglicherweise geöffnet wurde. Ersetzen Sie das Sicherheitssiegel nach Abschluss der"
+    },
+    {
+      "id": "p1b8",
+      "text": "Wartung."
+    }
+  ]
+}

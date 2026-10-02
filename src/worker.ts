@@ -2,7 +2,7 @@ import { Worker } from "bullmq";
 import { join } from "node:path";
 import { readFile, stat } from "node:fs/promises";
 import { sql, migrate } from "./db";
-import { config, log, AppError } from "./config";
+import { config, log, AppError, key } from "./config";
 import { connection, queue, notify, notificationId } from "./queue";
 import { quote, validateOutput, hash, terminal, type Block } from "./domain";
 import { formatProcess } from "./files";
@@ -57,6 +57,7 @@ async function processUnit(data:{id:string;generation:number}) {
     const [job]=await sql`select * from jobs where id=${unit.job_id}`;
     const ctx={job,unit,worker:workerId,generation:unit.generation};
     if(unit.kind==="PREFLIGHT"){
+      if(config.mode==="openai")key();
       const extracted=await formatProcess("extract",{path:job.source_path,format:job.format,options:job.options});
       const ir={...extracted.ir,chunks:extracted.chunks}, q=quote(ir,job.target);
       await gate("preflight-extracted");
@@ -94,12 +95,12 @@ async function processUnit(data:{id:string;generation:number}) {
   }catch(error:any){
     const code=error.code??error.message;
     if(code==="LEASE_LOST")return;
-    if(code==="SAFE_RATE_LIMIT_RETRY" && unit.attempts<2){
+    if(["SAFE_RATE_LIMIT_RETRY","FORMAT_SERVICE_UNAVAILABLE"].includes(code) && unit.attempts<2){
       await sql`update units set state='READY',attempts=attempts+1,generation=generation+1,not_before=now()+interval '5 seconds'*(attempts+1),ready_since=now(),lease_owner=null,lease_expires_at=null where id=${unit.id} and generation=${unit.generation} and lease_owner=${workerId}`;
     }else{
       const uncertain=["OUTCOME_UNKNOWN","COST_CAP_REACHED"].includes(code);
-      const safeCodes=["PDF_PAGE_LIMIT","DOCUMENT_WORD_LIMIT","PDF_NO_VISIBLE_TEXT","CORRUPT_PDF","CORRUPT_OR_ENCRYPTED_PDF","SCANNED_PDF_UNSUPPORTED","PDF_TEXT_ONLY_CONFIRMATION_REQUIRED","PDF_VISIBILITY_UNSUPPORTED","PDF_ANNOTATIONS_UNSUPPORTED","ENCRYPTED_PDF_UNSUPPORTED","SENSITIVE_MARKING_DETECTED","UNICODE_CONCEALMENT_UNSUPPORTED","MARKDOWN_HTML_UNSUPPORTED","MARKDOWN_UTF8_INVALID","MARKDOWN_URI_UNSUPPORTED","INVALID_MODEL_OUTPUT","OUTCOME_UNKNOWN","COST_CAP_REACHED","MODEL_INPUT_LIMIT","ARTIFACT_INCOMPLETE","PROVIDER_REQUEST_REJECTED","SAFE_RATE_LIMIT_RETRY"];
-      let publicCode=safeCodes.includes(code)?code:"PIPELINE_FAILED";
+      const safeCodes=["PDF_PAGE_LIMIT","DOCUMENT_WORD_LIMIT","PDF_NO_VISIBLE_TEXT","CORRUPT_PDF","CORRUPT_OR_ENCRYPTED_PDF","SCANNED_PDF_UNSUPPORTED","PDF_TEXT_ONLY_CONFIRMATION_REQUIRED","PDF_VISIBILITY_UNSUPPORTED","PDF_ANNOTATIONS_UNSUPPORTED","ENCRYPTED_PDF_UNSUPPORTED","SENSITIVE_MARKING_DETECTED","UNICODE_CONCEALMENT_UNSUPPORTED","MARKDOWN_HTML_UNSUPPORTED","MARKDOWN_UTF8_INVALID","MARKDOWN_URI_UNSUPPORTED","INVALID_MODEL_OUTPUT","OUTCOME_UNKNOWN","COST_CAP_REACHED","MODEL_INPUT_LIMIT","ARTIFACT_INCOMPLETE","PROVIDER_REQUEST_REJECTED","SAFE_RATE_LIMIT_RETRY","OPENAI_KEY_UNAVAILABLE","FORMAT_SERVICE_UNAVAILABLE"];
+      let publicCode=[...safeCodes,"MODEL_CONFIGURATION_CHANGED"].includes(code)?code:"PIPELINE_FAILED";
       await sql.begin(async tx=>{
         // An infrastructure error must not strand a submitted call as an active reservation.
         await tx`update calls set state='OUTCOME_UNKNOWN',updated_at=now() where unit_id=${unit.id} and state='SUBMITTED'`;

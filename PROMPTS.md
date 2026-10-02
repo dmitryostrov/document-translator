@@ -1,24 +1,140 @@
 # Build-AI Worklog
 
-## 2026-09-30–2026-10-01
+## 2026-09-30 20:25:12
 
-The user selected the Bun/BullMQ alternative, excluded Python and Cursor validation, and requested implementation with forced app/container kills. Codex implemented the application and tests. No human-authored code or delegated implementation is claimed.
+**UTC:** `2026-09-30T18:25:12.468Z`
 
-The supplied planning review rejected an outbox/dispatcher design, required generation-based repair of retained broker IDs, and required explicit duplicate handling for live domain leases. Its original source remains local in Git-ignored `.vscode`; these summaries and the implementation rationale are included in the published documents.
+```text
+read the task software_engineering_test.md
 
-Codex wrote the implementation and tests without subagent delegation. The following are actual corrected build approaches.
+[$create-and-validate-the-plan](\create-and-validate-the-plan\SKILL.md) don't validate with cursor
+```
 
-### Actual corrections during implementation
+## 2026-09-30 20:25:50
 
-1. The initial PDF.js integration assumed `isEvalSupported` and `PDFDocumentProxy.destroy()` from an older API. Typechecking the installed v6 package rejected both. The implementation now uses the documented loading-task lifecycle and the current supported options.
-2. The first oversized-block splitter re-tokenized every appended character. Seeded property tests timed out at 12.65 seconds. It was replaced with bounded binary search over Unicode codepoints; the same 960 assertions subsequently passed, with the generated-document test at 0.67 seconds.
-3. The first Docker image used Bun 1.3.10 while the host emitted a version-2 lockfile. The frozen-lockfile build failed with `Unknown lockfile version`. The image was changed to published Bun 1.4.2; the containers subsequently built and started.
-4. BullMQ 6 treats `ioredis` as optional. The initial image omitted it, producing repeated queue-client errors while the accepted PostgreSQL job remained READY. The client dependency and explicit Redis instance were added; bounded infrastructure diagnostics replace the unhelpful hot error log.
-5. The first real-provider corpus rejected eight outputs because the model treated glossary evidence IDs as the translation selection. Paid checkpoints were retained rather than retried. Explicit all-block instructions and a count/ID-constrained schema fixed the subsequent 20/20 cold corpus. The first run remains in `evidence/live-measurements-initial.json`.
-6. A fixture showed that wholly off-page text is omitted by PDF.js text extraction while remaining in the operator list. Position-aware filtering now excludes proven off-page runs before alignment; unresolved cases still reject. Regression evidence includes invisible rendering mode, white, off-page, tiny/low-contrast and scanned fixtures.
-7. The host MCP-token setup script became obsolete after the Docker API generated its credential in a named volume. It was removed so fresh deployment needs only Docker and a key file. Streamed uploads and publication lease fencing replaced the initial buffered/unfenced approaches.
-8. Review found that cancellation/infrastructure failure could strand a submitted call as an active reservation. Those paths now preserve it as uncertain exposure. Another correction canonicalizes logical input hashes so JSONB key ordering cannot break replay of cached agent turns; killing the worker after both agent responses proved zero repeat calls. Quote policies and immutable receipt metadata are versioned separately from current runtime defaults.
-9. Validation of individual split units could miss a protected literal spanning the split boundary. Publication now assembles every canonical block, rejects missing/gapped pieces, and validates whole-block literals before exposing an artifact. Seven unit tests and six focused publication checks passed.
-10. A folder holding its two paid slots could remain the first eligible job in fair admission and delay another owner. Admission now excludes folders at their limit. The regression held both folder slots, admitted another owner in 172 ms, then completed all four documents; see `evidence/folder-fairness.json`.
-11. The first browser test was a standalone script, so a standard Playwright test runner/explorer could not discover it, and it checked download availability rather than downloaded bytes. It now has a root Playwright config and seven named specifications with actual file/checksum/receipt assertions and browser failure/cancel paths. All seven passed. Test orchestration restores the prior service state instead of leaving a stopped test stack running. GitHub Actions and a genuine remote-clone verifier replace the missing Git-dependent delivery gates; their execution status is recorded separately.
-12. Linux CI exposed an MCP fixture bind-mount ownership mismatch: the runner and container `bun` account have different UIDs. A fixture-only ownership bridge now grants the container its disposable output directory, verifies output hashes under the container account, and returns generated outputs to the host owner afterward. User workspaces and application file permissions are unchanged.
+**UTC:** `2026-09-30T18:25:50.675Z`
+
+```text
+stack - java or bun.js
+```
+
+## 2026-09-30 20:26:34
+
+**UTC:** `2026-09-30T18:26:34.972Z`
+
+```text
+I need 3 alternative plans for this task
+```
+
+## 2026-09-30 21:43:03
+
+**UTC:** `2026-09-30T19:43:03.150Z`
+
+```text
+
+# Files pasted by the user:
+
+## "I read the task brief, the overview, option 2, and the shared contract, and che…": /caddbd30-cd2a-4631-92b8-9b2f6a679b10/Pasted text.txt
+
+## My request:
+let's go with option 2 on the plan, read this comment and update the plan respectively
+```
+
+## 2026-09-30 22:23:59
+
+**UTC:** `2026-09-30T20:23:59.810Z`
+
+```text
+incorporate these 05-ideas-to-explore.md into the plan
+```
+
+## 2026-09-30 22:54:35
+
+**UTC:** `2026-09-30T20:54:35.707Z`
+
+```text
+let's start the implementation and testing, including the app killing in the process
+```
+
+## 2026-10-01 04:07:29
+
+**UTC:** `2026-10-01T02:07:29.221Z`
+
+```text
+prepare a detailed conformance to "Software Engineer Assessment — Document Translator" document, answer all the questions in a clear form
+```
+
+## 2026-10-01 04:36:28
+
+**UTC:** `2026-10-01T02:36:28.285Z`
+
+```text
+create a private repo in my github account, close the gaps/tests that depend on it
+```
+
+## 2026-10-01 22:22:13
+
+**UTC:** `2026-10-01T20:22:13.463Z`
+
+```text
+i've added several pdfs to try the app on
+start it and test
+```
+
+## 2026-10-01 22:24:39
+
+**UTC:** `2026-10-01T20:24:39.375Z`
+
+```text
+added big pdf too, also can you add spanish translation? Let's test the handling of big file as instructed
+```
+
+## 2026-10-01 23:08:23
+
+**UTC:** `2026-10-01T21:08:23.128Z`
+
+```text
+
+# Files pasted by the user:
+
+## "Written for: you, deciding what to fix before submitting. # Verification of the…": /30f9934e-4ba7-481c-a504-3b008195eadd/Pasted text.txt
+
+Pasted text contains the user's request.
+
+## My request:
+
+```
+
+## 2026-10-01 23:09:44
+
+**UTC:** `2026-10-01T21:09:44.399Z`
+
+```text
+<send_user_message_question_reply>
+[{"questionItemId":"[\"request_user_input_async\",\"call_0564B45vsXeVm1UX4GJ4MHt1\",0]","question":"The attachment lists findings and offers next steps, but doesn’t choose one. What should I do with it?","answer":"Implement the five recommended fixes and test them"}]
+</send_user_message_question_reply>
+```
+
+## 2026-10-02 00:19:20
+
+**UTC:** `2026-10-01T22:19:20.691Z`
+
+```text
+what's missing for AC1?
+```
+
+## 2026-10-02 00:21:01
+
+**UTC:** `2026-10-01T22:21:01.234Z`
+
+```text
+switch to more potent model and compare
+```
+
+## 2026-10-02 01:15:55
+
+**UTC:** `2026-10-01T23:15:55.770Z`
+
+```text
+save all prompts from this session
+```

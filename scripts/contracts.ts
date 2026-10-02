@@ -17,6 +17,18 @@ p=await a.prepare(source+" expired");q=await a.quote(p.data.job_id);
 db(`update jobs set quote=jsonb_set(quote,'{expires_at}',to_jsonb((now()-interval '1 second')::text)) where id='${q.job_id}'`);
 assert.equal((await a.start(q)).code,409);assert.equal(db(`select count(*) from calls where job_id='${q.job_id}'`),"0");evidence.push({case:"expired-approval",paid_calls:0});
 assert.equal((await a.request("/api/translations/not-a-uuid/start",body,key)).code,400);
+// A settings change after approval must stop before transport, even on restart.
+p=await a.prepare(source+" model configuration control");q=await a.quote(p.data.job_id);
+db("insert into test_gates(name,enabled,hits) values('unit-claimed',true,0) on conflict(name) do update set enabled=true,hits=0");
+try{
+  assert.equal((await a.start(q)).code,200);
+  await poll(async()=>Number(db("select hits from test_gates where name='unit-claimed'")),n=>n>0);
+  db(`update jobs set quote=jsonb_set(quote,'{rates_version}',to_jsonb('unconfigured-test-rates'::text)) where id='${q.job_id}'`);
+  db("update test_gates set enabled=false where name='unit-claimed'");
+  const stopped=await a.done(q.job_id);assert.equal(stopped.stage,"FAILED");assert.equal(stopped.error,"MODEL_CONFIGURATION_CHANGED");
+  assert.equal(db(`select count(*) from calls where job_id='${q.job_id}'`),"0");
+  evidence.push({case:"approved-model-settings-change",error:stopped.error,paid_calls:0});
+}finally{db("update test_gates set enabled=false where name='unit-claimed'");}
 // Ordered canonical header/footer aliases are expanded without losing repeated numeric occurrences.
 p=await a.prepare(await fixturePDF(3,"running"),"running.pdf");q=await a.quote(p.data.job_id);
 assert.equal(q.stage,"AWAITING_APPROVAL");

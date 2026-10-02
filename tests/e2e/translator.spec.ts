@@ -84,6 +84,23 @@ for(const format of ["md","pdf"] as const){
   });
 }
 
+test("Spanish: select the target, approve and download through the common core",async({page})=>{
+  await page.getByLabel("Translate into").selectOption("spanish");
+  const accepted=await prepare(page,source,"spanish.md");
+  const quoted=await awaitStage(page,accepted.job_id,"AWAITING_APPROVAL");
+  expect(quoted.target_language).toBe("spanish");expectNoPaidCalls(quoted);
+  expect(quoted.warnings.map((w:any)=>w.code)).toContain("QUALITY_PAIR_INSUFFICIENT_EVIDENCE");
+  expect(quoted.quote.eta_seconds).toBeNull();
+  await page.getByRole("button",{name:"Approve and translate"}).click();
+  const complete=await awaitStage(page,accepted.job_id,"SUCCEEDED");
+  await expect(downloadLink(page)).toBeVisible();
+  const response=await page.request.get(complete.artifact.url);expect(response.ok()).toBe(true);
+  const bytes=await response.body();
+  expect(createHash("sha256").update(bytes).digest("hex")).toBe(complete.artifact.checksum);
+  expect(bytes.toString("utf8")).toContain("batería");
+  expect(bytes.toString("utf8")).toContain("12 kW");
+});
+
 for(const input of [
   {name:"corrupt.pdf",bytes:async()=>Buffer.from("%PDF-corrupt"),error:"CORRUPT_OR_ENCRYPTED_PDF",hint:"cannot be opened"},
   {name:"scanned.pdf",bytes:async()=>fixturePDF(1,"scan"),error:"SCANNED_PDF_UNSUPPORTED",hint:"needs OCR"}
@@ -110,6 +127,22 @@ test("Unsupported format: immediate named rejection",async({page})=>{
   expect((await response.json()).error.code).toBe("FORMAT_UNSUPPORTED");
   await expect(page.getByRole("alert")).toContainText("FORMAT_UNSUPPORTED");
   await expect(downloadLink(page)).toHaveCount(0);
+});
+
+test("Oversized file: immediate browser rejection and named API 413 without a job",async({page})=>{
+  const bytes=Buffer.alloc(27*1024*1024);
+  const before=await (await page.request.get("/api/translations")).json();
+  let browserSubmissions=0;
+  page.on("request",r=>{if(new URL(r.url()).pathname==="/api/translations"&&r.method()==="POST")browserSubmissions++;});
+  await page.getByLabel("Document file").setInputFiles({name:"oversized.pdf",mimeType:"application/pdf",buffer:bytes});
+  await page.getByRole("button",{name:"Prepare and estimate"}).click();
+  await expect(page.getByRole("alert")).toContainText("25 MiB upload limit");
+  expect(browserSubmissions).toBe(0);
+  const response=await page.request.post("/api/translations",{multipart:{file:{name:"oversized.pdf",mimeType:"application/pdf",buffer:bytes},target_language:"spanish"},headers:{"Idempotency-Key":crypto.randomUUID()}});
+  expect(response.status()).toBe(413);
+  expect((await response.json()).error.code).toBe("UPLOAD_SIZE_LIMIT");
+  const after=await (await page.request.get("/api/translations")).json();
+  expect(after.length).toBe(before.length);
 });
 
 test("Cancel before approval: persisted cancellation without spending",async({page})=>{

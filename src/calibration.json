@@ -1,6 +1,7 @@
 {
   "model": "gpt-4.1-mini",
   "prompt": "translation-v2",
+  "policy": "visible-v2",
   "source": "english",
   "target": "german",
   "n": 20,
