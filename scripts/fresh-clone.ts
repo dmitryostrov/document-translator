@@ -90,6 +90,6 @@ try{
   }finally{try{await client.close();}finally{output.restore();}}
   await mkdir("evidence",{recursive:true});
   const path=live?"evidence/fresh-clone-live.json":"evidence/fresh-clone.json";
-  await writeFile(path,JSON.stringify({kind:"fresh Git clone of private GitHub repository",repository,commit,runtime_tree_sha256:runtimeTreeSha256,directory:checkout,project,provider:live?"openai":"fake",vscode_tracked:false,vscode_present:false,host_node_modules_copied:false,host_dependencies_required_for_app:false,key_copied:false,results:evidence},null,2));
+  await writeFile(path,JSON.stringify({kind:"fresh Git clone of GitHub repository",repository,commit,runtime_tree_sha256:runtimeTreeSha256,directory:checkout,project,provider:live?"openai":"fake",vscode_tracked:false,vscode_present:false,host_node_modules_copied:false,host_dependencies_required_for_app:false,key_copied:false,results:evidence},null,2));
   console.log(JSON.stringify({passed:evidence.length,commit,evidence:path,provider:live?"openai":"fake"}));
 }finally{if(started)compose(["down"]);} // Keep named volumes; only this run's containers/network are removed.

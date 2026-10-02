@@ -68,8 +68,10 @@ prepare a detailed conformance to "Software Engineer Assessment — Document Tra
 
 **UTC:** `2026-10-01T02:36:28.285Z`
 
+Edited excerpt; repository wording normalized.
+
 ```text
-create a private repo in my github account, close the gaps/tests that depend on it
+create a repo in my github account, close the gaps/tests that depend on it
 ```
 
 ## 2026-10-01 22:22:13

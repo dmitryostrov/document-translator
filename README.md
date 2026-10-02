@@ -1,6 +1,6 @@
 # Stark document translator
 
-Private repository: [dmitryostrov/stark-document-translator](https://github.com/dmitryostrov/stark-document-translator).
+Repository: [dmitryostrov/stark-document-translator](https://github.com/dmitryostrov/stark-document-translator).
 
 This revision includes Spanish/upload handling, parser isolation and review fixes, the guarded Astra model profile and its paired comparison. GitHub Actions runs the fake-provider verification gate for each pushed `main` revision; consult that commit's check status. The earlier real-provider fresh-clone evidence applies to its recorded baseline commit. AC1 human acceptance remains open.
 
@@ -12,10 +12,10 @@ Branding provisionally follows the user's [Stark Future](https://starkfuture.com
 
 Requirements: Docker with Compose v2 (supporting `!reset`) and an OpenAI key file. Host Bun, Python, Poppler and PostgreSQL are unnecessary for running the application.
 
-Clone with an account that has access:
+Clone:
 
 ```sh
-git clone git@github.com:dmitryostrov/stark-document-translator.git
+git clone https://github.com/dmitryostrov/stark-document-translator.git
 cd stark-document-translator
 ```
 
