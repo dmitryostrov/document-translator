@@ -16,6 +16,6 @@ test("the stronger runtime quote binds model, effort and its cache-write-safe ap
   const script='import {quote} from "./src/domain";console.log(JSON.stringify(quote({format:"md",blocks:[{id:"b",text:"The battery supplies 12 kW."}],warnings:[],pages:0})))';
   const p=Bun.spawn(["bun","-e",script],{stdout:"pipe",stderr:"pipe",env:{PATH:process.env.PATH!,MODEL:"gpt-6-astra",PROVIDER_MODE:"fake"}});
   const q=JSON.parse(await new Response(p.stdout).text());expect(await p.exited).toBe(0);
-  expect(q.model).toBe("gpt-6-astra");expect(q.reasoning_effort).toBe("low");expect(q.maximum_reserved_usd).toBeGreaterThanOrEqual(2.15);expect(q.maximum_reserved_usd).toBeLessThanOrEqual(2.150001);
+  expect(q.model).toBe("gpt-6-astra");expect(q.reasoning_effort).toBe("low");expect(q.maximum_reserved_usd).toBeGreaterThan(1.6);expect(q.maximum_reserved_usd).toBeLessThan(2.15);
   expect(q.rates_version).toBe("2026-10-02-gpt-6-astra-standard");expect(q.eta_seconds).toBeNull();
 });

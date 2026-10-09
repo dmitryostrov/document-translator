@@ -29,6 +29,11 @@ export function log(event: string, fields: Record<string, unknown> = {}) {
   // Callers pass identifiers/counts only. Never serialize errors/prompts/SDK objects.
   console.error(JSON.stringify({ at: new Date().toISOString(), event, ...fields }));
 }
+// Diagnostic for unexpected errors: name, code and a few stack frames. Never the message (SDK/library messages may echo input text).
+export function failure(error: any) {
+  const frames = String(error?.stack ?? "").split("\n").slice(1, 5).map(s => s.trim().replace(/^at /, ""));
+  return { error_name: error?.name, error_code: error?.code, frames };
+}
 export class AppError extends Error {
   constructor(public code: string, public status = 422) { super(code); }
 }

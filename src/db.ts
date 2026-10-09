@@ -46,6 +46,11 @@ export async function migrate() {
         id bigserial primary key, call_id text not null, job_id uuid, kind text, state text, created_at timestamptz default now());
       CREATE TABLE IF NOT EXISTS test_gates (
         name text primary key, enabled boolean default true, hits int default 0);
+      ALTER TABLE jobs ADD COLUMN IF NOT EXISTS resume_count int default 0;
+      CREATE INDEX IF NOT EXISTS calls_job ON calls(job_id);
+      CREATE INDEX IF NOT EXISTS calls_unit ON calls(unit_id);
+      CREATE INDEX IF NOT EXISTS jobs_owner_created ON jobs(owner,created_at desc);
+      CREATE INDEX IF NOT EXISTS units_job_state ON units(job_id,state);
     `);
   });
 }

@@ -1,18 +1,21 @@
 import { Hono } from "hono";
 import { getCookie, setCookie } from "hono/cookie";
 import { readFile } from "node:fs/promises";
-import { randomBytes } from "node:crypto";
+import { randomBytes, createHmac } from "node:crypto";
 import { atomic } from "./files";
 import { timingSafeEqual } from "node:crypto";
 import { join } from "node:path";
 import { migrate, sql } from "./db";
-import { config, AppError, log } from "./config";
+import { config, AppError, log, failure } from "./config";
 import { hash } from "./domain";
 import * as core from "./core";
 import { upload } from "./uploads";
 await migrate();
 try { await readFile(config.tokenFile); }
 catch { await atomic(config.tokenFile,randomBytes(32).toString("hex")); }
+// Browser owners are self-issued: a signed cookie proves we issued it, so anonymous requests need no database row.
+const cookieSecret=(await readFile(config.tokenFile,"utf8")).trim();
+const sign=(id:string)=>createHmac("sha256",cookieSecret).update(id).digest("hex").slice(0,32);
 const app=new Hono();
 app.use("*",async(c,next)=>{
   c.header("X-Content-Type-Options","nosniff");c.header("Referrer-Policy","no-referrer");
@@ -31,14 +34,29 @@ app.use("/api/*",async(c,next)=>{
     owner=`mcp-${hash(expected)}`;
   }else{
     const cookie=getCookie(c,"stark-owner");
-    const known=cookie?await sql`select id from owners where id=${cookie}`:[];
-    if(known.length)owner=cookie!;
+    const [id,sig=""]=(cookie??"").split(".");
+    const signed=!!id&&sig.length===32&&timingSafeEqual(Buffer.from(sig),Buffer.from(sign(id)));
+    // Legacy cookies were a bare id stored in the owners table; keep them working.
+    const legacy=!signed&&!!cookie&&!cookie.includes(".")&&(await sql`select id from owners where id=${cookie}`).length>0;
+    if(signed)owner=id;
+    else if(legacy)owner=cookie!;
     else{
-      owner=crypto.randomUUID();await sql`insert into owners(id) values(${owner})`;
-      setCookie(c,"stark-owner",owner,{httpOnly:true,sameSite:"Strict",path:"/",maxAge:86400*7});
+      owner=crypto.randomUUID();
+      setCookie(c,"stark-owner",owner+"."+sign(owner),{httpOnly:true,sameSite:"Strict",path:"/",maxAge:86400*7});
     }
   }
   c.set("owner" as never,owner as never);await next();
+});
+// Operator view for the 3am question "what is stuck?". Counts and ages only: no owners, no document content. Not under /api (no cookie owner).
+app.get("/ops",async c=>{
+  const [units,oldest,expired,jobs,spend]=await Promise.all([
+    sql`select state,count(*)::int as n from units group by state`,
+    sql`select coalesce(extract(epoch from now()-min(ready_since)),0)::int as seconds from units where state='READY' and not_before<=now()`,
+    sql`select count(*)::int as n from units where state='RUNNING' and lease_expires_at<now()`,
+    sql`select stage,coalesce(error,'') as error,count(*)::int as n from jobs where stage in ('NEEDS_ATTENTION','FAILED') or updated_at>now()-interval '24 hours' group by stage,error`,
+    sql`select coalesce(sum(cost),0)::float as cost_usd,count(*)::int as calls from calls where created_at>now()-interval '1 hour'`
+  ]);
+  return c.json({units,oldest_ready_seconds:oldest[0].seconds,expired_leases:expired[0].n,jobs,last_hour:spend[0]});
 });
 const owner=(c:any)=>c.get("owner") as string;
 app.get("/api/session",c=>c.json({ok:true}));
@@ -54,6 +72,10 @@ app.post("/api/translations",async c=>{
 app.get("/api/translations/:id",async c=>c.json(await core.status(owner(c),c.req.param("id"))));
 app.post("/api/translations/:id/start",async c=>{
   const b=await c.req.json();return c.json(await core.start(owner(c),c.req.param("id"),b.quote_version,Number(b.max_cost_usd),c.req.header("Idempotency-Key")??""));
+});
+app.post("/api/translations/:id/resume",async c=>{
+  const b=await c.req.json().catch(()=>({}));
+  return c.json(await core.resume(owner(c),c.req.param("id"),Number(b.max_cost_usd),b.acknowledge_possible_charge===true,c.req.header("Idempotency-Key")??""));
 });
 app.post("/api/translations/:id/cancel",async c=>c.json(await core.cancel(owner(c),c.req.param("id"))));
 app.get("/api/translations/:id/receipt",async c=>{c.header("Content-Disposition",'attachment; filename="translation-receipt.json"');return c.json(await core.receipt(owner(c),c.req.param("id")));});
@@ -74,7 +96,8 @@ app.get("/",async c=>c.html(await Bun.file("dist/index.html").text()));
 app.get("/app.js",async c=>{c.header("Content-Type","text/javascript");return c.body(await Bun.file("dist/app.js").text());});
 app.get("/style.css",async c=>{c.header("Content-Type","text/css");return c.body(await Bun.file("dist/style.css").text());});
 app.onError((error,c)=>{
-  const code=error instanceof AppError?error.code:"SERVICE_UNAVAILABLE";log("request_failed",{code});
+  const known=error instanceof AppError,code=known?error.code:"SERVICE_UNAVAILABLE";
+  log("request_failed",{code,path:new URL(c.req.url).pathname.replace(/[0-9a-f-]{36}/gi,":id"),...(known?{}:failure(error))});
   return c.json({error:{code}},error instanceof AppError?error.status as any:503);
 });
 const requestLimit=26*1024*1024; // 25 MiB source plus bounded multipart overhead.

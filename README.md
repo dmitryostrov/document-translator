@@ -174,7 +174,7 @@ The stdio adapter uses Docker and the API's private editor credential volume; it
 
 On Linux, the mounted `out` directory must be writable by the image's `bun` account (UID 1000). Saved files are private to that account (mode 0600); arrange host ownership/access for your workspace. Automated checks change ownership only for their disposable fixture output folders and return those folders/files to the invoking host user afterward.
 
-Keep the normal stack running first. `translate_document` and `translate_folder` each have explicit `prepare`/`start` actions. `translation_status` returns metadata, while `save_translation` verifies the download and atomically creates a file under workspace/out, refusing overwrite and traversal.
+Keep the normal stack running first. `translate_file` is the one-call path: it prepares, waits, approves only if `max_cost_usd` covers the quote, and saves the result (call it again with the same arguments to keep waiting). `translate_document` and `translate_folder` each have explicit `prepare`/`start` actions. `translation_status` returns metadata, while `save_translation` verifies the download and atomically creates a file under workspace/out, refusing overwrite and traversal.
 
 1. List tools and call `translate_document` with `action:"prepare"`, `input_path:"/workspace/manual.pdf"`, `target_language:"german"`, and a fresh `idempotency_key`. Poll `translation_status` with its `job_id` until `AWAITING_APPROVAL`. No paid calls have occurred.
 2. Read the quote, then call `translate_document` with `action:"start"`, that `job_id`, `quote_version`, an explicitly approved `max_cost_usd`, and a distinct key. Poll status until `SUCCEEDED` or a named error/attention state.

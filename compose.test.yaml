@@ -1,5 +1,11 @@
 services:
+  # Fault scripts kill and restart services themselves; an automatic restart would race them.
+  postgres: {restart: "no"}
+  redis: {restart: "no"}
+  api: {restart: "no"}
+  parser: {restart: "no"}
   worker:
+    restart: "no"
     secrets: !reset []
     environment:
       OPENAI_API_KEY_FILE: ""

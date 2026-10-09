@@ -2,15 +2,24 @@ import { Worker } from "bullmq";
 import { join } from "node:path";
 import { readFile, stat } from "node:fs/promises";
 import { sql, migrate } from "./db";
-import { config, log, AppError, key } from "./config";
+import { config, log, AppError, key, failure } from "./config";
 import { connection, queue, notify, notificationId } from "./queue";
-import { quote, validateOutput, hash, terminal, type Block } from "./domain";
+import { quote, validateOutput, terminal, type Block } from "./domain";
 import { formatProcess } from "./files";
-import { terminology, translate, gate } from "./provider";
+import { terminology, translate, gate, segmentKey } from "./provider";
 import { publish } from "./publication";
 
 await migrate();
 const workerId=crypto.randomUUID();
+// Next unit in fair order: owners are served by least recent progress, then jobs, so many documents cannot out-weigh one.
+const fairHead=(db:any)=>db`select x.id,x.generation from units x join jobs j on j.id=x.job_id
+  where x.state='READY' and x.not_before<=now() and x.kind in ('TERMS','TRANSLATE') and j.approved=true
+  and j.stage not in ('FAILED','NEEDS_ATTENTION','SUCCEEDED','CANCELED')
+  and (select count(*) from units active where active.job_id=x.job_id and active.state='RUNNING' and active.lease_expires_at>now())<2
+  and (j.group_id is null or (select count(*) from units ga join jobs gj on gj.id=ga.job_id
+    where gj.group_id=j.group_id and ga.state='RUNNING' and ga.lease_expires_at>now()
+    and ga.kind in ('TERMS','TRANSLATE'))<2)
+  order by (select max(o.updated_at) from jobs o where o.owner=j.owner),j.updated_at,x.sequence,x.ready_since limit 1`;
 export async function claim(id:string,generation:number) {
   return sql.begin(async tx=>{
     await tx`select pg_advisory_xact_lock(91783002)`;
@@ -24,15 +33,8 @@ export async function claim(id:string,generation:number) {
         from units x join jobs j on j.id=x.job_id
         where x.state='RUNNING' and x.lease_expires_at>now() and x.kind in ('TERMS','TRANSLATE')`;
       if(counts.global>=4 || counts.document>=2 || u.group_id && counts.folder>=2)return null;
-      // Fair round-robin by least recently admitted job. Ready units of that owner/group cannot jump the head indefinitely.
-      const [next]=await tx`select x.id from units x join jobs j on j.id=x.job_id
-        where x.state='READY' and x.not_before<=now() and x.kind in ('TERMS','TRANSLATE') and j.approved=true
-        and j.stage not in ('FAILED','NEEDS_ATTENTION','SUCCEEDED','CANCELED')
-        and (select count(*) from units active where active.job_id=x.job_id and active.state='RUNNING' and active.lease_expires_at>now())<2
-        and (j.group_id is null or (select count(*) from units ga join jobs gj on gj.id=ga.job_id
-          where gj.group_id=j.group_id and ga.state='RUNNING' and ga.lease_expires_at>now()
-          and ga.kind in ('TERMS','TRANSLATE'))<2)
-        order by j.updated_at,x.sequence,x.ready_since limit 1`;
+      // Fair round-robin by least recently served owner; ready units of that owner cannot jump the head indefinitely.
+      const [next]=await fairHead(tx);
       if(next && next.id!==id)return null;
     }
     const [claimed]=await tx`update units set state='RUNNING',lease_owner=${workerId},lease_expires_at=now()+interval '30 seconds' where id=${id} and generation=${generation} returning *`;
@@ -42,11 +44,24 @@ export async function claim(id:string,generation:number) {
 }
 async function finished(unit:any,result:any,after:(tx:any)=>Promise<void>) {
   await sql.begin(async tx=>{
+    // Serialize finishers of one job: otherwise two last units can each count the other as unfinished and no RENDER unit is created.
+    await tx`select id from jobs where id=${unit.job_id} for update`;
     const updated=await tx`update units set state='DONE',result=${tx.json(result)},lease_owner=null,lease_expires_at=null where id=${unit.id} and generation=${unit.generation} and lease_owner=${workerId} and state='RUNNING' returning id`;
     if(!updated.length)throw new AppError("LEASE_LOST");
     await after(tx);
   });
   await gate("unit-checkpointed");
+}
+// Moves a job whose TRANSLATE units are all DONE to RENDERING exactly once. Caller holds the job row lock.
+export async function advanceToRender(tx:any,jobId:string) {
+  const [left]=await tx`select count(*) filter(where state!='DONE')::int as n,count(*)::int as total from units where job_id=${jobId} and kind='TRANSLATE'`;
+  if(left.n!==0||!left.total)return false;
+  const created=await tx`insert into units(id,job_id,kind) values(${crypto.randomUUID()},${jobId},'RENDER') on conflict(job_id,kind,sequence) do nothing returning id`;
+  if(!created.length)return false;
+  const parts=await tx`select result from units where job_id=${jobId} and kind='TRANSLATE' order by sequence`;
+  const expected=parts.reduce((n:number,p:any)=>n+p.result.quality.expected,0),correct=parts.reduce((n:number,p:any)=>n+p.result.quality.correct,0);
+  await tx`update jobs set stage='RENDERING',quality=${tx.json({numbers:{expected,correct,rate:expected?correct/expected:null}})},updated_at=now() where id=${jobId}`;
+  return true;
 }
 async function processUnit(data:{id:string;generation:number}) {
   const unit=await claim(data.id,data.generation);
@@ -75,16 +90,11 @@ async function processUnit(data:{id:string;generation:number}) {
     }else if(unit.kind==="TRANSLATE"){
       const blocks=await translate(ctx,unit.payload.blocks,unit.payload.previous);
       const quality=validateOutput(unit.payload.blocks,blocks,job.target);
-      await sql`insert into cache(owner,key,value) values(${job.owner},${hash(JSON.stringify({glossary:job.glossary,previous:unit.payload.previous.map((b:Block)=>b.text).join("\n").slice(-4000),blocks:unit.payload.blocks.map((b:Block)=>({id:b.id,text:b.text})),target:job.target})+config.model+config.prompt+config.policy)},${sql.json(blocks)}) on conflict do nothing`;
+      // Validated output only, one row per block; keys match translate()'s all-or-nothing lookup.
+      const translatedText=new Map(blocks.map(t=>[t.id,t.text]));
+      for(const b of unit.payload.blocks as Block[]){const text=translatedText.get(b.id);if(text!==undefined)await sql`insert into cache(owner,key,value) values(${job.owner},${segmentKey(job,b)},${sql.json({text})}) on conflict do nothing`;}
       await finished(unit,{blocks,quality},async tx=>{
-        const [left]=await tx`select count(*)::int as n from units where job_id=${job.id} and kind='TRANSLATE' and state!='DONE'`;
-        if(left.n===0){
-          await tx`update jobs set stage='RENDERING',updated_at=now() where id=${job.id}`;
-          await tx`insert into units(id,job_id,kind) values(${crypto.randomUUID()},${job.id},'RENDER') on conflict(job_id,kind,sequence) do nothing`;
-          const parts=await tx`select result from units where job_id=${job.id} and kind='TRANSLATE' order by sequence`;
-          const expected=parts.reduce((n:number,p:any)=>n+p.result.quality.expected,0),correct=parts.reduce((n:number,p:any)=>n+p.result.quality.correct,0);
-          await tx`update jobs set quality=${tx.json({numbers:{expected,correct,rate:expected?correct/expected:null}})} where id=${job.id}`;
-        }
+        await advanceToRender(tx,job.id);
       });
     }else if(unit.kind==="RENDER"){
       // A previous render may already have committed SUCCEEDED; never rebuild a paid stage.
@@ -111,12 +121,15 @@ async function processUnit(data:{id:string;generation:number}) {
         if(updated.length && !attention)await tx`update calls set state='REJECTED',reserved=0,updated_at=now() where unit_id=${unit.id} and state='INTENT'`;
         if(updated.length)await tx`update jobs set stage=${attention?"NEEDS_ATTENTION":"FAILED"},error=${publicCode},updated_at=now() where id=${unit.job_id} and stage not in ('SUCCEEDED','CANCELED')`;
       });
-      log("unit_failed",{unit_id:unit.id,code:publicCode});
+      // Diagnostic only: ids, kind and error name/frames; never messages or document text.
+      log("unit_failed",{unit_id:unit.id,job_id:unit.job_id,kind:unit.kind,generation:unit.generation,code:publicCode,cause:code===publicCode?undefined:String(code).slice(0,80),...failure(error)});
     }
   }finally{
     clearInterval(heartbeat);
     const ready=await sql`select id,generation from units where job_id=${unit.job_id} and state='READY' and not_before<=now()`;
     for(const u of ready)await notify(u.id,u.generation);
+    // A slot just freed: wake the head of the fair queue now instead of waiting for the next reconciler pass.
+    try{const [head]=await fairHead(sql);if(head)await notify(head.id,head.generation);}catch{}
   }
 }
 let scanning=false;
@@ -151,8 +164,16 @@ export async function reconcile() {
         if(advanced.length)await notify(u.id,advanced[0].generation);
       }else if(!broker)await notify(u.id,u.generation);
     }
-    log("reconciled",{eligible:ready.length,expired:expired.length});
-  }catch{log("reconciliation_unavailable");}finally{scanning=false;}
+    // Repair: every TRANSLATE unit DONE but no RENDER unit (a lost transition) must not wait for the job deadline.
+    const stranded=await sql`select id from jobs where stage='TRANSLATING' and not exists(select 1 from units where job_id=jobs.id and kind='TRANSLATE' and state!='DONE')
+      and exists(select 1 from units where job_id=jobs.id and kind='TRANSLATE') limit 20`;
+    for(const s of stranded)await sql.begin(async tx=>{
+      const [row]=await tx`select stage from jobs where id=${s.id} for update`;
+      if(row?.stage==='TRANSLATING'&&await advanceToRender(tx,s.id))log("render_transition_repaired",{job_id:s.id});
+    });
+    await Bun.write("/tmp/worker-alive",String(Date.now())).catch(()=>{});
+    log("reconciled",{eligible:ready.length,expired:expired.length,stranded:stranded.length});
+  }catch(error){log("reconciliation_unavailable",failure(error));}finally{scanning=false;}
 }
 const worker=new Worker("stark-units",async job=>processUnit(job.data),{connection,concurrency:8,lockDuration:60000,lockRenewTime:20000,stalledInterval:10000,maxStalledCount:1});
 let lastQueueError=0;

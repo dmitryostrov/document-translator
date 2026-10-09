@@ -1,4 +1,4 @@
-import { mkdir, open, rename, readFile, stat } from "node:fs/promises";
+import { mkdir, open, rename, readFile, stat, unlink } from "node:fs/promises";
 import { dirname, join } from "node:path";
 import { config } from "./config";
 import { hash } from "./domain";
@@ -43,5 +43,11 @@ export async function formatProcess(action: "extract" | "render", input: object)
   }catch(error:any){
     if(["ConnectionRefused","ECONNREFUSED","ENOENT","ECONNRESET","TimeoutError","AbortError"].includes(error.code??error.name))throw new Error("FORMAT_SERVICE_UNAVAILABLE");
     throw error;
-  } finally { settled=true;await relay; }
+  } finally {
+    settled=true;
+    // Result and artifact were read or copied above; remove every scratch file, including the fixture gate files.
+    try{await relay;}finally{
+      await Promise.all([request,result,staged,request+".ready",request+".release"].map(p=>unlink(p).catch(()=>{})));
+    }
+  }
 }

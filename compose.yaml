@@ -6,6 +6,7 @@ services:
       POSTGRES_USER: stark
       POSTGRES_PASSWORD: stark-local
       POSTGRES_DB: stark
+    restart: unless-stopped
     volumes: [pg:/var/lib/postgresql/data]
     healthcheck:
       test: [CMD-SHELL, "pg_isready -U stark"]
@@ -15,6 +16,7 @@ services:
   redis:
     image: redis:7.4-alpine
     command: [redis-server, --appendonly, "yes", --appendfsync, everysec, --maxmemory-policy, noeviction]
+    restart: unless-stopped
     volumes: [redis:/data]
     healthcheck:
       test: [CMD, redis-cli, ping]
@@ -23,6 +25,7 @@ services:
       retries: 30
   api:
     build: .
+    restart: unless-stopped
     ports: ["127.0.0.1:${APP_PORT:-3100}:3100"]
     environment: &appenv
       DATABASE_URL: postgres://stark:stark-local@postgres:5432/stark
@@ -43,6 +46,7 @@ services:
   worker:
     build: .
     command: [bun, src/worker.ts]
+    restart: unless-stopped
     environment:
       <<: *appenv
       OPENAI_API_KEY_FILE: /run/secrets/openai_key
@@ -53,9 +57,17 @@ services:
       redis: {condition: service_healthy}
       parser: {condition: service_healthy}
     mem_limit: 1536m
+    healthcheck:
+      # The worker rewrites this file on every 5-second reconciler pass.
+      test: [CMD, bun, -e, "try{process.exit(Date.now()-Number(require('fs').readFileSync('/tmp/worker-alive','utf8'))<30000?0:1)}catch{process.exit(1)}"]
+      interval: 10s
+      timeout: 3s
+      retries: 6
+      start_period: 20s
   parser:
     build: .
     command: [bun, src/format-server.ts]
+    restart: unless-stopped
     environment:
       PROVIDER_MODE: ${PROVIDER_MODE:-openai}
     volumes: [files:/data, format-ipc:/ipc]
