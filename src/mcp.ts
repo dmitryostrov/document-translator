@@ -27,8 +27,8 @@ async function submitFile(path:string,target:string,ack:boolean|undefined,key:st
   form.append("file",Bun.file(path),path.split(/[/\\]/).pop()!);form.append("target_language",target);form.append("acknowledge_text_only_pdf",String(!!ack));
   return api("/api/translations",form,key);
 }
-// Shared safe-save: verified bytes, atomic no-replace publication. Identical existing file counts as already saved.
-async function saveArtifact(jobId:string,outputPath:string){
+// Shared safe-save: verified bytes, atomic no-replace publication. Never overwrites; with allowIdentical (idempotent retries) a byte-identical existing file counts as already saved.
+async function saveArtifact(jobId:string,outputPath:string,allowIdentical=false){
   const target=resolve(root,outputPath),parent=await realpath(dirname(target));
   const rel=relative(canonicalOut,parent);
   if(rel.startsWith("..") || !target.startsWith(outRoot+"/") && !target.startsWith(outRoot+"\\"))throw new Error("OUTPUT_PATH_DENIED");
@@ -43,6 +43,7 @@ async function saveArtifact(jobId:string,outputPath:string){
   try{await link(tmp,target);}
   catch(e){
     if((e as NodeJS.ErrnoException).code!=="EEXIST")throw e;
+    if(!allowIdentical)throw new Error("OUTPUT_EXISTS");
     const existing=await lstat(target);
     if(!existing.isFile())throw new Error("OUTPUT_EXISTS");
     if(createHash("sha256").update(await readFile(target)).digest("hex")!==checksum)throw new Error("OUTPUT_EXISTS");
@@ -77,7 +78,7 @@ server.registerTool("translate_file",{description:"START HERE to translate one l
   }
   const status={job_id:id,stage:data.stage,progress:data.progress,cost:data.cost,error:data.error?.code??data.error,...(data.quote?{quote:data.quote}:{})};
   if(data.stage==="SUCCEEDED"){
-    const saved=await saveArtifact(id,outputPath);
+    const saved=await saveArtifact(id,outputPath,true);
     return metadata({...status,output_path:saved.output_path,checksum:saved.checksum,...(saved.already_saved?{already_saved:true}:{}),done:true});
   }
   if(TERMINAL_FAILED.has(data.stage))return metadata({...status,done:true});
