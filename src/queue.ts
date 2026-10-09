@@ -3,7 +3,7 @@ import Redis from "ioredis";
 import { config, log } from "./config";
 const url=new URL(config.redis);
 export const connection=new Redis(config.redis,{maxRetriesPerRequest:null,enableOfflineQueue:false});
-export const queue=new Queue("stark-units",{connection});
+export const queue=new Queue("translator-units",{connection});
 queue.on("error",()=>log("queue_unavailable"));
 export const notificationId=(id:string,g:number)=>`wu-${id}-g${g}`;
 export async function notify(id:string,generation:number,delay=0) {

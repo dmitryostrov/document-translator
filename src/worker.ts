@@ -175,7 +175,7 @@ export async function reconcile() {
     log("reconciled",{eligible:ready.length,expired:expired.length,stranded:stranded.length});
   }catch(error){log("reconciliation_unavailable",failure(error));}finally{scanning=false;}
 }
-const worker=new Worker("stark-units",async job=>processUnit(job.data),{connection,concurrency:8,lockDuration:60000,lockRenewTime:20000,stalledInterval:10000,maxStalledCount:1});
+const worker=new Worker("translator-units",async job=>processUnit(job.data),{connection,concurrency:8,lockDuration:60000,lockRenewTime:20000,stalledInterval:10000,maxStalledCount:1});
 let lastQueueError=0;
 worker.on("error",error=>{
   if(Date.now()-lastQueueError<5000)return;lastQueueError=Date.now();

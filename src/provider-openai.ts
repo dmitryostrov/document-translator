@@ -11,7 +11,7 @@ export function createOpenAIProvider():TranslationProvider{
     assertAgentReady(){client();},
     async translateChunk({prompt,schema,maxOutputTokens}){
       const response=await client().responses.create({
-        model:config.model,input:prompt,max_output_tokens:maxOutputTokens,store:false,prompt_cache_key:`stark-${config.prompt}`,
+        model:config.model,input:prompt,max_output_tokens:maxOutputTokens,store:false,prompt_cache_key:`translator-${config.prompt}`,
         ...(config.reasoning?{reasoning:{effort:config.reasoning}}:{}),
         ...(config.cacheOptions?{prompt_cache_options:config.cacheOptions}:{}),
         text:{format:{type:"json_schema",name:"translation",strict:true,schema}}

@@ -1,15 +1,15 @@
-name: stark-translator
+name: document-translator
 services:
   postgres:
     image: postgres:17-alpine
     environment:
-      POSTGRES_USER: stark
-      POSTGRES_PASSWORD: stark-local
-      POSTGRES_DB: stark
+      POSTGRES_USER: translator
+      POSTGRES_PASSWORD: translator-local
+      POSTGRES_DB: translator
     restart: unless-stopped
     volumes: [pg:/var/lib/postgresql/data]
     healthcheck:
-      test: [CMD-SHELL, "pg_isready -U stark"]
+      test: [CMD-SHELL, "pg_isready -U translator"]
       interval: 2s
       timeout: 2s
       retries: 30
@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     ports: ["127.0.0.1:${APP_PORT:-3100}:3100"]
     environment: &appenv
-      DATABASE_URL: postgres://stark:stark-local@postgres:5432/stark
+      DATABASE_URL: postgres://translator:translator-local@postgres:5432/translator
       REDIS_URL: redis://redis:6379
       PROVIDER_MODE: ${PROVIDER_MODE:-openai}
       MODEL: ${MODEL:-gpt-6-astra}
@@ -84,7 +84,7 @@ services:
       retries: 12
   mcp:
     profiles: [mcp]
-    image: ${COMPOSE_PROJECT_NAME:-stark-translator}-api
+    image: ${COMPOSE_PROJECT_NAME:-document-translator}-api
     command: [bun, src/mcp.ts]
     stdin_open: true
     environment:

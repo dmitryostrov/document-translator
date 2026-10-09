@@ -37,7 +37,7 @@ async function saveArtifact(jobId:string,outputPath:string){
   const bytes=new Uint8Array(await response.arrayBuffer());
   const checksum=createHash("sha256").update(bytes).digest("hex");
   if(checksum!==response.headers.get("etag"))throw new Error("ARTIFACT_CHECKSUM_MISMATCH");
-  const tmp=join(parent,`.stark-${crypto.randomUUID()}.tmp`);
+  const tmp=join(parent,`.translator-${crypto.randomUUID()}.tmp`);
   const fd=await open(tmp,"wx",0o600);try{await fd.writeFile(bytes);await fd.sync();}finally{await fd.close();}
   // Atomic no-replace publication: hard-link fails if the user's destination already exists.
   try{await link(tmp,target);}
@@ -52,7 +52,7 @@ async function saveArtifact(jobId:string,outputPath:string){
   return {output_path:target,checksum,already_saved:false};
 }
 const metadata=(value:unknown)=>({content:[{type:"text" as const,text:JSON.stringify(value)}]});
-const server=new McpServer({name:"stark-translator",version:"1.0.0"});
+const server=new McpServer({name:"document-translator",version:"1.0.0"});
 server.registerTool("translate_file",{description:"START HERE to translate one local document in the workspace. One call submits (idempotent), waits, and saves the result to output_path. If done is false, call again with the same arguments to continue. If stage is AWAITING_APPROVAL, nothing is spent: re-call with max_cost_usd >= quote.maximum_reserved_usd to approve. Returns status JSON only, never document text.",inputSchema:{input_path:z.string(),target_language:z.string(),max_cost_usd:z.number().optional(),output_path:z.string().optional(),wait_seconds:z.number().min(0).max(55).optional(),acknowledge_text_only_pdf:z.boolean().optional()}},async b=>{
   const path=await safeInput(b.input_path);const ack=!!b.acknowledge_text_only_pdf;
   if((await stat(path)).size>MAX_BYTES)throw new Error("UPLOAD_SIZE_LIMIT");

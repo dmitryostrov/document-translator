@@ -1,6 +1,6 @@
 import { spawnSync } from "node:child_process";
 import { source } from "./fixtures";
-export const project=`stark-test-${process.env.TEST_RUN_ID??"local"}`,base=process.env.TEST_API_URL??"http://127.0.0.1:3110";
+export const project=`translator-test-${process.env.TEST_RUN_ID??"local"}`,base=process.env.TEST_API_URL??"http://127.0.0.1:3110";
 export const environment={...process.env,MODEL:process.env.TEST_MODEL??"gpt-4.1-mini",PROVIDER_MODE:"fake",APP_PORT:"3110",OPENAI_API_KEY:"",OPENAI_API_KEY_FILE:"",OPENAI_KEY_PATH:"/dev/null"};
 export function docker(args:string[]){
   const p=spawnSync("docker",args,{env:environment,encoding:"utf8",maxBuffer:4*1024*1024});
@@ -20,7 +20,7 @@ export function restoreTestStack(before:Set<string>){
   const started=["api","worker","parser","postgres","redis"].filter(service=>!before.has(service));
   if(started.length)compose(["stop",...started]);
 }
-export function db(query:string){return compose(["exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query]);}
+export function db(query:string){return compose(["exec","-T","postgres","psql","-U","translator","-d","translator","-Atc",query]);}
 export async function poll<T>(fn:()=>Promise<T>,predicate:(v:T)=>boolean,timeout=75_000){
   const begin=Date.now();let last:T;
   while(Date.now()-begin<timeout){last=await fn();if(predicate(last))return last;await new Promise(resolve=>setTimeout(resolve,250));}

@@ -14,5 +14,5 @@
     "provider_calls": 0,
     "old_artifact_preserved": true
   },
-  "container_memory": "stark-translator-worker-1 111MiB / 1.5GiB\nstark-translator-api-1 106.2MiB / 512MiB\nstark-translator-parser-1 4.523MiB / 1.5GiB\nstark-test-local-worker-1 125.2MiB / 1.5GiB\nstark-test-local-api-1 112.1MiB / 512MiB\nstark-test-local-parser-1 6.324MiB / 1.5GiB\nstark-test-local-postgres-1 57.45MiB / 31.3GiB\nstark-test-local-redis-1 6.336MiB / 31.3GiB\nstark-translator-postgres-1 30.96MiB / 31.3GiB\nstark-translator-redis-1 5.152MiB / 31.3GiB"
+  "container_memory": "document-translator-worker-1 111MiB / 1.5GiB\ndocument-translator-api-1 106.2MiB / 512MiB\ndocument-translator-parser-1 4.523MiB / 1.5GiB\ntranslator-test-local-worker-1 125.2MiB / 1.5GiB\ntranslator-test-local-api-1 112.1MiB / 512MiB\ntranslator-test-local-parser-1 6.324MiB / 1.5GiB\ntranslator-test-local-postgres-1 57.45MiB / 31.3GiB\ntranslator-test-local-redis-1 6.336MiB / 31.3GiB\ndocument-translator-postgres-1 30.96MiB / 31.3GiB\ndocument-translator-redis-1 5.152MiB / 31.3GiB"
 }

@@ -10,7 +10,7 @@ try{
   const [unit]=JSON.parse(db(`select json_agg(json_build_object('id',id,'generation',generation,'owner',lease_owner)) from units where job_id='${p.data.job_id}' and state='RUNNING'`));
   await Bun.sleep(23000);
   const lease=Number(db(`select extract(epoch from lease_expires_at-now()) from units where id='${unit.id}'`));
-  const ttl=Number(compose(["exec","-T","redis","redis-cli","pttl",`bull:stark-units:wu-${unit.id}-g${unit.generation}:lock`]));
+  const ttl=Number(compose(["exec","-T","redis","redis-cli","pttl",`bull:translator-units:wu-${unit.id}-g${unit.generation}:lock`]));
   assert.ok(lease>20,`${lease}`);assert.ok(ttl>45000,`${ttl}`);
   assert.equal(db(`select lease_owner from units where id='${unit.id}'`),unit.owner);
   db("update test_gates set enabled=false where name='slow-pdf-subprocess'");

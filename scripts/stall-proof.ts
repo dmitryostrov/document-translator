@@ -6,7 +6,7 @@ const [unit]=await sql`select * from units where job_id=${process.argv[2]} and s
 const jid=notificationId(unit.id,unit.generation);
 const existing=await queue.getJob(jid);if(existing)await existing.remove();
 await queue.add("unit",{id:unit.id,generation:unit.generation},{jobId:jid,removeOnFail:false,attempts:1});
-const worker=new Worker("stark-units",async()=>{},{connection,autorun:false,maxStalledCount:1,stalledInterval:1000});
+const worker=new Worker("translator-units",async()=>{},{connection,autorun:false,maxStalledCount:1,stalledInterval:1000});
 await worker.waitUntilReady();
 let job:any;
 for(let n=0;n<2;n++){

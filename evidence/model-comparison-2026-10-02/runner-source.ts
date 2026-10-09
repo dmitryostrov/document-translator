@@ -74,7 +74,7 @@ function compose(args:string[],model:string){
   const p=spawnSync("docker",["compose",...args],{cwd:root,env:environment(model),encoding:"utf8",maxBuffer:4*1024*1024});
   if(p.status!==0)throw new Error("COMPARISON_DOCKER_FAILED:"+p.stderr.slice(-1000));return p.stdout.trim();
 }
-function db(query:string){return compose(["exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query],"gpt-6-astra");}
+function db(query:string){return compose(["exec","-T","postgres","psql","-U","translator","-d","translator","-Atc",query],"gpt-6-astra");}
 async function switchModel(model:string){
   assert.equal(db("select count(*) from jobs where stage in ('PREFLIGHT','TERMINOLOGY','TRANSLATING','RENDERING')"),"0","refuse to change model during active work");
   compose(["up","-d","--wait","--wait-timeout","120","api","worker"],model);

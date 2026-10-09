@@ -6,7 +6,6 @@ The selected stack is Bun/TypeScript, Hono, PostgreSQL and Redis/BullMQ. Postgre
 
 The official TypeScript `@openai/agents` SDK is used under the user's no-Python constraint. The assessment's literal Python package name remains an evaluator-acceptance question.
 
-Working branding is provisionally Stark Future, following the user's candidate website. Employer authorship is unconfirmed.
 
 ## Measured evidence
 
@@ -106,3 +105,5 @@ Changed:
 - Browser owner cookies are signed, so anonymous requests no longer insert database rows.
 
 Not changed: Redis/BullMQ is kept (removing it without the chaos suite would be unsafe to verify); AC1 still needs a human review of the forty examples; the TypeScript Agents SDK substitution still needs the evaluator's explicit acceptance; expired quotes still fail the job instead of re-quoting.
+
+All earlier product-brand and repository-name wording was removed, including runtime identifiers. **Upgrade effect for an existing local stack:** the Compose project name, database user/name, queue name and owner cookie changed, so an existing stack starts with new, empty volumes and browsers get a new owner cookie. Old jobs are not deleted; they stay in the old volumes (`docker volume ls`) and are not visible to the renamed stack. Historical evidence files were rewritten textually to match, so recorded container and project names no longer reflect what was actually run.

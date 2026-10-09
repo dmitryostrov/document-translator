@@ -4,7 +4,7 @@ import { modelProfile } from "./models";
 const model=process.env.MODEL??"gpt-6-astra",profile=modelProfile(model);
 
 export const config = {
-  database: process.env.DATABASE_URL ?? "postgres://stark:stark-local@localhost:55432/stark",
+  database: process.env.DATABASE_URL ?? "postgres://translator:translator-local@localhost:55432/translator",
   redis: process.env.REDIS_URL ?? "redis://localhost:56379",
   data: resolve(process.env.DATA_DIR ?? ".data"),
   port: Number(process.env.PORT ?? 3100),

@@ -46,4 +46,4 @@ jobs:
             evidence/infrastructure-chaos.json
       - name: Stop isolated test services
         if: always()
-        run: docker compose -p stark-test-ci -f compose.yaml -f compose.test.yaml stop
+        run: docker compose -p translator-test-ci -f compose.yaml -f compose.test.yaml stop

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { describeError, errorCatalog } from "../src/errors";
-const brand={name:"STARK FUTURE",product:"Document Translator"};
+const brand={name:"DOCUMENT TRANSLATOR",product:"Document Translator"};
 async function request(url:string,options:RequestInit={}){
   const response=await fetch(url,options);const data=await response.json();
   if(!response.ok)throw new Error(data.error?.code??"REQUEST_FAILED");return data;

@@ -2,7 +2,7 @@ import { strict as assert } from "node:assert";
 import { mkdir, writeFile } from "node:fs/promises";
 import { setup, Session, db, compose, poll, project } from "./test-support";
 import { source, fixturePDF } from "./fixtures";
-if(!project.startsWith("stark-test-"))throw new Error("REFUSE_NON_TEST_PROJECT");
+if(!project.startsWith("translator-test-"))throw new Error("REFUSE_NON_TEST_PROJECT");
 await setup(process.env.SKIP_BUILD!=="1");
 const evidence:any[]=[];
 function enable(name:string){db(`insert into test_gates(name,enabled,hits) values('${name}',true,0) on conflict(name) do update set enabled=true,hits=0`);}

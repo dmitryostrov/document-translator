@@ -33,7 +33,7 @@ app.use("/api/*",async(c,next)=>{
     if(supplied.length!==expected.length||!timingSafeEqual(supplied,expected))throw new AppError("AUTH_REQUIRED",401);
     owner=`mcp-${hash(expected)}`;
   }else{
-    const cookie=getCookie(c,"stark-owner");
+    const cookie=getCookie(c,"translator-owner");
     const [id,sig=""]=(cookie??"").split(".");
     const signed=!!id&&sig.length===32&&timingSafeEqual(Buffer.from(sig),Buffer.from(sign(id)));
     // Legacy cookies were a bare id stored in the owners table; keep them working.
@@ -42,7 +42,7 @@ app.use("/api/*",async(c,next)=>{
     else if(legacy)owner=cookie!;
     else{
       owner=crypto.randomUUID();
-      setCookie(c,"stark-owner",owner+"."+sign(owner),{httpOnly:true,sameSite:"Strict",path:"/",maxAge:86400*7});
+      setCookie(c,"translator-owner",owner+"."+sign(owner),{httpOnly:true,sameSite:"Strict",path:"/",maxAge:86400*7});
     }
   }
   c.set("owner" as never,owner as never);await next();

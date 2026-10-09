@@ -4,7 +4,7 @@ import { resolve,join } from "node:path";
 import { spawnSync } from "node:child_process";
 import { strict as assert } from "node:assert";
 import { createHash } from "node:crypto";
-const destination=await mkdtemp(join(tmpdir(),"stark-fresh-")),project=`stark-fresh-${crypto.randomUUID().slice(0,8)}`;
+const destination=await mkdtemp(join(tmpdir(),"translator-fresh-")),project=`translator-fresh-${crypto.randomUUID().slice(0,8)}`;
 const files=["package.json","bun.lock","tsconfig.json","Dockerfile","compose.yaml",".dockerignore",".gitignore",".env.example","README.md","DECISIONS.md","PROMPTS.md","src","scripts","tests","web"];
 for(const f of files)await cp(resolve(f),join(destination,f),{recursive:true,errorOnExist:true});
 const environment={...process.env,APP_PORT:"3112",OPENAI_KEY_PATH:resolve(".vscode/openapi-key.txt").replaceAll("\\","/"),PROVIDER_MODE:"openai"};
