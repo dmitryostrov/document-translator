@@ -21,7 +21,7 @@ const args=[...composeArgs,"run","--rm","--no-deps","-T","-v",`${folder.replaceA
 const client=new Client({name:"clean-translator-verification",version:"1.0.0"});
 const transport=new StdioClientTransport({command:"docker",args,env:environment as Record<string,string>,stderr:"pipe"});
 await client.connect(transport);
-const tools=await client.listTools();assert.deepEqual(tools.tools.map(t=>t.name).sort(),["save_translation","translate_document","translate_folder","translation_status"]);
+const tools=await client.listTools();assert.deepEqual(tools.tools.map(t=>t.name).sort(),["save_translation","translate_document","translate_file","translate_folder","translation_status"]);
 async function call(name:string,arguments_:any){const result:any=await client.callTool({name,arguments:arguments_});if(result.isError)throw new Error(JSON.stringify(result.content));return JSON.parse(result.content[0].text);}
 const evidence:any[]=[];
 try{
@@ -38,6 +38,15 @@ try{
     await assert.rejects(()=>call("save_translation",{job_id:q.job_id,output_path:`/workspace/out/sample.de.${format}`}));
     evidence.push({format,job_id:q.job_id,checksum:saved.checksum,metadata_only:true});
   }
+  // One-call path: the first call must stop at the quote and spend nothing; a cap covering the quote lets it finish and save.
+  const file={input_path:"/workspace/sample.md",target_language:"german",wait_seconds:20};
+  const quoted=await call("translate_file",file);
+  assert.equal(quoted.stage,"AWAITING_APPROVAL");assert.equal(quoted.done,false);assert.ok(quoted.quote?.maximum_reserved_usd>0);assert.equal(quoted.cost.known_cost_usd,0);
+  let one:any=await call("translate_file",{...file,max_cost_usd:Math.max(1,quoted.quote.maximum_reserved_usd)});
+  for(let i=0;i<15&&!one.done;i++)one=await call("translate_file",{...file,max_cost_usd:Math.max(1,quoted.quote.maximum_reserved_usd)});
+  assert.equal(one.stage,"SUCCEEDED");assert.equal(one.done,true);assert.equal(one.job_id,quoted.job_id);
+  assert.equal(await output.checksum("sample.german.md"),one.checksum);
+  evidence.push({case:"translate_file-one-call",job_id:one.job_id,checksum:one.checksum,metadata_only:true});
   await assert.rejects(()=>call("translate_document",{action:"prepare",input_path:"/etc/passwd",target_language:"german",idempotency_key:crypto.randomUUID()}));
   const key=crypto.randomUUID(),g=await call("translate_folder",{action:"prepare",glob:"docs/*.md",target_language:"german",idempotency_key:key});
   const repeat=await call("translate_folder",{action:"prepare",glob:"docs/*.md",target_language:"german",idempotency_key:key});assert.equal(g.group_id,repeat.group_id);
@@ -51,5 +60,5 @@ try{
   evidence.push({case:"folder-idempotency-and-cap",group_id:g.group_id,children:children.length});
   const evidencePath=live?"evidence/mcp-live.json":"evidence/mcp.json";
   await mkdir("evidence",{recursive:true});await writeFile(evidencePath,JSON.stringify(evidence,null,2));
-  console.log(JSON.stringify({passed:evidence.length,tools:4,evidence:evidencePath,provider:live?"openai":"fake",inputs_preserved:true}));
+  console.log(JSON.stringify({passed:evidence.length,tools:5,evidence:evidencePath,provider:live?"openai":"fake",inputs_preserved:true}));
 }finally{try{await client.close();}finally{output.restore();}}
