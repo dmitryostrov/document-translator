@@ -11,7 +11,8 @@ import { gate } from "./provider";
 
 export async function jobFor(owner: string, id: string) {
   if(!/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id))throw new AppError("INVALID_JOB_ID",400);
-  const rows=await sql`select * from jobs where id=${id} and owner=${owner}`;
+  // Every column except the (large) IR: status/receipt/start never need the document body.
+  const rows=await sql`select id,owner,request_key,fingerprint,format,target,options,source_path,source_hash,stage,approved,cap,group_id,quote,glossary,warnings,quality,artifact,error,created_at,updated_at,deadline,resume_count from jobs where id=${id} and owner=${owner}`;
   if(!rows.length)throw new AppError("JOB_NOT_FOUND",404);return rows[0];
 }
 export async function submit(owner:string, bytes:Uint8Array|Uploaded, filename:string, language:unknown, requestKey:string, options:any={}) {
@@ -99,6 +100,36 @@ export async function start(owner:string,id:string,version:string,cap:number,req
   });
   const units=await sql`select id,generation from units where job_id=${id} and state='READY'`;
   for(const u of units)await notify(u.id,u.generation);return status(owner,id);
+}
+// Explicit, approved continuation of a job stopped by an uncertain provider outcome (or its deadline).
+// The unresolved call is set aside (still counted in cost exposure) so its identity is free for one fresh attempt;
+// completed calls keep their identity and are never paid for again.
+export async function resume(owner:string,id:string,cap:number,acknowledged:boolean,requestKey:string) {
+  await jobFor(owner,id);
+  if(!requestKey || !Number.isFinite(cap) || cap<=0 || cap>1000)throw new AppError("INVALID_BUDGET_OR_START_KEY",400);
+  if(acknowledged!==true)throw new AppError("RESUME_ACK_REQUIRED",400);
+  await sql.begin(async tx=>{
+    await tx`select pg_advisory_xact_lock(91783002)`;
+    const [job]=await tx`select id,stage,error,resume_count from jobs where id=${id} and owner=${owner} for update`;
+    if(!job)throw new AppError("JOB_NOT_FOUND",404);
+    const fp=hash(JSON.stringify({resume:true,cap}));
+    const [old]=await tx`select fingerprint from starts where job_id=${id} and request_key=${requestKey}`;
+    if(old){if(old.fingerprint!==fp)throw new AppError("IDEMPOTENCY_CONFLICT",409);return;}
+    if(job.stage!=="NEEDS_ATTENTION"||!["OUTCOME_UNKNOWN","JOB_DEADLINE_EXCEEDED"].includes(job.error))throw new AppError("RESUME_NOT_AVAILABLE",409);
+    if(job.resume_count>=3)throw new AppError("RESUME_LIMIT_REACHED",409);
+    const [committed]=await tx`select coalesce(sum(cost+case when state in ('INTENT','SUBMITTED','OUTCOME_UNKNOWN') then reserved else 0 end),0) as n from calls where job_id=${id}`;
+    if(cap<Number(committed.n))throw new AppError("COST_CAP_TOO_LOW",409);
+    const pending=await tx`select distinct kind from units where job_id=${id} and state!='DONE' and state!='CANCELED'`;
+    const kinds=new Set(pending.map((r:any)=>r.kind));
+    const stage=kinds.has("RENDER")?"RENDERING":kinds.has("TRANSLATE")?"TRANSLATING":kinds.has("TERMS")?"TERMINOLOGY":"TRANSLATING";
+    await tx`insert into starts(job_id,request_key,fingerprint) values(${id},${requestKey},${fp})`;
+    await tx`update calls set id=id||':unresolved:'||${job.resume_count+1},unit_id=null where job_id=${id} and state='OUTCOME_UNKNOWN'`;
+    await tx`update units set state='READY',generation=generation+1,attempts=0,not_before=now(),ready_since=now(),lease_owner=null,lease_expires_at=null where job_id=${id} and state='FAILED'`;
+    await tx`update jobs set stage=${stage},error=null,cap=${cap},resume_count=resume_count+1,deadline=now()+interval '120 minutes',updated_at=now() where id=${id}`;
+  });
+  const units=await sql`select id,generation from units where job_id=${id} and state='READY'`;
+  for(const u of units)await notify(u.id,u.generation);
+  return status(owner,id);
 }
 export async function cancel(owner:string,id:string) {
   await jobFor(owner,id);

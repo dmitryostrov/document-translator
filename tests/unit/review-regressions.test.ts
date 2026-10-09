@@ -48,7 +48,7 @@ test("size-based estimates scale with source tokens and remain separate from res
   expect(large.eta_seconds).toBeNull();
 });
 test("missing, unreadable and empty key inputs produce only a named configuration error",async()=>{
-  const scratch=await mkdtemp(join(tmpdir(),"stark-empty-key-")),empty=join(scratch,"empty.txt");await writeFile(empty,"");
+  const scratch=await mkdtemp(join(tmpdir(),"translator-empty-key-")),empty=join(scratch,"empty.txt");await writeFile(empty,"");
   for(const file of ["",join(scratch,"missing.txt"),empty]){
     const script='import {key} from "./src/config";try{key();process.exit(2)}catch(e){console.log(e.code);process.exit(e.code==="OPENAI_KEY_UNAVAILABLE"?0:1)}';
     const p=Bun.spawn(["bun","-e",script],{stdout:"pipe",stderr:"pipe",env:{PATH:process.env.PATH!,PROVIDER_MODE:"openai",OPENAI_API_KEY:"",OPENAI_API_KEY_FILE:file}});

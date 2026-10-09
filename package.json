@@ -1,5 +1,5 @@
 {
-  "name": "stark-document-translator",
+  "name": "document-translator",
   "private": true,
   "type": "module",
   "scripts": {

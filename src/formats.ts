@@ -5,24 +5,64 @@ import { visit } from "unist-util-visit";
 import { PDFDocument, rgb } from "pdf-lib";
 import fontkit from "@pdf-lib/fontkit";
 import { AppError } from "./config";
-import { screenText, splitBlocks, type IR, type Block, type Translated } from "./domain";
+import { screenText, splitBlocks, placeholderTags, type IR, type Block, type Translated } from "./domain";
 import { atomic } from "./files";
 import { fileURLToPath } from "node:url";
 
+type Span = { node: any; wrap: boolean };
+// Letters only: a..z, then aa..zz, ... in order of appearance.
+const placeholderId = (n: number) => { let s = ""; for (n++; n > 0; n = Math.floor((n - 1) / 26)) s = String.fromCharCode(97 + (n - 1) % 26) + s; return s; };
+const phrasingParents = new Set(["paragraph", "heading", "tableCell"]);
+const hasText = (nodes: any[]): boolean => nodes.some(n => n.type === "text" ? n.value.trim() !== "" : hasText(n.children ?? []));
 export function markdownIR(text: string): IR {
   screenText(text);
   const tree = fromMarkdown(text); const blocks: Block[] = [];
+  // One block per phrasing container: text is kept, inline wrappers and atoms become placeholders.
+  const inline = (nodes: any[], ctx: { n: number; spans: Record<string, Span> }): string => nodes.map((node: any) => {
+    if (node.type === "text") {
+      if (/<\/?[a-z]+\/?>/.test(node.value)) throw new AppError("MARKDOWN_HTML_UNSUPPORTED");
+      return node.value;
+    }
+    if (node.type === "html") throw new AppError("MARKDOWN_HTML_UNSUPPORTED");
+    const { children, position, ...attrs } = node; const id = placeholderId(ctx.n++);
+    if (!children) { ctx.spans[id] = { node: attrs, wrap: false }; return `<${id}/>`; }
+    ctx.spans[id] = { node: attrs, wrap: true };
+    return `<${id}>${inline(children, ctx)}</${id}>`;
+  }).join("");
   visit(tree, (node: any) => {
     if (node.type === "html") throw new AppError("MARKDOWN_HTML_UNSUPPORTED");
     if (node.url) {
       const scheme=/^([a-z][a-z0-9+.-]*):/i.exec(node.url)?.[1];
       if (/[\u0000-\u001f\u007f]/.test(node.url) || /^[\\/]{2}/.test(node.url) || scheme && !/^(https?|mailto)$/i.test(scheme)) throw new AppError("MARKDOWN_URI_UNSUPPORTED");
     }
-    if (node.type === "text" && node.value.trim()) {
-      node.blockId = `b${blocks.length}`; blocks.push({ id: node.blockId, text: node.value });
+    if (phrasingParents.has(node.type) && node.children && hasText(node.children)) {
+      const ctx = { n: 0, spans: {} as Record<string, Span> };
+      const body = inline(node.children, ctx);
+      node.blockId = `b${blocks.length}`; node.spans = ctx.spans; blocks.push({ id: node.blockId, text: body });
     }
   });
   return { format: "md", blocks, tree, warnings: [], pages: 0 };
+}
+// Rebuild phrasing nodes from a translated block. Placeholders must match the source exactly once each and nest properly.
+function rebuild(text: string, spans: Record<string, Span>): any[] {
+  function fail(): never { throw new AppError("ARTIFACT_INCOMPLETE"); }
+  const root: any = { children: [] }, stack: { id: string; node: any }[] = [{ id: "", node: root }], seen = new Set<string>();
+  const addText = (s: string) => { if (s) stack.at(-1)!.node.children.push({ type: "text", value: s }); };
+  let at = 0;
+  for (const t of placeholderTags(text)) {
+    addText(text.slice(at, t.index)); at = t.index + t.tag.length;
+    const span = Object.hasOwn(spans, t.id) ? spans[t.id] : undefined;
+    if (!span || seen.has(t.tag) || t.close && t.selfClosing) fail();
+    seen.add(t.tag);
+    const top = stack.at(-1)!;
+    if (t.selfClosing) { if (span.wrap) fail(); top.node.children.push({ ...span.node }); }
+    else if (t.close) { if (!span.wrap || top.id !== t.id) fail(); stack.pop(); }
+    else { if (!span.wrap) fail(); const node = { ...span.node, children: [] }; top.node.children.push(node); stack.push({ id: t.id, node }); }
+  }
+  addText(text.slice(at));
+  const expected = Object.values(spans).reduce((n, s) => n + (s.wrap ? 2 : 1), 0);
+  if (stack.length !== 1 || seen.size !== expected) fail();
+  return root.children;
 }
 async function native(args: string[]) {
   const p = Bun.spawn(args, { stdout: "pipe", stderr: "pipe" });
@@ -58,11 +98,11 @@ export async function pdfIR(path: string, acknowledge: boolean): Promise<IR> {
   try {
     for (let pageNum = 1; pageNum <= pages; pageNum++) {
       const page = await pdf.getPage(pageNum);
-      if ((await page.getAnnotations()).length) throw new AppError("PDF_ANNOTATIONS_UNSUPPORTED");
+      if ((await page.getAnnotations()).some((a:any)=>a.subtype!=="Link")) throw new AppError("PDF_ANNOTATIONS_UNSUPPORTED");
       const content = await page.getTextContent();
       const operators = await page.getOperatorList({ annotationMode: pdfjs.AnnotationMode.DISABLE, intent: "display" });
       let mode = 0, color = "#000000", alpha = 1, markedHidden = false,fontSize=12,hScale=1,matrix=[1,0,0,1,0,0],ctm=[1,0,0,1,0,0],clip=Array.from(page.view);
-      let background="#ffffff",backgroundPainted=false;
+      let background="#ffffff",backgroundPainted=false,clipWarned=false;
       const multiply=(a:number[],b:number[])=>[a[0]*b[0]+a[2]*b[1],a[1]*b[0]+a[3]*b[1],a[0]*b[2]+a[2]*b[3],a[1]*b[2]+a[3]*b[3],a[0]*b[4]+a[2]*b[5]+a[4],a[1]*b[4]+a[3]*b[5]+a[5]];
       const states: any[] = [], marked: boolean[] = [], runs: { text:string; hidden:boolean; suspect:boolean; off:boolean; clip:number[]; index:number }[] = [];
       const snapshot=()=>({mode,color,alpha,markedHidden,fontSize,hScale,matrix:[...matrix],ctm:[...ctm],clip:[...clip]});
@@ -95,10 +135,13 @@ export async function pdfIR(path: string, acknowledge: boolean): Promise<IR> {
           if (k === "ca") alpha=Number(v);
           if(k==="SMask"&&v || k==="BM"&&v!=="Normal")throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
         }
-        if (op === pdfjs.OPS.clip || op === pdfjs.OPS.eoClip || op === pdfjs.OPS.shadingFill) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
-        // PDF.js 6 encodes path painting inside constructPath. Only an opaque,
-        // uniform full-page rectangle before content has resolved visibility.
-        if(op===pdfjs.OPS.constructPath){
+        // Clip regions are not applied to text visibility; the warning tells the caller so.
+        if (op === pdfjs.OPS.clip || op === pdfjs.OPS.eoClip) { if(!clipWarned){clipWarned=true;warnings.push({code:"CLIP_REGIONS_NOT_EVALUATED",page:pageNum});} }
+        if (op === pdfjs.OPS.shadingFill) throw new AppError("PDF_VISIBILITY_UNSUPPORTED");
+        // PDF.js 6 encodes path painting inside constructPath. Stroke-only and no-paint
+        // ops never fill. Any fill-type op is limited to an opaque, uniform full-page
+        // rectangle before content has resolved visibility.
+        if(op===pdfjs.OPS.constructPath && ![pdfjs.OPS.stroke,pdfjs.OPS.closeStroke,pdfjs.OPS.endPath].includes(args[0])){
           const path=Array.from(args[1]?.[0]??[]) as number[], box=args[2]?bounds(args[2]):[];
           const rectangle=path.length===13&&path[0]===0&&path[3]===1&&path[6]===1&&path[9]===1&&path[12]===4
             && new Set([path[1],path[4],path[7],path[10]]).size===2&&new Set([path[2],path[5],path[8],path[11]]).size===2
@@ -175,16 +218,26 @@ export async function extract(path: string, format: "md"|"pdf", options:any) {
   return {ir,chunks:splitBlocks(ir.blocks)};
 }
 export async function render(ir: IR, translations: Translated[], path: string) {
+  // Index once: direct translations by id (first wins, as find did); split parts keyed by every
+  // block id that is a prefix before ".s", preserving translation order for the stable sort.
+  const direct=new Map<string,Translated>(), parts=new Map<string,Translated[]>();
+  for(const t of translations){
+    if(!direct.has(t.id))direct.set(t.id,t);
+    for(let k=t.id.indexOf(".s");k!==-1;k=t.id.indexOf(".s",k+1)){
+      const key=t.id.slice(0,k);
+      (parts.get(key)??parts.set(key,[]).get(key)!).push(t);
+    }
+  }
   const assembled=new Map<string,string>();
   for(const b of ir.blocks) {
-    const direct=translations.find(t=>t.id===b.id);
-    const split=translations.filter(t=>t.id.startsWith(b.id+".s")).sort((a,b)=>Number(a.id.split(".s")[1])-Number(b.id.split(".s")[1]));
-    if (!direct && !split.length) throw new AppError("ARTIFACT_INCOMPLETE");
-    assembled.set(b.id,direct?.text ?? split.map(t=>t.text).join(""));
+    const d=direct.get(b.id);
+    const split=(parts.get(b.id)??[]).slice().sort((a,b)=>Number(a.id.split(".s")[1])-Number(b.id.split(".s")[1]));
+    if (!d && !split.length) throw new AppError("ARTIFACT_INCOMPLETE");
+    assembled.set(b.id,d?.text ?? split.map(t=>t.text).join(""));
   }
   if (ir.format==="md") {
     const tree=structuredClone(ir.tree);
-    visit(tree,(node:any)=>{if(node.blockId)node.value=assembled.get(node.blockId);});
+    visit(tree,(node:any)=>{if(node.blockId){node.children=rebuild(assembled.get(node.blockId)!,node.spans);delete node.blockId;delete node.spans;}});
     await atomic(path,toMarkdown(tree)); return;
   }
   const pdf=await PDFDocument.create(); pdf.registerFontkit(fontkit);
@@ -196,9 +249,16 @@ export async function render(ir: IR, translations: Translated[], path: string) {
   };
   const occurrenceIds=ir.order??ir.blocks.flatMap(b=>[b.id,...b.aliases??[]]);
   if(new Set(occurrenceIds).size!==occurrenceIds.length)throw new AppError("ARTIFACT_INCOMPLETE");
+  // Lookup by id or alias; the earliest block in ir.blocks order wins, as find did.
+  const byId=new Map<string,number>(), byAlias=new Map<string,number>();
+  ir.blocks.forEach((b,i)=>{
+    if(!byId.has(b.id))byId.set(b.id,i);
+    for(const alias of b.aliases??[])if(!byAlias.has(alias))byAlias.set(alias,i);
+  });
   for(const occurrenceId of occurrenceIds){
-    const b=ir.blocks.find(b=>b.id===occurrenceId||b.aliases?.includes(occurrenceId));
-    if(!b)throw new AppError("ARTIFACT_INCOMPLETE");
+    const hit=[byId.get(occurrenceId),byAlias.get(occurrenceId)].filter((i):i is number=>i!==undefined);
+    if(!hit.length)throw new AppError("ARTIFACT_INCOMPLETE");
+    const b=ir.blocks[Math.min(...hit)];
       let row="";
       for(const word of assembled.get(b.id)!.replace(/\r/g,"").split(/\s+/)){
         if(font.widthOfTextAtSize(word,10)>505){

@@ -20,7 +20,7 @@ const git=(args:string[],cwd=root)=>run("git",["-c",`safe.directory=${cwd.replac
 const repository=process.argv[2]??git(["remote","get-url","origin"]);
 assert.match(repository,/^(?:git@github\.com:[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+|https:\/\/github\.com\/[A-Za-z0-9_.-]+\/[A-Za-z0-9_.-]+)$/,"Use a GitHub URL without embedded credentials");
 const expected=git(["rev-parse","HEAD"]);
-const scratch=await mkdtemp(join(tmpdir(),"stark-clone-")),checkout=join(scratch,"checkout");
+const scratch=await mkdtemp(join(tmpdir(),"translator-clone-")),checkout=join(scratch,"checkout");
 git(["clone","--",repository,checkout]);
 const commit=git(["rev-parse","HEAD"],checkout);assert.equal(commit,expected,"Fresh clone must contain the pushed local HEAD");
 const files=git(["ls-files"],checkout).split(/\r?\n/);
@@ -31,7 +31,7 @@ const runtimeFiles=files.filter(p=>/^(src\/|scripts\/|tests\/|web\/|\.github\/)/
 const digest=createHash("sha256");
 for(const path of runtimeFiles.sort()){digest.update(path+"\0");digest.update(await readFile(join(checkout,path)));digest.update("\0");}
 const runtimeTreeSha256=digest.digest("hex");
-const live=process.env.FRESH_LIVE==="1",project=`stark-clone-${crypto.randomUUID().slice(0,8)}`,base="http://127.0.0.1:3112";
+const live=process.env.FRESH_LIVE==="1",project=`translator-clone-${crypto.randomUUID().slice(0,8)}`,base="http://127.0.0.1:3112";
 const liveCap=Number(process.env.FRESH_MAX_COST_USD??.25);
 assert.ok(Number.isFinite(liveCap)&&liveCap>0,"FRESH_MAX_COST_USD must be a positive per-document live budget");
 const workspace=join(scratch,"workspace");await mkdir(workspace);await mkdir(join(workspace,"out"));

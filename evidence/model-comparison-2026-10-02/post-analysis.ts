@@ -7,7 +7,7 @@ import {assembleTranslations,hash,literals,validateOutput} from "../../src/domai
 const out=import.meta.dir,root=resolve(out,"../.."),run=await Bun.file(join(out,"comparison.json")).json();
 const records:any[]=[],observed:any[]=[];
 function db(query:string){
-  const r=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query],{cwd:root,encoding:"utf8"});
+  const r=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","translator","-d","translator","-Atc",query],{cwd:root,encoding:"utf8"});
   assert.equal(r.status,0);return JSON.parse(r.stdout.trim());
 }
 for(const row of run.rows){

@@ -5,7 +5,7 @@ const refs=[{term:"drive",pattern:"Antrieb"},{term:"battery",pattern:"Batterie|A
 const review:any[]=[];let expected=0,correct=0,numbers=0,preserved=0;
 for(const sample of measurements.rows.filter((r:any)=>r.concurrency===1&&r.target==="german")){
   const query=`select json_build_object('ir',ir,'parts',(select json_agg(result->'blocks' order by sequence) from units where job_id=j.id and kind='TRANSLATE')) from jobs j where id='${sample.job_id}'`;
-  const p=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query],{encoding:"utf8"});
+  const p=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","translator","-d","translator","-Atc",query],{encoding:"utf8"});
   if(p.status!==0)throw new Error("QUALITY_EVIDENCE_UNAVAILABLE");
   const data=JSON.parse(p.stdout),parts=data.parts.flat();
   for(const b of data.ir.blocks){

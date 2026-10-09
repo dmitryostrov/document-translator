@@ -53,13 +53,36 @@ export function splitBlocks(blocks: Block[], max = 1200): Block[][] {
 const literalPattern = /(?:(?:[Hh][Tt][Tt][Pp][Ss]?:\/\/|[Ww][Ww][Ww]\.)[^\s<>"')\]]+|[\w.+-]+@[\w.-]+\.[A-Za-z]{2,}|[+-]?\d+(?:[.,]\d+)*(?:[-–]\d+(?:[.,]\d+)*)?|(?:\b[A-Z]{2,}[-_]\w+\b)|\b(?:kg|kW|kWh|Nm|mm|cm|km|mph|rpm|°C|°F)\b)/g;
 export const literals = (s: string) => withoutTypographicControls(s).match(literalPattern) ?? [];
 export function assembleTranslations(blocks:Block[],translations:Translated[]):Translated[]{
+  const exact=new Map<string,Translated[]>(),split=new Map<string,Translated[]>();
+  const add=(m:Map<string,Translated[]>,k:string,t:Translated)=>{const g=m.get(k);g?g.push(t):m.set(k,[t]);};
+  // A translation is a split piece of every block id X where its id is X+".s"+suffix.
+  for(const t of translations){
+    add(exact,t.id,t);
+    for(let k=t.id.indexOf(".s");k>=0;k=t.id.indexOf(".s",k+1))add(split,t.id.slice(0,k),t);
+  }
   return blocks.map(b=>{
-    const direct=translations.filter(t=>t.id===b.id),parts=translations.filter(t=>t.id.startsWith(b.id+".s")).sort((a,c)=>Number(a.id.slice(b.id.length+2))-Number(c.id.slice(b.id.length+2)));
+    const direct=exact.get(b.id)??[],parts=(split.get(b.id)??[]).sort((a,c)=>Number(a.id.slice(b.id.length+2))-Number(c.id.slice(b.id.length+2)));
     if(direct.length>1||direct.length&&parts.length||!direct.length&&!parts.length||parts.some((p,n)=>p.id!==`${b.id}.s${n}`))throw new AppError("ARTIFACT_INCOMPLETE");
     return {id:b.id,text:direct[0]?.text??parts.map(p=>p.text).join("")};
   });
 }
 function bag(values: string[]) { return JSON.stringify(values.sort()); }
+// Numeric key: sign + digits without separators + separator count + digits after last separator.
+// "4.2" and "4,2" share a key; "42" does not.
+const numericKey=(s:string)=>{const sign=/^[+-]/.test(s)?s[0]:"",body=s.slice(sign.length),last=Math.max(body.lastIndexOf("."),body.lastIndexOf(","));
+  return `${sign}${body.replace(/[.,]/g,"")}|${body.match(/[.,]/g)?.length??0}|${last<0?0:body.length-last-1}`;};
+const literalKey=(s:string)=>{const r=s.match(/^([+-]?\d+(?:[.,]\d+)*)[-–](\d+(?:[.,]\d+)*)$/);
+  if(r)return `${numericKey(r[1])}-${numericKey(r[2])}`;
+  return /^[+-]?\d/.test(s)?numericKey(s):s;};
+// Markdown inline placeholders: <x> and </x> wrap children, <x/> is atomic. Ids are letters only.
+export const placeholderTags=(s:string)=>[...s.matchAll(/<(\/?)([a-z]+)(\/?)>/g)].map(m=>({tag:m[0],id:m[2],close:m[1]==="/",selfClosing:m[3]==="/",index:m.index}));
+const wellNested=(tags:ReturnType<typeof placeholderTags>)=>{const stack:string[]=[];
+  for(const t of tags){
+    if(t.close&&t.selfClosing)return false;
+    if(t.selfClosing)continue;
+    if(t.close){if(stack.pop()!==t.id)return false;}else stack.push(t.id);
+  }
+  return !stack.length;};
 export function validateOutput(source: Block[], output: Translated[], target: string) {
   if (output.length !== source.length || new Set(output.map(b => b.id)).size !== source.length) throw new AppError("INVALID_MODEL_OUTPUT");
   let expected = 0, correct = 0; const warnings: string[] = [];
@@ -69,10 +92,15 @@ export function validateOutput(source: Block[], output: Translated[], target: st
     if (out.id !== s.id || !out.text.trim() || out.text.length > Math.max(200, s.text.length * 4) || out.text.length < s.text.length / 5) throw new AppError("INVALID_MODEL_OUTPUT");
     const before = literals(s.text), after = literals(out.text);
     const nums = before.filter(x => /^[+-]?\d/.test(x)); expected += nums.length*(1+(s.aliases?.length??0));
-    if (bag(before) !== bag(after)) throw new AppError("INVALID_MODEL_OUTPUT");
+    if (bag(before.map(literalKey)) !== bag(after.map(literalKey))) throw new AppError("INVALID_MODEL_OUTPUT");
     correct += nums.length*(1+(s.aliases?.length??0));
     const markup=/!\[|\]\(|<\s*(?:script|img|iframe)\b|\bjavascript:|\bdata:[^,\s]+,/i;
     if (markup.test(out.text) && !markup.test(s.text)) throw new AppError("INVALID_MODEL_OUTPUT");
+    // Split pieces can cut a placeholder pair; the whole-block check in publish() covers them.
+    if (!s.id.includes(".s")) {
+      const sourceTags = placeholderTags(s.text), outputTags = placeholderTags(out.text);
+      if (bag(sourceTags.map(t => t.tag)) !== bag(outputTags.map(t => t.tag)) || wellNested(sourceTags) && !wellNested(outputTags)) throw new AppError("INVALID_MODEL_OUTPUT");
+    }
     const refusal=/\b(?:I (?:cannot|can't|won't|will not|am unable)|I['’]m sorry|as an AI|ignore previous|here is (?:the|your) translation|no puedo traducir|je ne peux pas traduire|ich kann .*nicht .*übersetzen)\b/i;
     if (refusal.test(proseForPolicy(out.text)) && !refusal.test(proseForPolicy(s.text))) throw new AppError("INVALID_MODEL_OUTPUT");
   }
@@ -89,12 +117,20 @@ export function cost(usage: { input: number; output: number; cached?: number; wr
 }
 export const reservedCost = (usage:{input:number;output:number},pricing:Rates=rates) =>
   (usage.input*Math.max(pricing.input,pricing.write)+usage.output*pricing.output)/1e6;
+// Worst-case spend for one translation call, from the chunk itself. The quote and the runtime ledger both use this, so the approved
+// floor always covers what the worker reserves. Glossary margin covers the 40-entry cap; output includes reasoning tokens when enabled.
+export function chunkReservation(chunkTokens:number,blocks:number,previousTokens:number){
+  return {input:chunkTokens+previousTokens+800+30*blocks+4500,
+    output:Math.min(6000,Math.ceil(chunkTokens*2.5)+600+(config.reasoning?2000:0))};
+}
+export const previousContext=(chunk:Block[]|undefined)=>(chunk?.slice(-2).map(b=>b.text).join("\n")??"").slice(-4000);
+export const chunkTokenCount=(chunk:Block[])=>chunk.reduce((n,b)=>n+tokens(b.text),0);
 export function quote(ir: IR,target="german") {
   const chunks = splitBlocks(ir.blocks);
   const sourceText=ir.blocks.map(b=>b.text).join("\n"),inputTokens=tokens(sourceText);
   const measured=target===calibration.target&&calibration.model===config.model&&calibration.prompt===config.prompt&&calibration.policy===config.policy&&chunks.length===1&&inputTokens>=calibration.input_tokens.min&&inputTokens<=calibration.input_tokens.max&&franc(sourceText,{minLength:80})==="eng";
   // Bounded direct outputs plus four bounded agent turns (context/input <= 24000).
-  const ceiling = chunks.length * reservedCost({ input:20000,output:6000 })
+  const ceiling = chunks.reduce((n,c,i)=>n+reservedCost(chunkReservation(chunkTokenCount(c),c.length,i?tokens(previousContext(chunks[i-1])):0)),0)
     + 4 * reservedCost({ input: 24000, output: 2000 });
   const previousTokens=chunks.slice(0,-1).reduce((n,c)=>n+tokens(c.slice(-2).map(b=>b.text).join("\n").slice(-4000)),0);
   const projected={

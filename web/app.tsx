@@ -1,37 +1,28 @@
 import React, { useEffect, useState } from "react";
 import { createRoot } from "react-dom/client";
-const brand={name:"STARK FUTURE",product:"Document Translator"};
+import { describeError, errorCatalog } from "../src/errors";
+const brand={name:"DOCUMENT TRANSLATOR",product:"Document Translator"};
 async function request(url:string,options:RequestInit={}){
   const response=await fetch(url,options);const data=await response.json();
   if(!response.ok)throw new Error(data.error?.code??"REQUEST_FAILED");return data;
 }
 const money=(n:number)=>new Intl.NumberFormat("en-US",{style:"currency",currency:"USD",minimumFractionDigits:4}).format(n);
-const explain:Record<string,string>={
-  SERVICE_UNAVAILABLE:"The local service is reconnecting. Accepted jobs are saved; progress will resume when it returns.",
-  OPENAI_KEY_UNAVAILABLE:"OpenAI is not configured. Set OPENAI_KEY_PATH to an external readable key file and recreate the worker. No model call was made.",
-  QUOTE_STALE:"The quote no longer matches the configured model or settings. Prepare the document again and review the new cost before approving.",
-  MODEL_CONFIGURATION_CHANGED:"The configured model changed after approval. This job stopped before another model call. Prepare a new job and review its quote.",
-  FORMAT_SERVICE_UNAVAILABLE:"The isolated document parser is unavailable. Restore the parser service and prepare again; no incomplete file was published.",
-  SCANNED_PDF_UNSUPPORTED:"This PDF needs OCR. Upload a searchable text export.",
-  PDF_PAGE_LIMIT:"Use a PDF with 250 pages or fewer.",
-  PDF_VISIBILITY_UNSUPPORTED:"This PDF has text visibility or layout we cannot safely resolve. Export a simple searchable PDF.",
-  PDF_TEXT_ONLY_CONFIRMATION_REQUIRED:"This PDF includes images. Select the text-only acknowledgment and upload again; images will be excluded.",
-  SENSITIVE_MARKING_DETECTED:"A restricted-content marker was found. This document was blocked before any OpenAI call.",
-  OUTCOME_UNKNOWN:"A submitted model request has an uncertain outcome. Checkpoints and its possible charge are preserved. It will not be repeated automatically.",
-  INVALID_MODEL_OUTPUT:"The model response failed a quality or fidelity check. Its cost is recorded; no incomplete artifact was published.",
-  COST_CAP_REACHED:"The translation reached its reserved cost limit. Review the receipt before approving further work.",
-  APPROVAL_EXPIRED:"The quote expired without approval. Prepare a new job.",
-  CORRUPT_OR_ENCRYPTED_PDF:"This PDF cannot be opened. Try an unencrypted searchable export."
-  ,UPLOAD_SIZE_LIMIT:"This file exceeds the current 25 MiB upload limit. Choose a smaller file or split the document."
-  ,SAFE_RATE_LIMIT_RETRY:"The provider repeatedly rejected requests due to rate limits. No translation call was charged. Try again later.",
-  PROVIDER_REQUEST_REJECTED:"OpenAI rejected the request. Check the worker's model and credential configuration.",
-  UNICODE_CONCEALMENT_UNSUPPORTED:"This file contains unsupported hidden or directional control characters. Export clean visible text.",
-  MARKDOWN_UTF8_INVALID:"This Markdown file is not valid UTF-8. Save it as UTF-8 and upload again."
-};
 function App(){
   const [jobs,setJobs]=useState<any[]>([]),[file,setFile]=useState<File|null>(null),[target,setTarget]=useState("german"),[ack,setAck]=useState(false),[busy,setBusy]=useState(false),[error,setError]=useState(""),[selected,setSelected]=useState<string|null>(null),[caps,setCaps]=useState<Record<string,string>>({});
   async function refresh(){try{setJobs(await request("/api/translations"));setError(old=>["SERVICE_UNAVAILABLE","Failed to fetch"].includes(old)?"":old);}catch(e:any){setError(e.message);}}
-  useEffect(()=>{void refresh();const t=setInterval(refresh,1500);return()=>clearInterval(t);},[]);
+  useEffect(()=>{void refresh();const t=setInterval(refresh,6000);return()=>clearInterval(t);},[]);
+  const openId=(selected??jobs[0]?.job_id)||null,openStage=jobs.find(j=>j.job_id===openId)?.stage;
+  useEffect(()=>{
+    if(!openId||["SUCCEEDED","FAILED","CANCELED","NEEDS_ATTENTION"].includes(openStage))return;
+    const t=setInterval(async()=>{try{const j=await request(`/api/translations/${openId}`);setJobs(old=>old.map(o=>o.job_id===openId?j:o));}catch{}},1500);
+    return()=>clearInterval(t);
+  },[openId,openStage]);
+  const [ackResume,setAckResume]=useState(false);
+  async function resume(j:any){
+    setError("");
+    const cap=Number((j.cost.cap_usd+j.cost.unresolved_exposure_usd+(j.quote?.maximum_reserved_usd??0)).toFixed(6));
+    try{await request(`/api/translations/${j.job_id}/resume`,{method:"POST",headers:{"Content-Type":"application/json","Idempotency-Key":crypto.randomUUID()},body:JSON.stringify({max_cost_usd:cap,acknowledge_possible_charge:true})});setAckResume(false);await refresh();}catch(e:any){setError(e.message);}
+  }
   const current=jobs.find(j=>j.job_id===selected)??jobs[0];
   async function prepare(e:React.FormEvent){
     e.preventDefault();if(!file)return;setError("");
@@ -67,12 +58,16 @@ function App(){
             {current.quote.size_projection&&<p className="hint">{current.quote.size_projection.source_tokens} source tokens · {current.quote.size_projection.translation_chunks} chunks. Projection assumes output at 0.9–1.6× source tokens and 2–4 terminology turns. This is an unmeasured planning range; actual usage, retries and caching can differ.</p>}
             {current.stage==="AWAITING_APPROVAL"&&<><label>Approved cap (USD)<input aria-label="Approved cap" type="number" step="0.01" min={current.quote.maximum_reserved_usd} value={caps[current.job_id]??Math.max(0.25,current.quote.maximum_reserved_usd*1.1).toFixed(6)} onChange={e=>setCaps({...caps,[current.job_id]:e.target.value})}/></label><button onClick={()=>start(current)}>Approve and translate<span>↗</span></button></>}</div>}
           {current.warnings?.length>0&&<div className="warnings"><h3>Document notes</h3>{current.warnings.map((w:any,i:number)=><p key={i}>{w.code.replaceAll("_"," ")}{w.page?` · page ${w.page}`:""}</p>)}</div>}
-          {current.error&&<div className="error" role="alert"><strong>{current.error}</strong><p>{explain[current.error]??"The operation stopped safely. Review the receipt and use a supported source."}</p></div>}
+          {current.error&&<div className="error" role="alert"><strong>{current.error}</strong><p>{describeError(current.error).message} {describeError(current.error).remedy}</p></div>}
+          {current.stage==="NEEDS_ATTENTION"&&["OUTCOME_UNKNOWN","JOB_DEADLINE_EXCEEDED"].includes(current.error)&&<div className="quote"><h3>Resume translation</h3>
+            <p className="hint">Completed work is kept and will not be paid for again. The interrupted request may already have been charged ({money(current.cost.unresolved_exposure_usd)} at most); resuming sends it once more, so that amount could be charged a second time.</p>
+            <label className="checkbox"><input type="checkbox" checked={ackResume} onChange={e=>setAckResume(e.target.checked)}/>I accept a possible second charge of up to {money(current.cost.unresolved_exposure_usd)}.</label>
+            <button disabled={!ackResume} onClick={()=>resume(current)}>Resume translation<span>↗</span></button></div>}
           <div className="actions">{current.artifact&&<a className="button" href={current.artifact.url}>Download translation ↗</a>}<a href={current.receipt_url}>Cost and quality receipt</a>{!["SUCCEEDED","FAILED","CANCELED","NEEDS_ATTENTION"].includes(current.stage)&&<button className="secondary" onClick={async()=>{try{await request(`/api/translations/${current.job_id}/cancel`,{method:"POST"});await refresh();}catch(e:any){setError(e.message);}}}>Cancel</button>}</div>
         </>}
       </section>
     </div>
-    {error&&<div className="error" role="alert">{explain[error]??error}</div>}
+    {error&&<div className="error" role="alert"><strong>{error}</strong>{Object.hasOwn(errorCatalog,error)&&<p>{describeError(error).message} {describeError(error).remedy}</p>}</div>}
     <section className="history"><div className="section-label"><h2>Your translations</h2><span>{jobs.length} DOCUMENTS</span></div>{jobs.length===0?<p className="hint">Accepted jobs and completed work remain available after a service restart.</p>:jobs.map(j=><button className="history-row" key={j.job_id} onClick={()=>setSelected(j.job_id)}><span>{j.format.toUpperCase()} <strong>{j.target_language}</strong></span><span>{j.stage.replaceAll("_"," ")}</span><span>{money(j.cost.known_cost_usd)} ↗</span></button>)}</section>
     <footer><span>{brand.name} · Translation workbench</span><span>Source files are preserved. Review translated technical material before use.</span></footer>
   </main>;

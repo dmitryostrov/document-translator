@@ -1,12 +1,11 @@
-# Stark document translator
+# Document translator
 
-Repository: [dmitryostrov/stark-document-translator](https://github.com/dmitryostrov/stark-document-translator).
+Repository: [dmitryostrov/document-translator](https://github.com/dmitryostrov/document-translator).
 
 This revision includes Spanish/upload handling, parser isolation and review fixes, the guarded Astra model profile and its paired comparison. GitHub Actions runs the fake-provider verification gate for each pushed `main` revision; consult that commit's check status. The earlier real-provider fresh-clone evidence applies to its recorded baseline commit. AC1 human acceptance remains open.
 
 A local workbench for support staff and dealers translating non-sensitive technical prose. It accepts searchable PDF and UTF-8 Markdown, prepares a cost quote locally, and calls OpenAI only after explicit approval. PDF output is a readable Unicode reflow; Markdown preserves its document structure, code and link targets.
 
-Branding provisionally follows the user's [Stark Future](https://starkfuture.com/) candidate and its [team page](https://starkfuture.com/team). The dark/gold wordmark is a local interpretation, not a claim of official brand colors or employer affiliation.
 
 ## Run
 
@@ -15,8 +14,8 @@ Requirements: Docker with Compose v2 (supporting `!reset`) and an OpenAI key fil
 Clone:
 
 ```sh
-git clone https://github.com/dmitryostrov/stark-document-translator.git
-cd stark-document-translator
+git clone https://github.com/dmitryostrov/document-translator.git
+cd document-translator
 ```
 
 1. Create a private plaintext key file outside the checkout.
@@ -157,12 +156,12 @@ The stdio adapter uses Docker and the API's private editor credential volume; it
 ```json
 {
   "mcpServers": {
-    "stark-translator": {
+    "document-translator": {
       "command": "docker",
       "args": [
         "compose",
-        "--project-directory", "C:/Users/dmitr/Documents/src/stark",
-        "-f", "C:/Users/dmitr/Documents/src/stark/compose.yaml",
+        "--project-directory", "C:/path/to/document-translator",
+        "-f", "C:/path/to/document-translator/compose.yaml",
         "run", "--rm", "--no-deps", "-T",
         "-v", "C:/Documents/translation-workspace:/workspace",
         "mcp"
@@ -174,7 +173,7 @@ The stdio adapter uses Docker and the API's private editor credential volume; it
 
 On Linux, the mounted `out` directory must be writable by the image's `bun` account (UID 1000). Saved files are private to that account (mode 0600); arrange host ownership/access for your workspace. Automated checks change ownership only for their disposable fixture output folders and return those folders/files to the invoking host user afterward.
 
-Keep the normal stack running first. `translate_document` and `translate_folder` each have explicit `prepare`/`start` actions. `translation_status` returns metadata, while `save_translation` verifies the download and atomically creates a file under workspace/out, refusing overwrite and traversal.
+Keep the normal stack running first. `translate_file` is the one-call path: it prepares, waits, approves only if `max_cost_usd` covers the quote, and saves the result (call it again with the same arguments to keep waiting). `translate_document` and `translate_folder` each have explicit `prepare`/`start` actions. `translation_status` returns metadata, while `save_translation` verifies the download and atomically creates a file under workspace/out, refusing overwrite and traversal.
 
 1. List tools and call `translate_document` with `action:"prepare"`, `input_path:"/workspace/manual.pdf"`, `target_language:"german"`, and a fresh `idempotency_key`. Poll `translation_status` with its `job_id` until `AWAITING_APPROVAL`. No paid calls have occurred.
 2. Read the quote, then call `translate_document` with `action:"start"`, that `job_id`, `quote_version`, an explicitly approved `max_cost_usd`, and a distinct key. Poll status until `SUCCEEDED` or a named error/attention state.
@@ -218,9 +217,9 @@ At 3am:
 ```sh
 docker compose ps
 docker compose logs --tail 100 api worker
-docker compose exec -T postgres psql -U stark -d stark -c "select stage,error,count(*) from jobs group by stage,error;"
-docker compose exec -T postgres psql -U stark -d stark -c "select state,count(*) from units group by state;"
-docker compose exec -T postgres psql -U stark -d stark -c "select state,count(*),sum(cost),sum(reserved) from calls group by state;"
+docker compose exec -T postgres psql -U translator -d translator -c "select stage,error,count(*) from jobs group by stage,error;"
+docker compose exec -T postgres psql -U translator -d translator -c "select state,count(*) from units group by state;"
+docker compose exec -T postgres psql -U translator -d translator -c "select state,count(*),sum(cost),sum(reserved) from calls group by state;"
 ```
 
 Logs contain generated IDs and named codes, not source/model text or keys. Inspect health and PostgreSQL first, then broker delivery/expired leases and cost states. Restore dependencies/worker and let the reconciler operate. Do not flush Redis or reset leases/call identities. `OUTCOME_UNKNOWN` requires provider/operator reconciliation before a deliberate new job; never force it back to READY.

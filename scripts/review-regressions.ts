@@ -28,8 +28,8 @@ for(const variant of ["plain","white-on-black","nested-form"]){
   assert.equal((await a.request("/api/translations/"+q.job_id+"/cancel","{}")).code,200);
 }
 // Synthetic canary proves the worker filesystem is not the parser's filesystem.
-compose(["exec","-T","worker","bun","-e","await Bun.write('/tmp/stark-parser-key-canary','synthetic-canary');"]);
-const isolation=JSON.parse(compose(["exec","-T","parser","bun","-e",`import{stat}from'node:fs/promises';console.log(JSON.stringify({canary_visible:await stat('/tmp/stark-parser-key-canary').then(()=>true,()=>false),key_mount_visible:await stat('/run/secrets/openai_key').then(()=>true,()=>false),credential_environment:Object.keys(process.env).filter(k=>/OPENAI|DATABASE_URL|REDIS_URL|MCP_TOKEN/.test(k))}));`]));
+compose(["exec","-T","worker","bun","-e","await Bun.write('/tmp/translator-parser-key-canary','synthetic-canary');"]);
+const isolation=JSON.parse(compose(["exec","-T","parser","bun","-e",`import{stat}from'node:fs/promises';console.log(JSON.stringify({canary_visible:await stat('/tmp/translator-parser-key-canary').then(()=>true,()=>false),key_mount_visible:await stat('/run/secrets/openai_key').then(()=>true,()=>false),credential_environment:Object.keys(process.env).filter(k=>/OPENAI|DATABASE_URL|REDIS_URL|MCP_TOKEN/.test(k))}));`]));
 assert.equal(isolation.canary_visible,false);assert.equal(isolation.key_mount_visible,false);assert.deepEqual(isolation.credential_environment,[]);
 const id=compose(["ps","-q","parser"]),isolate=JSON.parse(docker(["inspect",id]))[0];
 assert.equal(isolate.HostConfig.NetworkMode,"none");assert.equal(isolate.HostConfig.ReadonlyRootfs,true);
@@ -46,7 +46,7 @@ try{
   evidence.push({case:"missing-key-preflight",error:q.error,paid_calls:0});
 }finally{docker(["kill","--signal","SIGKILL",noKey]);docker(["rm",noKey]);compose(["up","-d","worker"]);}
 // Missing fresh-clone setup is rejected by Compose before startup.
-const empty=await mkdtemp(join(tmpdir(),"stark-no-key-config-"));
+const empty=await mkdtemp(join(tmpdir(),"translator-no-key-config-"));
 const config=spawnSync("docker",["compose","--project-directory",empty,"-f",resolve("compose.yaml"),"config","--quiet"],
   {env:{...environment,OPENAI_KEY_PATH:"",PROVIDER_MODE:"openai"},encoding:"utf8"});
 assert.notEqual(config.status,0);assert.ok(config.stderr.includes("OPENAI_KEY_UNAVAILABLE"));

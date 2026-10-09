@@ -9,7 +9,7 @@ if(mode.provider_mode!=="openai")throw new Error("LIVE_MEASUREMENT_REQUIRES_OPEN
 const rows:any[]=[],failures:any[]=[];
 await mkdir("evidence/live-artifacts",{recursive:true});
 const db=(query:string)=>{
-  const r=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","stark","-d","stark","-Atc",query],{encoding:"utf8"});
+  const r=spawnSync("docker",["compose","exec","-T","postgres","psql","-U","translator","-d","translator","-Atc",query],{encoding:"utf8"});
   if(r.status!==0)throw new Error("MEASUREMENT_DATABASE_UNAVAILABLE");return r.stdout.trim();
 };
 async function run(index:number,concurrency:number,target="german",existingCookie=""){
